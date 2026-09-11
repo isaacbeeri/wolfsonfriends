@@ -25,6 +25,9 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Set permissions
+RUN chmod -R 755 /usr/share/nginx/html
+
 # Expose Cloud Run default port
 EXPOSE 8080
 
