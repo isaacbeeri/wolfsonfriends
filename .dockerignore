@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.github
+*.log
+.env*
+desktop.ini
+extracted_*
+temp_*
+*.pdf
+*.docx
+*.xlsx
+*.mp4
+*.htm
+*.cjs
+!public/documents/*.pdf
+!public/video/*.mp4

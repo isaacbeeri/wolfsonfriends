@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Production build
+dist/
+build/
+
+# Logs & Debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment & Local secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Operating System & Editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Temporary extraction & conversion folders (raw source assets)
+extracted_*/
+temp_*/
+
+# Root-level loose raw source files (already processed into /public)
+/*.pdf
+/*.docx
+/*.xlsx
+/*.mp4
+/*.htm
+/*.html.bak
+/*.txt
+/*.png
+/*.jpg
+/*.jpeg
+/*.cjs
+
+# Exception: keep index.html and root configuration files
+!/index.html
+!/package.json
+!/package-lock.json
+!/vite.config.js
+!/tailwind.config.js
+!/postcss.config.js
+!/Dockerfile
+!/nginx.conf
+!/deploy-gcp.*
+!/DEPLOYMENT.md
+!/README.md

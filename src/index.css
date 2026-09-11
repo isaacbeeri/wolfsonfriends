@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Accessibility Modes */
+body.accessibility-high-contrast {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+body.accessibility-high-contrast div,
+body.accessibility-high-contrast section,
+body.accessibility-high-contrast header,
+body.accessibility-high-contrast footer,
+body.accessibility-high-contrast nav {
+  background-color: #0b0b0b !important;
+  color: #FFFFFF !important;
+  border-color: #facc15 !important;
+}
+
+body.accessibility-high-contrast a,
+body.accessibility-high-contrast button {
+  color: #facc15 !important;
+  border-color: #facc15 !important;
+}
+
+body.accessibility-monochrome {
+  filter: grayscale(100%) !important;
+}
+
+body.accessibility-large-text {
+  font-size: 1.15rem;
+}
+
+body.accessibility-xl-text {
+  font-size: 1.3rem;
+}
+
+body.accessibility-readable-font * {
+  font-family: Arial, Helvetica, sans-serif !important;
+  letter-spacing: 0.03em !important;
+}
+
+body.accessibility-highlight-links a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-decoration-color: #f59e0b !important;
+}
+
+body.accessibility-stop-animations * {
+  animation: none !important;
+  transition: none !important;
+}
