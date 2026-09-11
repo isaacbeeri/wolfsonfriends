@@ -19,7 +19,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from "lucide-react";
-import { getStoredNews, saveStoredNews, resetStoredNews } from "../data/newsData";
+import { getStoredNews, saveStoredNews, resetStoredNews, compressImageFile } from "../data/newsData";
 
 const DEFAULT_PIN = "wolfson2026";
 
@@ -54,6 +54,8 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
   const [formLink, setFormLink] = useState("#projects");
   const [formLinkText, setFormLinkText] = useState("לפרטים נוספים");
   const [formActive, setFormActive] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadNote, setUploadNote] = useState("");
 
   useEffect(() => {
     setItems(getStoredNews());
@@ -174,14 +176,23 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
     a.click();
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setFormImage(event.target?.result);
-    };
-    reader.readAsDataURL(file);
+    try {
+      setIsUploading(true);
+      setUploadNote(isHe ? "מעבד וממטב תמונה לגודל אופטימלי..." : "Optimizing image...");
+      const compressed = await compressImageFile(file, 800, 800, 0.78);
+      setFormImage(compressed);
+      const kbSize = Math.round((compressed.length * 0.75) / 1024);
+      setUploadNote(isHe ? `תמונה ממוטבת בהצלחה (${kbSize} KB)` : `Image optimized (${kbSize} KB)`);
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      alert(isHe ? "שגיאה בטעינת התמונה." : "Failed to load image.");
+      setUploadNote("");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -406,11 +417,23 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                           <img 
                             src={formImage} 
                             alt="Preview" 
-                            className="w-12 h-12 object-cover rounded-lg border border-slate-300 shadow-xs" 
+                            className="w-12 h-12 object-cover rounded-lg border border-slate-300 shadow-xs shrink-0" 
                           />
-                          <span className="text-[11px] text-slate-400 font-mono truncate max-w-[200px]">
-                            {formImage.startsWith("data:") ? "תמונה שהועלתה (Base64)" : formImage}
-                          </span>
+                          <div className="min-w-0">
+                            <span className="block text-[11px] text-slate-400 font-mono truncate max-w-[200px]">
+                              {formImage.startsWith("data:") ? "תמונה שהועלתה" : formImage}
+                            </span>
+                            {isUploading && (
+                              <span className="block text-[11px] text-sky-600 font-bold animate-pulse">
+                                {isHe ? "מעבד וממטב..." : "Optimizing..."}
+                              </span>
+                            )}
+                            {uploadNote && !isUploading && (
+                              <span className="block text-[11px] text-emerald-600 font-bold">
+                                {uploadNote}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -464,7 +487,7 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                   </div>
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2.5 max-h-[420px] overflow-y-auto pe-1">
                   {items.map((item, idx) => {
                     const getVal = (v) => typeof v === "object" ? (v[lang] || v.he || v.en || "") : (v || "");
                     const itTitle = getVal(item.title);
