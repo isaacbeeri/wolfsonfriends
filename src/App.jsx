@@ -13,9 +13,11 @@ import { Footer } from "./components/Footer.jsx";
 import { DonationModal } from "./components/DonationModal.jsx";
 import { AdminNewsManager } from "./components/AdminNewsManager.jsx";
 import { AccessibilityToolbar } from "./components/AccessibilityToolbar.jsx";
+import { FaqPage } from "./components/FaqPage.jsx";
 
 export function App() {
   const [lang, setLang] = useState("he");
+  const [currentView, setCurrentView] = useState("home"); // 'home' | 'faq'
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false);
@@ -40,6 +42,33 @@ export function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === "#faq") {
+        setCurrentView("faq");
+      } else if (window.location.hash === "" || window.location.hash === "#") {
+        setCurrentView("home");
+      }
+    };
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const handleOpenFaq = () => {
+    setCurrentView("faq");
+    window.location.hash = "faq";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleBackHome = () => {
+    setCurrentView("home");
+    if (window.location.hash === "#faq") {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleOpenDonate = (project = null) => {
     setSelectedProject(project);
     setIsDonationOpen(true);
@@ -63,18 +92,36 @@ export function App() {
 
       {/* Main Content Sections */}
       <main className="flex-1">
-        <Hero t={t} onOpenDonate={handleOpenDonate} dir={dir} lang={lang} />
-        <BrandPillars t={t} />
-        <ProjectsSection t={t} lang={lang} onOpenDonate={handleOpenDonate} />
-        <DisparityComparison t={t} dir={dir} />
-        <VideoShowcase t={t} onOpenDonate={handleOpenDonate} />
-        <AboutAndLeadership t={t} onOpenDonate={handleOpenDonate} lang={lang} />
-        <CampusMapSection t={t} />
-        <ContactSection t={t} />
+        {currentView === "faq" ? (
+          <FaqPage
+            lang={lang}
+            t={t}
+            onBackHome={handleBackHome}
+            onOpenDonate={handleOpenDonate}
+          />
+        ) : (
+          <>
+            <Hero t={t} onOpenDonate={handleOpenDonate} dir={dir} lang={lang} />
+            <BrandPillars t={t} />
+            <ProjectsSection t={t} lang={lang} onOpenDonate={handleOpenDonate} />
+            <DisparityComparison t={t} dir={dir} />
+            <VideoShowcase t={t} onOpenDonate={handleOpenDonate} />
+            <AboutAndLeadership t={t} onOpenDonate={handleOpenDonate} lang={lang} />
+            <CampusMapSection t={t} />
+            <ContactSection t={t} />
+          </>
+        )}
       </main>
 
       {/* Footer */}
-      <Footer t={t} onOpenDonate={handleOpenDonate} setLang={setLang} lang={lang} onOpenAdmin={() => setIsAdminOpen(true)} />
+      <Footer
+        t={t}
+        onOpenDonate={handleOpenDonate}
+        setLang={setLang}
+        lang={lang}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenFaq={handleOpenFaq}
+      />
 
       {/* Interactive Modals */}
       <DonationModal

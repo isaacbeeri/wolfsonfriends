@@ -1,9 +1,16 @@
 import React from 'react';
-import { Heart, ShieldCheck, Mail, Phone, MapPin, ExternalLink, Zap, Download } from 'lucide-react';
+import { Heart, ShieldCheck, Mail, Phone, MapPin, ExternalLink, Zap, Download, HelpCircle } from 'lucide-react';
 
-export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin }) {
+export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq }) {
   const f = t.footer;
   const isHe = lang === 'he';
+  const faqTitles = {
+    he: 'שאלות נפוצות (FAQ)',
+    en: 'Frequently Asked Questions (FAQ)',
+    fr: 'Foire Aux Questions (FAQ)',
+    de: 'Häufig gestellte Fragen (FAQ)'
+  };
+  const faqTitle = faqTitles[lang] || faqTitles.he;
 
   return (
     <footer className='bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800'>
@@ -65,6 +72,19 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin }) {
               <li><a href='#transparency' className='hover:text-white transition-colors'>{t.nav.transparency}</a></li>
               <li><a href='#campus' className='hover:text-white transition-colors'>{t.nav.map}</a></li>
               <li><a href='#contact' className='hover:text-white transition-colors'>{t.nav.contact}</a></li>
+              <li>
+                <a
+                  href='#faq'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onOpenFaq) onOpenFaq();
+                  }}
+                  className='hover:text-sky-400 text-slate-300 font-semibold flex items-center gap-1.5 transition-colors pt-0.5'
+                >
+                  <HelpCircle className='w-3.5 h-3.5 text-sky-400' />
+                  <span>{faqTitle}</span>
+                </a>
+              </li>
             </ul>
           </div>
 
