@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { MessageSquare, MapPin, Mail, Phone, Send, CheckCircle2 } from "lucide-react";
 
-export function ContactSection({ t }) {
+export function ContactSection({ t, lang }) {
   const c = t.contact;
+  const isHe = lang === "he" || (c.formName && c.formName.includes("שם"));
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,6 +14,9 @@ export function ContactSection({ t }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+    const emailSubject = encodeURIComponent(`[${isHe ? 'פנייה מאתר ידידי וולפסון' : 'Wolfson Friends Inquiry'}] ${subject || (isHe ? 'פנייה כללית' : 'General')} - ${name}`);
+    const emailBody = encodeURIComponent(`${isHe ? 'שם' : 'Name'}: ${name}\n${isHe ? 'אימייל' : 'Email'}: ${email}\n${isHe ? 'טלפון' : 'Phone'}: ${phone || (isHe ? 'לא צוין' : 'Not provided')}\n${isHe ? 'נושא' : 'Subject'}: ${subject}\n\n${isHe ? 'הודעה' : 'Message'}:\n${message}`);
+    window.location.href = `mailto:friends2@wmc.gov.il?subject=${emailSubject}&body=${emailBody}`;
   };
 
   return (
@@ -100,13 +104,40 @@ export function ContactSection({ t }) {
           {/* Form Column */}
           <div className="lg:col-span-7 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
             {submitted ? (
-              <div className="text-center py-12 space-y-4">
+              <div className="text-center py-12 space-y-5">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h4 className="text-xl font-bold text-slate-900">
                   {c.formSuccess}
                 </h4>
+                <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                  {isHe
+                    ? 'הפנייה נותבה ישירות לכתובת friends2@wmc.gov.il. באפשרותך גם לפתוח ישירות בתוכנת הדוא״ל שלך או לשלוח הודעה נוספת:'
+                    : 'Your inquiry is routed directly to friends2@wmc.gov.il. You can also open it in your email client or send another message:'}
+                </p>
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <a
+                    href={`mailto:friends2@wmc.gov.il?subject=${encodeURIComponent(`[${isHe ? 'פנייה מאתר הידידים' : 'Wolfson Friends Inquiry'}] ${subject || (isHe ? 'פנייה' : 'General')} - ${name}`)}&body=${encodeURIComponent(`${isHe ? 'שם' : 'Name'}: ${name}\n${isHe ? 'אימייל' : 'Email'}: ${email}\n${isHe ? 'טלפון' : 'Phone'}: ${phone}\n\n${isHe ? 'הודעה' : 'Message'}:\n${message}`)}`}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-xs shadow transition-all"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>{isHe ? 'שליחה ישירה בדוא״ל' : 'Open in Email App'}</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setName("");
+                      setEmail("");
+                      setPhone("");
+                      setMessage("");
+                    }}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all"
+                  >
+                    <span>{isHe ? 'שליחת הודעה נוספת' : 'Send Another Message'}</span>
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">

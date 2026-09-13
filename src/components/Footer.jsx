@@ -143,7 +143,7 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq 
             <p className='text-center sm:text-start'>{f.rights}</p>
             <div className='flex items-center gap-2 text-emerald-400 text-[11px] font-medium'>
               <ShieldCheck className='w-4 h-4' />
-              <span>{isHe ? 'סעיף 46 בתוקף עד 31.12.2026 | ניהול תקין | US 501(c)(3)' : 'Section 46 Valid to 31.12.2026 | Proper Management | US 501(c)(3)'}</span>
+              <span>{isHe ? 'סעיף 46 בתוקף עד 31.12.2029 | ניהול תקין | US 501(c)(3) דרך JGive' : 'Section 46 Valid to 31.12.2029 | Proper Management | US 501(c)(3) via JGive'}</span>
             </div>
           </div>
           <p className='text-slate-600 text-[11px] leading-relaxed'>

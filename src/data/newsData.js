@@ -52,16 +52,16 @@ export const defaultNewsItems = [
       de: "Sept 2026"
     },
     title: {
-      he: "שנת שיא של צמיחה ועשייה בעמותת הידידים",
-      en: "Record-Breaking Year of Philanthropic Growth",
-      fr: "Année Record de Croissance et d'Engagement",
-      de: "Rekordjahr für Philanthropie und Engagement"
+      he: "דוחות 2025: גידול של 42.7% בעודף השנתי לציוד רפואי",
+      en: "2025 Financials: 42.7% Growth in Surplus for Medical Equipment",
+      fr: "Résultats 2025 : 42,7% de Croissance de l'Excédent pour les Équipements",
+      de: "Finanzen 2025: 42,7 % Zuwachs beim Überschuss für Medizingeräte"
     },
     snippet: {
-      he: "גיוס של מעל 10 מיליון ש״ח וגידול של 42% בעודף השנתי לטובת רכש ציוד רפואי מציל חיים.",
-      en: "Over 10M NIS raised and 42% surplus growth directly funding life-saving medical gear.",
-      fr: "Plus de 10 millions de NIS collectés pour financer des équipements médicaux de pointe.",
-      de: "Über 10 Mio. NIS an Spenden für lebensrettende medizinische Geräte gesichert."
+      he: "הדוחות המבוקרים לשנת 2025 מצביעים על גידול של 42.7% בעודף השנתי (כ-4.1 מיליון ש\"ח) לטובת רכש ציוד רפואי, לצד יעד גיוס שנתי של 10 מיליון ש\"ח לשנת 2026.",
+      en: "Audited 2025 statements reflect a 42.7% increase in annual surplus (~4.1M NIS) for life-saving medical equipment, alongside a 10M NIS campaign target for 2026.",
+      fr: "Les comptes vérifiés de 2025 indiquent une hausse de 42,7 % de l'excédent annuel (~4,1 M NIS) pour l'équipement médical, avec un objectif de campagne de 10 M NIS en 2026.",
+      de: "Die geprüften Bilanzen 2025 zeigen ein Plus von 42,7 % beim Jahresüberschuss (~4,1 Mio. NIS) für medizinische Geräte, begleitet von einem Spendenziel von 10 Mio. NIS für 2026."
     },
     image: "/images/growth-arrow.jpg",
     link: "#about",

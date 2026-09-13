@@ -19,7 +19,7 @@ export const fr = {
   },
   "hero": {
     "badge": "Poumon Médical Vital pour plus de 700 000 Habitants",
-    "taxBadge": "Article 46 | US 501(c)(3) | Saine Gestion 2025–2026",
+    "taxBadge": "Art. 46 (jusqu'en 2029) | Déductibilité US 501(c)(3) via JGive | Saine Gestion",
     "title": "Combler la Fracture Sanitaire. Sauver des Vies avec Dignité.",
     "subtitle": "Le Centre Médical Edith Wolfson à Holon soigne plus de 700 000 résidents de Holon, Bat Yam, Jaffa et du sud de Tel Aviv. Nous nous engageons à offrir à chaque patient des soins d'élite, des technologies de pointe et des infrastructures résilientes, indépendamment de toute considération socio-économique.",
     "ctaDonate": "Soutenir nos Projets Vitaux",
@@ -67,32 +67,32 @@ export const fr = {
   "videoSection": {
     "badge": "Vidéo Stratégique",
     "title": "PET-CT Mobile : Combler la Fracture Diagnostique Oncologique",
-    "subtitle": "Découvrez comment une unité mobile d'imagerie de pointe réduit les délais d'attente anxiogènes de 6 semaines à 7 jours seulement.",
+    "subtitle": "Découvrez comment une unité mobile d'imagerie de pointe apportera un diagnostic précoce directement au cœur de la communauté.",
     "duration": "01:30 min",
-    "keyInsight1": "Réduit les délais d'attente diagnostique du cancer de 6 semaines à 7 jours",
+    "keyInsight1": "Objectif stratégique de réduction substantielle des délais de diagnostic oncologique et d'accès local",
     "keyInsight2": "Accessibilité directe pour les malades grabataires, les aînés et les rescapés de la Shoah",
-    "keyInsight3": "Objectif philanthropique de $3.8M USD pour financer le véhicule, le scanner et son fonctionnement",
+    "keyInsight3": "Objectif philanthropique de $2.2M USD pour financer le véhicule, le scanner et son fonctionnement",
     "supportProject": "Dédier un Don au Projet PET-CT"
   },
   "disparity": {
     "badge": "Réalité Nationale",
     "title": "Une Disparité Flagrante que la Philanthropie Doit Combler",
-    "subtitle": "Bien qu'il accueille plus de la moitié du flux de patients des plus grands CHU israéliens, Wolfson fonctionne avec une infime fraction de leur budget et de leurs dons.",
+    "subtitle": "Les données comparatives officielles 2024 avec le Centre Médical Sheba (Tel HaShomer) mettent en lumière la disparité structurelle des budgets, équipements et dons face à la population desservie.",
     "metric": "Indicateur Clé",
     "wolfson": "Centre Médical Edith Wolfson",
-    "sheba": "Grands Centres de Tel Aviv (Ichilov / Sheba)",
+    "sheba": "Centre Médical Sheba, Tel HaShomer (Données 2024)",
     "ratio": "Ratio d'Écart",
     "row1": {
       "label": "Budget Annuel Officiel d'Exploitation",
       "w": "$245 Millions USD",
       "s": "$1.08 Milliard USD",
-      "r": "Wolfson opère avec seulement 23%"
+      "r": "Wolfson opère avec seulement 23% (4,4x moins)"
     },
     "row2": {
       "label": "Collecte Philanthropique Annuelle",
       "w": "< $5.5 Millions USD",
       "s": "> $41.4 Millions USD",
-      "r": "7.5x plus élevé dans les centres du nord"
+      "r": "7.5x plus élevé à Sheba"
     },
     "row3": {
       "label": "Systèmes Chirurgicaux Robotisés (Da Vinci)",
@@ -101,17 +101,17 @@ export const fr = {
       "r": "Retard technologique urgent à résorber"
     },
     "row4": {
-      "label": "Bassin de Population Directement Desservi",
+      "label": "Population du Bassin de Desserte Direct",
       "w": "700 000 Habitants",
       "s": "1 200 000 Habitants",
-      "r": "Plus de 58% du volume de patients"
+      "r": "Rapport de 1,7x (plus de 58 % du bassin)"
     },
     "callout": "Votre engagement philanthropique pour Wolfson a l'impact direct le plus puissant en Israël. Ici, chaque euro contribue directement à sauver des vies humaines."
   },
   "projectsSection": {
-    "badge": "Priorités Immédiates 2025–2028",
+    "badge": "Objectifs Stratégiques & Projets Proposés (En Planification et Collecte)",
     "title": "Projets Stratégiques de Développement",
-    "subtitle": "Notre campagne vise $40M USD, dont $19.5M dédiés aux besoins d'urgence immédiate. Vous pouvez flécher votre don vers le projet de votre choix.",
+    "subtitle": "Ces initiatives prioritaires incarnent les aspirations et objectifs stratégiques de l'hôpital. L'Association recherche activement des partenaires philanthropiques fondateurs pour leur concrétisation.",
     "goalLabel": "Objectif de Financement",
     "raisedLabel": "Collecté à ce Jour",
     "urgentBadge": "Urgence Nationale",
@@ -131,27 +131,27 @@ export const fr = {
     "p1": "Inauguré en 1980 grâce à la vision de Lady Edith Wolfson et de la Fondation Wolfson de Londres, le centre hospitalier universitaire est affilié à la Faculté de Médecine de l'Université de Tel Aviv et joue un rôle de premier plan dans la résilience civile nationale.",
     "quote": "« Le bien-être de l'âme ne peut être atteint qu'après avoir assuré celui du corps. »",
     "quoteAuthor": "Maïmonide (Rambam), Le Guide des Égarés",
-    "historyNote": "Depuis 1983, l'Association des Amis est administrée avec dévouement par des personnalités du monde civil et des affaires agissant à titre entièrement bénévole.",
+    "historyNote": "Le conseil d'administration œuvre à titre entièrement bénévole, réunissant des personnalités du monde civil, juridique et médical, appuyé par une équipe administrative professionnelle dévouée.",
     "historyPhotoCaption": "Tradition de dévouement : L'équipe soignante aux premières heures de l'hôpital",
     "transparencyTitle": "Gouvernance, Transparence & Agréments Fiscaux",
-    "transparencyLead": "L'Association observe les standards éthiques et comptables les plus stricts, titulaire du label officiel de Saine Gestion et habilitée à délivrer des reçus fiscaux en Israël, aux États-Unis, en France et en Europe.",
-    "docSection46Title": "Agrément Fiscal Art. 46 (Valable jusqu'au 31.12.2026)",
-    "docSection46Desc": "Institution d'intérêt général agréée pour la déductibilité fiscale selon l'art. 46 du code des impôts israélien (#580022507, agréée depuis 1986).",
+    "transparencyLead": "L'Association observe les standards éthiques et comptables les plus stricts, titulaire du label officiel de Saine Gestion et habilitée à délivrer des reçus fiscaux en Israël et aux États-Unis via JGive.",
+    "docSection46Title": "Agrément Fiscal Art. 46 (Valable jusqu'au 31.12.2029)",
+    "docSection46Desc": "Institution d'intérêt général agréée pour la déductibilité fiscale selon l'art. 46 du code des impôts israélien (#580022507, valable jusqu'au 31.12.2029).",
     "docSection46Btn": "Consulter le Certificat Art. 46 (PDF)",
-    "docNihulTakinTitle": "Certificat Officiel de Saine Gestion (2025–2026)",
+    "docNihulTakinTitle": "Certificat Officiel de Saine Gestion",
     "docNihulTakinDesc": "Délivré par le Registre des Associations (Ministère de la Justice), attestant de la totale conformité statutaire et financière.",
     "docNihulTakinBtn": "Voir le Profil Officiel Guidestar",
     "docBylawsTitle": "Statuts et Charte de l'Association",
     "docBylawsDesc": "Statuts certifiés par le Registre des Associations (Ministère de la Justice) définissant les objectifs d'intérêt général et la gouvernance.",
     "docBylawsBtn": "Consulter le Registre & Statuts",
-    "docInternationalTitle": "Déductibilité USA 501(c)(3), France, UK, Canada & Europe",
-    "docInternationalDesc": "Vos dons sont éligibles aux réductions fiscales aux États-Unis (via partenaires 501c3 tels que PEF), en France, au Royaume-Uni et en Europe via JGive.",
+    "docInternationalTitle": "Déductibilité US 501(c)(3) & Internationale via JGive",
+    "docInternationalDesc": "Vos dons sont éligibles aux réductions fiscales aux États-Unis (501c3) et traités en toute sécurité via notre plateforme partenaire officielle JGive.",
     "docInternationalBtn": "Faire un Don Défiscalisé sur JGive",
     "docRegulationsTitle": "Règlement Officiel des Dons & Charte Éthique",
     "docRegulationsDesc": "Procédure formelle de gestion des libéralités et garantie d'affectation intégrale ratifiée par le Conseil d'Administration.",
     "docRegulationsBtn": "Consulter le Règlement des Dons (PDF)",
     "leadershipTitle": "Conseil d'Administration & Direction Générale",
-    "leadershipSub": "L'association est gouvernée bénévolement par d'éminentes personnalités du monde médical, juridique et économique.",
+    "leadershipSub": "L'association est gouvernée bénévolement par le Conseil d'Administration, appuyé par une équipe administrative et opérationnelle dévouée.",
     "chairmanRole": "Président du Conseil d'Administration",
     "chairmanName": "Isaac (Tzachi) Beeri",
     "chairmanBadge": "Président du Conseil",
@@ -187,7 +187,7 @@ export const fr = {
   },
   "donateModal": {
     "title": "Soutenir les Amis du Centre Médical Wolfson",
-    "subtitle": "Dons déductibles des impôts en Israël (Art. 46), USA (501c3), France, UK, Canada & Europe",
+    "subtitle": "Dons déductibles des impôts en Israël (Art. 46) et aux USA (501c3) via JGive",
     "oneTime": "Don Ponctuel",
     "monthly": "Don Mensuel Régulier",
     "selectAmount": "Choisir le Montant",
@@ -199,10 +199,10 @@ export const fr = {
     "tabBank": "Virement Bancaire Direct",
     "jgiveBadge": "Plateforme Philanthropique Officielle",
     "jgiveTitle": "Don Rapide par Carte, Bit, Apple Pay & Google Pay",
-    "jgiveDesc": "Vos transactions sont protégées par le plus haut niveau de sécurité bancaire. Le reçu fiscal officiel (Art. 46 Israël, Cerfa France / 501(c)(3) USA) est émis et envoyé instantanément à votre adresse email.",
+    "jgiveDesc": "Vos transactions sont protégées par le plus haut niveau de sécurité bancaire. Le reçu fiscal officiel (Art. 46 Israël, 501(c)(3) USA) est émis et envoyé instantanément à votre adresse email.",
     "jgiveBtn": "Continuer sur JGive en Toute Sécurité",
-    "badgeSec46": "Art. 46 Agréé",
-    "badge501c3": "Déductible US 501(c)(3)",
+    "badgeSec46": "Art. 46 Valable jusqu'en 2029",
+    "badge501c3": "US 501(c)(3) via JGive",
     "badgeProperManagement": "Certificat de Saine Gestion",
     "badgeDigitalWallets": "Bit, Apple Pay & Google Pay",
     "bankDetailsTitle": "Coordonnées Bancaires Officielles",
@@ -261,7 +261,7 @@ export const fr = {
   },
   "footer": {
     "rights": "Tous droits réservés © 2026 Association des Amis du Centre Médical Edith Wolfson (Amouta #580022507).",
-    "taxNotice": "Association d'intérêt général agréée selon l'article 46 du code fiscal israélien et titulaire du label de Saine Gestion 2025–2026.",
-    "usNotice": "Dons fiscalement déductibles aux États-Unis (501c3), au Royaume-Uni, au Canada et en Europe via nos fondations partenaires et JGive."
+    "taxNotice": "Association d'intérêt général agréée selon l'article 46 du code fiscal israélien (valable jusqu'au 31.12.2029) et label officiel de Saine Gestion.",
+    "usNotice": "Les dons déductibles d'impôt aux États-Unis (501c3) et à l'international sont traités via la plateforme partenaire officielle JGive."
   }
 };

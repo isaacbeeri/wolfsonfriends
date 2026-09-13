@@ -9,7 +9,7 @@ export const faqData = {
     {
       "id": "de-2",
       "question": "Sind Spenden an den Verein steuerlich absetzbar?",
-      "answer": "Ja. In Israel sind Spenden gemäß Abschnitt 46 der Einkommensteuerverordnung steuerlich begünstigt. Für Förderer aus Deutschland, Europa und Nordamerika ermöglicht der Verein steuerwirksame Spendenwege über autorisierte internationale Partnerorganisationen. Für alle Zuwendungen werden ordnungsgemäße Spendenbescheinigungen ausgestellt."
+      "answer": "Ja. In Israel sind Spenden gemäß Abschnitt 46 der Einkommensteuerverordnung (gültig bis 31.12.2029) steuerlich begünstigt. Für internationale Förderer aus den USA und weltweit ermöglicht der Verein steuerwirksame Zuwendungen nach US 501(c)(3) über die autorisierte Plattform JGive. Für alle Zuwendungen werden ordnungsgemäße Spendenbescheinigungen ausgestellt."
     },
     {
       "id": "de-3",
@@ -31,7 +31,7 @@ export const faqData = {
     {
       "id": "en-2",
       "question": "Are donations to the Friends Association tax-deductible?",
-      "answer": "Yes. In Israel, donations are tax-deductible under Section 46 of the Israeli Income Tax Ordinance. For international donors across North America, the UK, and Europe, the association facilitates tax-efficient giving pathways through authorized international partner organizations. Official receipts are issued for all contributions."
+      "answer": "Yes. In Israel, donations are tax-deductible under Section 46 of the Israeli Income Tax Ordinance (valid through December 31, 2029). For international donors, the association provides tax-deductible pathways under US 501(c)(3) via the authorized platform JGive. Official tax receipts are issued for all contributions."
     },
     {
       "id": "en-3",
@@ -53,7 +53,7 @@ export const faqData = {
     {
       "id": "fr-2",
       "question": "Les dons faits à l'association bénéficient-ils d'avantages fiscaux ?",
-      "answer": "Oui. En Israël, les dons sont déductibles d'impôt au titre de l'article 46 de l'ordonnance sur l'impôt sur le revenu. Pour les donateurs résidant en France, en Europe ou en Amérique du Nord, l'association facilite des solutions de mécénat fiscalement avantageuses via des entités partenaires agréées. Des reçus fiscaux officiels sont délivrés pour chaque contribution."
+      "answer": "Oui. En Israël, les dons sont déductibles d'impôt au titre de l'article 46 de l'ordonnance sur l'impôt sur le revenu (en vigueur jusqu'au 31.12.2029). Pour les donateurs internationaux, l'association propose une déductibilité fiscale américaine US 501(c)(3) via la plateforme agréée JGive. Des reçus fiscaux officiels sont délivrés pour chaque contribution."
     },
     {
       "id": "fr-3",
@@ -75,7 +75,7 @@ export const faqData = {
     {
       "id": "he-2",
       "question": "האם התרומות לעמותת הידידים מוכרות לצורכי מס?",
-      "answer": "כן. תרומות לעמותה מוכרות לזיכוי ממס בישראל לפי סעיף 46 לפקודת מס הכנסה. עבור תורמים בינלאומיים (מארה״ב, בריטניה ואירופה), העמותה מספקת אפיקי תרומה מוכרים במס באמצעות ארגוני שותפים בינלאומיים. לכל תרומה מונפקת קבלה רשמית כדין."
+      "answer": "כן. תרומות לעמותה מוכרות לזיכוי ממס בישראל לפי סעיף 46 לפקודת מס הכנסה (אישור בתוקף עד 31.12.2029). עבור תורמים בינלאומיים ומארה״ב, העמותה מספקת אפיק תרומה מוכר לצרכי מס בארה״ב לפי סעיף US 501(c)(3) באמצעות פלטפורמת JGive המורשית. לכל תרומה מונפקת קבלה רשמית כדין."
     },
     {
       "id": "he-3",

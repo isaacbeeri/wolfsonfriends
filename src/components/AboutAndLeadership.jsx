@@ -147,7 +147,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                       <ShieldCheck className="w-5 h-5" />
                     </span>
                     <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                      {isHe ? "בתוקף עד 31.12.2026" : "Valid to 31.12.2026"}
+                      {isHe ? "בתוקף עד 31.12.2029" : "Valid to 31.12.2029"}
                     </span>
                   </div>
                   <h4 className="font-bold text-base text-slate-900 mb-2">

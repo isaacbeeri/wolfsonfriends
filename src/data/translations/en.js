@@ -19,7 +19,7 @@ export const en = {
   },
   "hero": {
     "badge": "Regional Medical Lifeline for 700,000+ Residents",
-    "taxBadge": "Section 46 | US 501(c)(3) | Proper Management 2025–2026",
+    "taxBadge": "Section 46 (Valid to 2029) | US 501(c)(3) via JGive | Proper Management",
     "title": "Bridging the Healthcare Gap. Saving Lives with Dignity.",
     "subtitle": "Edith Wolfson Medical Center in Holon serves over 700,000 diverse residents across Holon, Bat Yam, Jaffa, and South Tel Aviv. We are dedicated to ensuring that elite clinical care, transformative technology, and modern facilities are accessible to all — regardless of socio-economic background.",
     "ctaDonate": "Support Life-Saving Projects",
@@ -67,32 +67,32 @@ export const en = {
   "videoSection": {
     "badge": "Exclusive Video Showcase",
     "title": "Mobile PET-CT: Bridging the Regional Oncology Gap",
-    "subtitle": "Discover how bringing rapid diagnostic imaging directly into the community slashes life-threatening waiting times from 6 weeks to 7 days.",
+    "subtitle": "Discover how bringing rapid diagnostic imaging directly into the community will expand life-saving oncology staging and eliminate travel hardship for vulnerable patients.",
     "duration": "01:30 min",
-    "keyInsight1": "Cuts critical oncology diagnostic delays from 6 weeks down to 7 days",
+    "keyInsight1": "Strategic objective to substantially reduce oncology diagnostic waiting times and expand community access",
     "keyInsight2": "Direct physical accessibility for immobile, elderly, and Holocaust survivors",
-    "keyInsight3": "$3.8M USD philanthropic funding target for vehicle, scanner, and initial operation",
+    "keyInsight3": "$2.2M USD philanthropic funding target for vehicle, scanner, and initial operation",
     "supportProject": "Dedicate a Gift to the PET-CT Initiative"
   },
   "disparity": {
     "badge": "National Reality",
     "title": "A Stark Disparity That Philanthropy Must Bridge",
-    "subtitle": "Despite serving more than half the patient load of Israel's largest tertiary centers, Wolfson operates on a fraction of their budget and philanthropic support.",
+    "subtitle": "Official 2024 comparative data with Sheba Medical Center highlights the structural disparity in budget, equipment, and philanthropic funding relative to the catchment population.",
     "metric": "Key Indicator",
     "wolfson": "Edith Wolfson Medical Center",
-    "sheba": "Central Tel Aviv Tertiary Centers (Ichilov / Sheba)",
+    "sheba": "Sheba Medical Center, Tel HaShomer (2024 Data)",
     "ratio": "Disparity Ratio",
     "row1": {
       "label": "Official Annual Operating Budget",
       "w": "$245 Million USD",
       "s": "$1.08 Billion USD",
-      "r": "Wolfson operates on just 23%"
+      "r": "Wolfson operates on just 23% (4.4x less)"
     },
     "row2": {
       "label": "Annual Philanthropic Fundraising",
       "w": "< $5.5 Million USD",
       "s": "> $41.4 Million USD",
-      "r": "7.5x Higher at Central Centers"
+      "r": "7.5x Higher at Sheba"
     },
     "row3": {
       "label": "Robotic Surgical Systems (Da Vinci)",
@@ -101,17 +101,17 @@ export const en = {
       "r": "Critical technology gap requiring urgent funding"
     },
     "row4": {
-      "label": "Annual Patient Population Served",
+      "label": "Direct Catchment Area Population Served",
       "w": "700,000 Residents",
       "s": "1,200,000 Residents",
-      "r": "Over 58% of patient volume"
+      "r": "1.7x difference (over 58% of catchment size)"
     },
     "callout": "Your philanthropic investment in Wolfson creates the highest direct impact in Israel. Here, every contribution directly bridges the divide between life and death."
   },
   "projectsSection": {
-    "badge": "Immediate Priorities 2025–2028",
+    "badge": "Strategic Objectives & Proposed Campaigns (In Planning & Fundraising)",
     "title": "Strategic Philanthropic Projects",
-    "subtitle": "Our campaign aims for $40M USD, with $19.5M focused on urgent immediate needs. You may designate your contribution to a specific initiative.",
+    "subtitle": "These priority initiatives represent the hospital's strategic objectives and aspirational vision. The Friends Association is actively seeking founding philanthropic partners to bring them to fruition.",
     "goalLabel": "Funding Target",
     "raisedLabel": "Raised So Far",
     "urgentBadge": "Urgent Priority",
@@ -131,27 +131,27 @@ export const en = {
     "p1": "Founded in 1980 through the visionary philanthropy of British benefactor Lady Edith Wolfson and the Wolfson Foundation, the hospital serves as an academic teaching medical center affiliated with Tel Aviv University and stands as a pivotal pillar in Israel’s civil resilience and emergency preparedness.",
     "quote": "“The wellbeing of the soul can only be obtained after that of the body has been secured.”",
     "quoteAuthor": "Maimonides (Rambam), The Guide for the Perplexed",
-    "historyNote": "Since 1983, the non-profit Friends Association has operated under fully volunteer leadership from prominent civic, legal, and business figures.",
+    "historyNote": "The association's Board of Directors serves entirely on a voluntary basis, comprising prominent civic, legal, and medical figures, supported by dedicated professional administrative staff.",
     "historyPhotoCaption": "Nursing Legacy: Devoted staff caring for patients in the early founding years",
     "transparencyTitle": "Governance, Transparency & Tax Benefits",
-    "transparencyLead": "The Friends Association operates under strict non-profit corporate governance, certified with the Israeli Certificate of Proper Management and recognized for tax deductions in Israel, the US, UK, and Europe.",
-    "docSection46Title": "Section 46 Income Tax Exemption (Valid to 31.12.2026)",
-    "docSection46Desc": "Recognized as an approved public institution for tax-deductible contributions under Section 46 of the Israeli Income Tax Ordinance (#580022507, certified since 1986).",
+    "transparencyLead": "The Friends Association operates under strict non-profit corporate governance, certified with the Israeli Certificate of Proper Management and recognized for tax deductions in Israel, and in the US via JGive.",
+    "docSection46Title": "Section 46 Income Tax Exemption (Valid to 31.12.2029)",
+    "docSection46Desc": "Recognized as an approved public institution for tax-deductible contributions under Section 46 of the Israeli Income Tax Ordinance (#580022507, valid to 31.12.2029).",
     "docSection46Btn": "View / Download Section 46 Certificate (PDF)",
-    "docNihulTakinTitle": "Certificate of Proper Management (2025–2026)",
+    "docNihulTakinTitle": "Certificate of Proper Management",
     "docNihulTakinDesc": "Official certification issued by the Israeli Corporations and Non-Profits Authority (Ministry of Justice), verifying pristine fiduciary transparency.",
     "docNihulTakinBtn": "View Official Guidestar Registry Profile",
     "docBylawsTitle": "Association Bylaws & Charter",
     "docBylawsDesc": "Official charter and governance articles certified by the Israeli Registrar of Associations defining non-profit mandates and board protocols.",
     "docBylawsBtn": "View Official Registry & Bylaws",
-    "docInternationalTitle": "US 501(c)(3), UK, Canada & European Tax Deductions",
-    "docInternationalDesc": "Gifts are eligible for income tax deductions in the US via 501(c)(3) partners (such as PEF Israel Endowments), and in the UK, Canada, and Europe via JGive.",
+    "docInternationalTitle": "US 501(c)(3) & International Tax Deductions via JGive",
+    "docInternationalDesc": "Contributions are eligible for US 501(c)(3) tax deductions and international tax efficiency processed securely through our official giving partner platform JGive.",
     "docInternationalBtn": "Donate with International Tax Receipt via JGive",
     "docRegulationsTitle": "Official Donation Regulations & Ethics Code",
     "docRegulationsDesc": "Formal donation handling procedures and donor confidentiality ethics ratified by the Board of Directors.",
     "docRegulationsBtn": "View Donation Regulations (PDF)",
     "leadershipTitle": "Board of Directors & Association Governance",
-    "leadershipSub": "The Association is led on a purely voluntary basis by distinguished leaders from commerce, healthcare, law, and civil society.",
+    "leadershipSub": "The Association is led on a purely voluntary basis by the Board of Directors, supported by dedicated professional administrative staff.",
     "chairmanRole": "Chairman of the Board & Executive Committee",
     "chairmanName": "Isaac (Tzachi) Beeri",
     "chairmanBadge": "Board Chairman",
@@ -187,7 +187,7 @@ export const en = {
   },
   "donateModal": {
     "title": "Support the Friends of Wolfson Medical Center",
-    "subtitle": "Tax-deductible in Israel (Section 46), the US (501c3), UK, Canada & Europe",
+    "subtitle": "Tax-deductible in Israel (Section 46) and the US (501c3) via JGive",
     "oneTime": "One-Time Donation",
     "monthly": "Monthly Sustaining Gift",
     "selectAmount": "Select Gift Amount",
@@ -199,10 +199,10 @@ export const en = {
     "tabBank": "Direct Bank Wire Transfer",
     "jgiveBadge": "Official Giving Platform",
     "jgiveTitle": "Instant Credit Card, Bit & Apple Pay Giving",
-    "jgiveDesc": "Donations are processed with top-tier banking security. Official tax receipts (Israeli Section 46, US 501(c)(3), UK Gift Aid) are generated instantly and sent to your email.",
+    "jgiveDesc": "Donations are processed with top-tier banking security. Official tax receipts (Israeli Section 46, US 501(c)(3)) are generated instantly and sent to your email.",
     "jgiveBtn": "Continue to Secure JGive Checkout",
-    "badgeSec46": "Section 46 Approved",
-    "badge501c3": "US 501(c)(3) Deductible",
+    "badgeSec46": "Section 46 Valid to 2029",
+    "badge501c3": "US 501(c)(3) via JGive",
     "badgeProperManagement": "Proper Management Certified",
     "badgeDigitalWallets": "Bit, Apple Pay & Google Pay Supported",
     "bankDetailsTitle": "Official Bank Transfer Details",
@@ -261,7 +261,7 @@ export const en = {
   },
   "footer": {
     "rights": "All rights reserved © 2026 Society of Friends of the Edith Wolfson Medical Center (Amutah #580022507).",
-    "taxNotice": "Approved public institution for donations under Section 46 of the Israeli Income Tax Ordinance and holder of the 2025–2026 Certificate of Proper Management.",
-    "usNotice": "Donations are tax-deductible in the US (501c3), UK, Canada, and Europe via official philanthropic partners and JGive."
+    "taxNotice": "Approved public institution under Section 46 of the Israeli Income Tax Ordinance (valid to 31.12.2029) and certified for Proper Management.",
+    "usNotice": "US 501(c)(3) and international tax-deductible contributions are securely processed via official partner platform JGive."
   }
 };

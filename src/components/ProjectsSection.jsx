@@ -44,6 +44,28 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
             {pText.subtitle}
           </p>
 
+          {/* Aspirations & Objectives Disclaimer Banner */}
+          <div className="mt-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-amber-900 text-xs sm:text-sm leading-relaxed text-start flex items-start gap-3 shadow-sm">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0 mt-1.5 animate-pulse"></span>
+            <div>
+              <strong className="block font-bold mb-0.5 text-amber-950">
+                {lang === 'he' ? 'יעדי פיתוח ושאיפות אסטרטגיות בתכנון וגיוס' : (lang === 'fr' ? 'Objectifs stratégiques & projets en phase de levée de fonds' : (lang === 'de' ? 'Strategische Entwicklungsziele in Planung & Mittelbeschaffung' : 'Strategic Development Objectives & Proposed Campaigns'))}
+              </strong>
+              <span>
+                {lang === 'he' 
+                  ? 'הפרויקטים המוצגים להלן מהווים את חזון הדגל ויעדי הפיתוח הקריטיים של המרכז הרפואי וולפסון. העמותה מגייסת שותפויות פילנתרופיות מייסדות על מנת להביאם לכדי מימוש מלא.'
+                  : (lang === 'fr'
+                    ? 'Les projets ci-dessous représentent la vision d\'avenir et les ambitions majeures du Centre Médical Wolfson. L\'Association recherche activement des partenaires fondateurs pour leur concrétisation.'
+                    : (lang === 'de'
+                      ? 'Die nachfolgenden Projekte verkörpern die strategischen Zukunftsziele des Wolfson Medical Centers. Die Fördergesellschaft wirbt um philanthropische Partnerschaften zu deren Verwirklichung.'
+                      : 'The initiatives below represent the flagship vision and priority strategic objectives of Edith Wolfson Medical Center. The Friends Association is actively seeking founding philanthropic partners to bring them into full reality.'
+                    )
+                  )
+                }
+              </span>
+            </div>
+          </div>
+
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
             {filterButtons.map((btn) => (
@@ -65,7 +87,6 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((item) => {
-            const percent = Math.min(100, Math.round((item.raised / item.goal) * 100));
             const itemTitle = item.title[lang] || item.title.en;
             const itemCategory = item.category[lang] || item.category.en;
             const itemSummary = item.summary[lang] || item.summary.en;
@@ -98,17 +119,13 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
                       )}
                     </div>
 
-                    {/* Funding Progress Bar Over Image */}
+                    {/* Status & Funding Goal Badge Over Image */}
                     <div className="absolute bottom-3 inset-x-4 text-white">
-                      <div className="flex justify-between items-end text-xs font-semibold mb-1">
-                        <span>{percent}% {pText.raisedLabel}</span>
-                        <span className="text-amber-300 font-bold">{formatCurrency(item.goal)}</span>
-                      </div>
-                      <div className="w-full h-2 bg-white/30 rounded-full overflow-hidden backdrop-blur-sm">
-                        <div
-                          className="h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full transition-all duration-1000"
-                          style={{ width: `${percent}%` }}
-                        ></div>
+                      <div className="flex justify-between items-center bg-slate-950/80 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10">
+                        <span className="text-[11px] font-bold text-sky-300">
+                          {lang === 'he' ? 'יעד תקציבי נדרש' : (lang === 'fr' ? 'Objectif de Financement' : (lang === 'de' ? 'Finanzierungsziel' : 'Funding Target'))}
+                        </span>
+                        <span className="text-amber-300 font-black text-sm">{formatCurrency(item.goal)}</span>
                       </div>
                     </div>
                   </div>
@@ -137,9 +154,12 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
                 {/* Card Footer CTA */}
                 <div className="p-6 pt-0 border-t border-slate-100 mt-2">
                   <div className="flex items-center justify-between py-3 text-xs text-slate-500 font-medium">
-                    <span>{pText.raisedLabel}: <strong className="text-slate-800">{formatCurrency(item.raised)}</strong></span>
+                    <span className="inline-flex items-center gap-1.5 text-slate-700 font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                      {lang === 'he' ? 'פרויקט בתכנון וגיוס שותפים' : (lang === 'fr' ? 'Projet en planification' : (lang === 'de' ? 'Projekt in Planung' : 'Proposed Strategic Initiative'))}
+                    </span>
                     {item.annualOp && (
-                      <span className="text-slate-400">+{formatCurrency(item.annualOp)}/yr</span>
+                      <span className="text-slate-400 font-mono text-[11px]">+{formatCurrency(item.annualOp)}/yr</span>
                     )}
                   </div>
                   <button

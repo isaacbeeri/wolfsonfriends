@@ -19,7 +19,7 @@ export const de = {
   },
   "hero": {
     "badge": "Medizinische Lebensader für über 700.000 Menschen",
-    "taxBadge": "§ 46 EStG | US 501(c)(3) | Geprüfte Vereinsführung 2025–2026",
+    "taxBadge": "§ 46 EStG (bis 2029) | US 501(c)(3) über JGive | Geprüfte Führung",
     "title": "Gesundheitliche Chancengleichheit schaffen. Leben retten mit Würde.",
     "subtitle": "Das Wolfson Medical Center in Holon versorgt über 700.000 Einwohner in Holon, Bat Yam, Jaffa und Süd-Tel Aviv. Wir setzen uns mit Entschlossenheit dafür ein, dass jeder Mensch Zugang zu Spitzenmedizin, modernster Technologie und geschützten Klinikeinrichtungen erhält — unabhängig von sozialer Herkunft.",
     "ctaDonate": "Lebensrettende Projekte unterstützen",
@@ -67,32 +67,32 @@ export const de = {
   "videoSection": {
     "badge": "Exklusives Video",
     "title": "Mobiles PET-CT: Das onkologische Diagnosegefälle schließen",
-    "subtitle": "Erfahren Sie, wie eine mobile High-End-Scannereinheit lebensbedrohliche Wartezeiten von 6 Wochen auf nur 7 Tage verkürzt.",
+    "subtitle": "Erfahren Sie, wie eine mobile High-End-Scannereinheit lebensrettende onkologische Frühdiagnostik direkt in die Gemeinschaft bringt.",
     "duration": "01:30 Min.",
-    "keyInsight1": "Verkürzt lebensnotwendige Krebsdiagnose-Wartezeiten von 6 Wochen auf 7 Tage",
+    "keyInsight1": "Strategisches Ziel zur deutlichen Verkürzung der Wartezeiten auf onkologische Diagnostik und lokalen Zugang",
     "keyInsight2": "Direkte Erreichbarkeit für bettlägerige Patienten, Hochbetagte und Holocaust-Überlebende",
-    "keyInsight3": "Spendenziel von $3,8M USD zur Finanzierung des Spezialfahrzeugs, Scanners und Betriebs",
+    "keyInsight3": "Spendenziel von 2,2 Mio. USD zur Finanzierung des Spezialfahrzeugs, Scanners und Betriebs",
     "supportProject": "Projekt Mobiles PET-CT fördern"
   },
   "disparity": {
     "badge": "Nationale Realität",
     "title": "Ein Versorgungsgefälle, das Philanthropie überwinden muss",
-    "subtitle": "Obwohl Wolfson über die Hälfte des Patientenaufkommens der größten israelischen Universitätskliniken bewältigt, operiert es mit nur einem Bruchteil deren Budgets und Spenden.",
+    "subtitle": "Offizielle Vergleichsdaten aus 2024 mit dem Sheba Medical Center (Tel HaShomer) verdeutlichen die strukturelle Ungleichheit bei Budget, Geräten und Spenden im Verhältnis zur versorgten Bevölkerung.",
     "metric": "Schlüsselindikator",
     "wolfson": "Edith Wolfson Medical Center",
-    "sheba": "Zentrale Kliniken Tel Aviv (Ichilov / Sheba)",
+    "sheba": "Sheba Medical Center, Tel HaShomer (Daten 2024)",
     "ratio": "Gefälle-Verhältnis",
     "row1": {
       "label": "Offizielles jährliches Betriebsbudget",
       "w": "$245 Millionen USD",
       "s": "$1,08 Milliarden USD",
-      "r": "Wolfson wirtschaftet mit nur 23%"
+      "r": "Wolfson wirtschaftet mit nur 23% (4,4-mal weniger)"
     },
     "row2": {
       "label": "Jährliches philanthropisches Spendenaufkommen",
       "w": "< $5,5 Millionen USD",
       "s": "> $41,4 Millionen USD",
-      "r": "7,5-mal höher in den zentralen Kliniken"
+      "r": "7,5-mal höher am Sheba"
     },
     "row3": {
       "label": "Robotische Chirurgiesysteme (Da Vinci)",
@@ -101,17 +101,17 @@ export const de = {
       "r": "Dringend zu schließende Technologielücke"
     },
     "row4": {
-      "label": "Unmittelbar versorgte Bevölkerung",
+      "label": "Direktes Einzugsgebiet der Bevölkerung",
       "w": "700.000 Einwohner",
       "s": "1.200.000 Einwohner",
-      "r": "Über 58% des Patientenvolumens"
+      "r": "1,7-facher Unterschied (über 58 % der Einzugsgröße)"
     },
     "callout": "Ihre Spende für Wolfson erzielt die höchste unmittelbare Wirkung in Israel. Hier schließt jeder Beitrag direkt die Kluft zwischen Leben und Tod."
   },
   "projectsSection": {
-    "badge": "Dringliche Prioritäten 2025–2028",
+    "badge": "Strategische Ziele & Geplante Kampagnen (In Planung & Mittelbeschaffung)",
     "title": "Strategische Förderprojekte",
-    "subtitle": "Unsere Kampagne zielt auf ein Gesamtvolumen von $40M USD ab, davon $19.5M für unmittelbare Akutbedarfe. Sie können Ihre Spende zweckgebunden widmen.",
+    "subtitle": "Diese vorrangigen Initiativen verkörpern die strategischen Ziele und Visionen des Krankenhauses. Die Freunde-Vereinigung sucht aktiv philanthropische Gründungspartner für deren Realisierung.",
     "goalLabel": "Finanzierungsziel",
     "raisedLabel": "Bisher eingeworben",
     "urgentBadge": "Höchste Dringlichkeit",
@@ -131,27 +131,27 @@ export const de = {
     "p1": "Gegründet im Jahr 1980 durch die visionäre Philanthropie von Lady Edith Wolfson und der Wolfson Foundation, ist das Klinikum akademisches Lehrkrankenhaus der Universität Tel Aviv und bildet ein zentrales Rückgrat der nationalen Notfall- und Krisenvorsorge.",
     "quote": "„Das Wohl der Seele kann erst erlangt werden, wenn das des Körpers gesichert ist.“",
     "quoteAuthor": "Maimonides (Rambam), Führer der Unschlüssigen",
-    "historyNote": "Seit 1983 wird die gemeinnützige Gesellschaft vollständig ehrenamtlich von Persönlichkeiten aus Wirtschaft, Wissenschaft und Justiz geführt.",
+    "historyNote": "Der Vorstand der Vereinigung ist vollständig ehrenamtlich tätig und vereint führende Persönlichkeiten, unterstützt von einem engagierten professionellen Verwaltungsteam.",
     "historyPhotoCaption": "Pflege-Erbe: Hingebungsvolles Pflegepersonal in den Gründerjahren des Klinikums",
     "transparencyTitle": "Transparenz, Führung & Steuervorteile",
-    "transparencyLead": "Die Fördergesellschaft arbeitet nach strengsten Corporate-Governance-Grundsätzen, ist Inhaberin des offiziellen israelischen Gütesiegels für einwandfreie Vereinsführung und in Israel, den USA und Europa steuerbefreit anerkannt.",
-    "docSection46Title": "Steuerbefreiung nach § 46 EStG (Gültig bis 31.12.2026)",
-    "docSection46Desc": "Anerkannte gemeinnützige Körperschaft für steuerlich abzugsfähige Zuwendungen nach § 46 des israelischen Steuergesetzes (#580022507, anerkannt seit 1986).",
+    "transparencyLead": "Die Fördergesellschaft arbeitet nach strengsten Corporate-Governance-Grundsätzen, ist Inhaberin des offiziellen Gütesiegels für einwandfreie Vereinsführung und in Israel sowie in den USA über JGive steuerbegünstigt anerkannt.",
+    "docSection46Title": "Steuerbefreiung nach § 46 EStG (Gültig bis 31.12.2029)",
+    "docSection46Desc": "Anerkannte gemeinnützige Körperschaft für steuerlich abzugsfähige Zuwendungen nach § 46 des israelischen Steuergesetzes (#580022507, gültig bis 31.12.2029).",
     "docSection46Btn": "§ 46-Bescheinigung ansehen (PDF)",
-    "docNihulTakinTitle": "Gültiges Gütesiegel für ordnungsgemäße Vereinsführung (2025–2026)",
+    "docNihulTakinTitle": "Gültiges Gütesiegel für ordnungsgemäße Vereinsführung",
     "docNihulTakinDesc": "Ausgestellt durch die staatliche israelische Vereinsaufsichtsbehörde im Justizministerium, bestätigt vollständige satzungsgemäße Integrität.",
     "docNihulTakinBtn": "Offizielles Guidestar-Registerprofil ansehen",
     "docBylawsTitle": "Offizielle Vereinssatzung & Verfassung",
     "docBylawsDesc": "Die beim amtlichen Vereinsregister hinterlegte Satzung, welche die gemeinnützigen Zwecke und Leitlinien festlegt.",
     "docBylawsBtn": "Satzung im Vereinsregister einsehen",
-    "docInternationalTitle": "US 501(c)(3), UK, Kanada & Europa Steuerabzug",
-    "docInternationalDesc": "Spenden sind in den USA (über 501c3-Partner wie PEF Israel Endowments) sowie im Vereinigten Königreich, in Kanada und Europa über JGive steuerlich abzugsfähig.",
+    "docInternationalTitle": "US 501(c)(3) & Internationaler Steuerabzug über JGive",
+    "docInternationalDesc": "Zuwendungen sind in den USA (501c3) steuerlich abzugsfähig und werden sicher über unsere offizielle Partnerplattform JGive abgewickelt.",
     "docInternationalBtn": "Steuerlich absetzbar spenden über JGive",
     "docRegulationsTitle": "Offizielle Spendenordnung & Ethikkodex",
     "docRegulationsDesc": "Durch das Direktorium ratifizierte verbindliche Spendenrichtlinien zur Gewährleistung von Zweckbindung und Spendertransparenz.",
     "docRegulationsBtn": "Spendenordnung einsehen (PDF)",
     "leadershipTitle": "Vorstand & Vereinsführung",
-    "leadershipSub": "Die Gesellschaft wird von angesehenen Vertretern aus Wirtschaft, Recht und Zivilgesellschaft ehrenamtlich geleitet.",
+    "leadershipSub": "Die Gesellschaft wird ehrenamtlich vom Vorstand geleitet, unterstützt von einem engagierten hauptamtlichen Fachteam.",
     "chairmanRole": "Vorstandsvorsitzender",
     "chairmanName": "Isaac (Tzachi) Beeri",
     "chairmanBadge": "Vorstandsvorsitzender",
@@ -187,7 +187,7 @@ export const de = {
   },
   "donateModal": {
     "title": "Die Freunde des Wolfson Medical Centers unterstützen",
-    "subtitle": "Steuerlich absetzbar in Israel (§ 46), den USA (501c3), UK, Kanada & Europa",
+    "subtitle": "Steuerlich absetzbar in Israel (§ 46) und den USA (501c3) über JGive",
     "oneTime": "Einmalige Zuwendung",
     "monthly": "Monatlicher Förderbeitrag",
     "selectAmount": "Spendenbetrag wählen",
@@ -199,10 +199,10 @@ export const de = {
     "tabBank": "Direkte Banküberweisung",
     "jgiveBadge": "Offizielle Förderplattform",
     "jgiveTitle": "Sofortspende via Kreditkarte, Bit, Apple & Google Pay",
-    "jgiveDesc": "Ihre Spende wird nach höchsten Bankensicherheitsstandards verarbeitet. Die offizielle Spendenquittung wird automatisch erstellt und an Ihre E-Mail gesendet.",
+    "jgiveDesc": "Ihre Spende wird nach höchsten Bankensicherheitsstandards verarbeitet. Die offizielle Spendenquittung (§ 46 Israel, 501(c)(3) USA) wird automatisch erstellt und an Ihre E-Mail gesendet.",
     "jgiveBtn": "Weiter zur sicheren JGive-Spendenseite",
-    "badgeSec46": "Anerkannt nach § 46 EStG",
-    "badge501c3": "US 501(c)(3) Abzugsfähig",
+    "badgeSec46": "§ 46 EStG Gültig bis 2029",
+    "badge501c3": "US 501(c)(3) über JGive",
     "badgeProperManagement": "Geprüfte Vereinsführung",
     "badgeDigitalWallets": "Bit, Apple Pay & Google Pay",
     "bankDetailsTitle": "Offizielle Bankverbindung für Überweisungen",
@@ -261,7 +261,7 @@ export const de = {
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten © 2026 Gesellschaft der Freunde des Edith Wolfson Medical Centers (Verein #580022507).",
-    "taxNotice": "Anerkannte gemeinnützige Körperschaft nach § 46 des israelischen Steuergesetzes und Inhaberin des Fühungszeugnisses für ordnungsgemäße Vereinsführung 2025–2026.",
-    "usNotice": "Spenden sind in den USA (501c3), im UK, in Kanada und Europa über offizielle Partnerorganisationen und JGive steuerabzugsfähig."
+    "taxNotice": "Anerkannte gemeinnützige Körperschaft nach § 46 des israelischen Steuergesetzes (gültig bis 31.12.2029) und Inhaberin des Fühungszeugnisses für ordnungsgemäße Vereinsführung.",
+    "usNotice": "Spenden sind in den USA (501c3) und international über die offizielle Partnerplattform JGive steuerabzugsfähig."
   }
 };

@@ -108,7 +108,7 @@ export function App() {
             <VideoShowcase t={t} onOpenDonate={handleOpenDonate} />
             <AboutAndLeadership t={t} onOpenDonate={handleOpenDonate} lang={lang} />
             <CampusMapSection t={t} />
-            <ContactSection t={t} />
+            <ContactSection t={t} lang={lang} />
           </>
         )}
       </main>
