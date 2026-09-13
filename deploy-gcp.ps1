@@ -1,18 +1,18 @@
 # Google Cloud Run Deployment Script for FWMC Website
 # Project: oia-anti (or customized)
-# Region: me-west1 (Tel Aviv, Israel) or europe-west1
+# Region: europe-west1 (Primary production mapped to wolfsonfriends.com)
 
 param (
     [string]$ProjectId = "wolfsonfriends",
     [string]$ServiceName = "fwmc-friends-site",
-    [string]$Region = "me-west1"
+    [string]$Region = "europe-west1"
 )
 
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host " Deploying Wolfson Friends Medical Center Website to GCP  " -ForegroundColor Green
 Write-Host " Project:     $ProjectId" -ForegroundColor Yellow
 Write-Host " Service:     $ServiceName" -ForegroundColor Yellow
-Write-Host " Region:      $Region (Tel Aviv)" -ForegroundColor Yellow
+Write-Host " Region:      $Region (europe-west1 - wolfsonfriends.com)" -ForegroundColor Yellow
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 # Set active project
