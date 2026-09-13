@@ -171,7 +171,7 @@ export const en = {
     "legalCounselRole": "Official Legal Counsel to the Friends Association",
     "legalCounselLink": "https://www.goldfarb.com/en/",
     "honoredMembersTitle": "Distinguished Members & Past Chairs",
-    "honoredMembersDesc": "Eli Beeri of blessed memory (Past Chair), Ben-Hur Yerushalmi (Past Chair), Shlomo Recht (Past Chair), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark (CPA), Shabtai Salins (CPA)."
+    "honoredMembersDesc": "Ben-Hur Yerushalmi (Past Chair), Eli Beeri of blessed memory (Past Chair), Shlomo Recht (Past Chair), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark (CPA), Shabtai Salins (CPA)."
   },
   "campus": {
     "badge": "Medical Campus Overview",

@@ -171,7 +171,7 @@ export const de = {
     "legalCounselRole": "Offizielle Rechtsberatung der Fördergesellschaft",
     "legalCounselLink": "https://www.goldfarb.com/en/",
     "honoredMembersTitle": "Ehrenmitglieder & Ehemalige Vorsitzende",
-    "honoredMembersDesc": "Eli Beeri s.A. (Ehemaliger Vorsitzender), Ben-Hur Yerushalmi (Ehrenvorsitzender), Shlomo Recht (Ehrenvorsitzender), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark (CPA), Shabtai Salins (CPA)."
+    "honoredMembersDesc": "Ben-Hur Yerushalmi (Ehrenvorsitzender), Eli Beeri s.A. (Ehemaliger Vorsitzender), Shlomo Recht (Ehrenvorsitzender), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark (CPA), Shabtai Salins (CPA)."
   },
   "campus": {
     "badge": "Klinikgelände",

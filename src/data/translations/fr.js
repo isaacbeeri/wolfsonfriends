@@ -171,7 +171,7 @@ export const fr = {
     "legalCounselRole": "Conseillers juridiques officiels de l'Association",
     "legalCounselLink": "https://www.goldfarb.com/en/",
     "honoredMembersTitle": "Membres d'Honneur & Anciens Présidents",
-    "honoredMembersDesc": "Eli Beeri z״l (Ancien Président), Ben-Hur Yerushalmi (Ancien Président), Shlomo Recht (Ancien Président), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark, Shabtai Salins."
+    "honoredMembersDesc": "Ben-Hur Yerushalmi (Ancien Président), Eli Beeri z״l (Ancien Président), Shlomo Recht (Ancien Président), Rosette Hinawi, Dr. Walid Abulafia, Ilana Liberman, Ricky Zeevi, Abraham Kotler, Yona Alon, Zohar Noymark, Shabtai Salins."
   },
   "campus": {
     "badge": "Campus Hospitalier",
