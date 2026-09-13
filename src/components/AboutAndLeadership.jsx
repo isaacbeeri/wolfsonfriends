@@ -1,7 +1,6 @@
 import React from "react";
 import { 
   ShieldCheck, 
-  FileText, 
   ExternalLink, 
   Download, 
   CheckCircle2, 
@@ -136,8 +135,8 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
               </p>
             </div>
 
-            {/* Official Documents Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Official Documents Cards Grid - Section 46 & Proper Management */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               
               {/* Card 1: Section 46 Certificate */}
               <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
@@ -196,36 +195,6 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                   <span>{a.docNihulTakinBtn}</span>
                 </a>
               </div>
-
-              {/* Card 3: Association Bylaws */}
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                      <FileText className="w-5 h-5" />
-                    </span>
-                    <span className="text-[11px] font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
-                      {isHe ? "תקנון מאושר" : "Certified Charter"}
-                    </span>
-                  </div>
-                  <h4 className="font-bold text-base text-slate-900 mb-2">
-                    {a.docBylawsTitle}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-6">
-                    {a.docBylawsDesc}
-                  </p>
-                </div>
-                <a
-                  href="https://www.guidestar.org.il/organization/580022507"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-xs border border-blue-300 transition-colors"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>{a.docBylawsBtn}</span>
-                </a>
-              </div>
-
 
             </div>
           </div>
