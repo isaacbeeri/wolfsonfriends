@@ -128,7 +128,7 @@ export const fr = {
     "badge": "L'Association & Gouvernance",
     "title": "À Propos des Amis du Centre Médical Edith Wolfson",
     "lead": "L'Association des Amis du Centre Médical Edith Wolfson (Amouta #580022507) a été fondée en 1983 pour accélérer la modernisation de l'hôpital, équiper les services en matériel de haute technologie et soutenir les équipes médicales dévouées.",
-    "p1": "Inauguré en 1980 grâce à la vision de Lady Edith Wolfson et de la Fondation Wolfson de Londres, le centre hospitalier universitaire est affilié à la Faculté de Médecine de l'Université de Tel Aviv et joue un rôle de premier plan dans la résilience civile nationale.",
+    "p1": "Inauguré en 1980 grâce à la générosité de la philanthrope britannique Lady Edith Wolfson, de son époux Sir Isaac Wolfson et de la Fondation Wolfson, le centre hospitalier universitaire est affilié à la Faculté de Médecine de l'Université de Tel Aviv et joue un rôle de premier plan dans la résilience civile nationale.",
     "quote": "« Le bien-être de l'âme ne peut être atteint qu'après avoir assuré celui du corps. »",
     "quoteAuthor": "Maïmonide (Rambam), Le Guide des Égarés",
     "historyNote": "Le conseil d'administration œuvre à titre entièrement bénévole, réunissant des personnalités du monde civil, juridique et médical, appuyé par une équipe administrative professionnelle dévouée.",

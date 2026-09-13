@@ -128,7 +128,7 @@ export const de = {
     "badge": "Über Uns & Vorstand",
     "title": "Über die Gesellschaft der Freunde des Edith Wolfson Medical Centers",
     "lead": "Die Gesellschaft der Freunde des Edith Wolfson Medical Centers (Verein #580022507) wurde 1983 gegründet, um den Ausbau der Klinik, modernste Gerätetechnik und das engagierte medizinische Personal zu fördern.",
-    "p1": "Gegründet im Jahr 1980 durch die visionäre Philanthropie von Lady Edith Wolfson und der Wolfson Foundation, ist das Klinikum akademisches Lehrkrankenhaus der Universität Tel Aviv und bildet ein zentrales Rückgrat der nationalen Notfall- und Krisenvorsorge.",
+    "p1": "Gegründet im Jahr 1980 durch die visionäre Philanthropie von Lady Edith Wolfson, ihres Ehemanns Sir Isaac Wolfson und der Wolfson Foundation, ist das Klinikum akademisches Lehrkrankenhaus der Universität Tel Aviv und bildet ein zentrales Rückgrat der nationalen Notfall- und Krisenvorsorge.",
     "quote": "„Das Wohl der Seele kann erst erlangt werden, wenn das des Körpers gesichert ist.“",
     "quoteAuthor": "Maimonides (Rambam), Führer der Unschlüssigen",
     "historyNote": "Der Vorstand der Vereinigung ist vollständig ehrenamtlich tätig und vereint führende Persönlichkeiten, unterstützt von einem engagierten professionellen Verwaltungsteam.",

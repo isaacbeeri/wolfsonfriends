@@ -128,7 +128,7 @@ export const en = {
     "badge": "About & Leadership",
     "title": "About the Friends of Edith Wolfson Medical Center",
     "lead": "The Society of Friends of the Edith Wolfson Medical Center (Registered Amutah #580022507) was established in 1983 to advance hospital development, acquire state-of-the-art medical technology, and support compassionate clinical staff.",
-    "p1": "Founded in 1980 through the visionary philanthropy of British benefactor Lady Edith Wolfson and the Wolfson Foundation, the hospital serves as an academic teaching medical center affiliated with Tel Aviv University and stands as a pivotal pillar in Israel’s civil resilience and emergency preparedness.",
+    "p1": "Founded in 1980 through the visionary philanthropy of British benefactor Lady Edith Wolfson, her husband Sir Isaac Wolfson, and the Wolfson Foundation, the hospital serves as an academic teaching medical center affiliated with Tel Aviv University and stands as a pivotal pillar in Israel’s civil resilience and emergency preparedness.",
     "quote": "“The wellbeing of the soul can only be obtained after that of the body has been secured.”",
     "quoteAuthor": "Maimonides (Rambam), The Guide for the Perplexed",
     "historyNote": "The association's Board of Directors serves entirely on a voluntary basis, comprising prominent civic, legal, and medical figures, supported by dedicated professional administrative staff.",
