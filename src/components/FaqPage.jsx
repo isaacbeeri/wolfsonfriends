@@ -186,8 +186,10 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
                    "100% of Donations"))}
                 </strong>
                 <span className="text-slate-400 text-xs">
-                  {lang === "he" ? "מועברות ישירות לרכישת מכשור רפואי, שדרוג מחלקות ומחקר קליני." : 
-                   "Directly channeled to critical equipment purchases, patient ward upgrades, and clinical research."}
+                  {lang === "he" ? "מועברות בהתאם לבקשת התורם, בין השאר לרכישת מכשור רפואי, פעילויות לצוותים, לשדרוג מחלקות ומחקר קליני." : 
+                   (lang === "fr" ? "Alloués selon la volonté du donateur, notamment pour l'équipement médical, le soutien aux équipes, la modernisation des services et la recherche." :
+                   (lang === "de" ? "Zweckgebunden nach Wunsch des Spenders verwendet, u. a. für medizinische Geräte, Teamförderung, Stationsausbau und Forschung." :
+                   "Allocated according to donor intent, including medical equipment, staff support initiatives, ward modernization, and clinical research."))}
                 </span>
               </div>
             </div>

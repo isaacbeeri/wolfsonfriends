@@ -162,7 +162,7 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{isHe ? "100% מהתרומות מועברות ישירות לציוד רפואי, שדרוג מחלקות ומחקר." : "100% of donations are directed straight to clinical equipment and care."}</span>
+                      <span>{isHe ? "100% מהתרומות מועברות בהתאם לבקשת התורם, בין השאר לרכישת מכשור רפואי, פעילויות לצוותים, לשדרוג מחלקות ומחקר קליני." : "100% of donations are allocated according to donor intent, including medical equipment, staff support, ward modernization, and clinical research."}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
