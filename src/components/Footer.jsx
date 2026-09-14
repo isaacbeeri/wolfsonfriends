@@ -20,7 +20,7 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
   };
 
   return (
-    <footer className='bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800'>
+    <footer role="contentinfo" className='bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         
         {/* Top Grid */}
@@ -47,6 +47,7 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
             <div className='pt-2 flex flex-wrap gap-2'>
               <button
                 onClick={() => onOpenDonate()}
+                aria-label={isHe ? 'תרומה לעמותת ידידי המרכז הרפואי וולפסון' : 'Donate to Friends of Edith Wolfson'}
                 className='inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs shadow-md transition-all'
               >
                 <Heart className='w-3.5 h-3.5 fill-white' />
@@ -57,6 +58,7 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
                 href='https://www.jgive.com/new/en/usd/charity-organizations/4565/donate/amount'
                 target='_blank'
                 rel='noopener noreferrer'
+                aria-label={isHe ? 'מעבר לקמפיין התרומות באתר JGive (ייפתח בחלון חדש)' : 'Donate via JGive campaign (opens in new window)'}
                 className='inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-400/30 text-xs font-bold transition-colors'
               >
                 <Zap className='w-3.5 h-3.5 text-rose-400' />
@@ -66,8 +68,12 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
             </div>
           </div>
 
-          {/* Col 2: Navigation Links */}
-          <div className='lg:col-span-3 space-y-3'>
+          {/* Col 2: Navigation Links (WCAG 2.1 SC 1.3.1 / 2.4.1) */}
+          <nav 
+            role="navigation" 
+            aria-label={isHe ? 'קישורים מהירים בתחתית העמוד' : 'Footer Quick Links'}
+            className='lg:col-span-3 space-y-3'
+          >
             <h4 className='text-xs font-bold text-white uppercase tracking-wider'>
               {isHe ? 'קישורים מהירים' : 'Quick Navigation'}
             </h4>
@@ -93,19 +99,21 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
                 </a>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Col 3: Languages & Official Documents */}
           <div className='lg:col-span-2 space-y-3'>
             <h4 className='text-xs font-bold text-white uppercase tracking-wider'>
               {isHe ? 'שפות / Languages' : 'Languages'}
             </h4>
-            <ul className='space-y-1.5 text-xs text-slate-400 font-medium'>
-              <li><button onClick={() => setLang('he')} className='hover:text-sky-400 transition-colors'>🇮🇱 עברית</button></li>
-              <li><button onClick={() => setLang('en')} className='hover:text-sky-400 transition-colors'>🇺🇸 English</button></li>
-              <li><button onClick={() => setLang('fr')} className='hover:text-sky-400 transition-colors'>🇫🇷 Français</button></li>
-              <li><button onClick={() => setLang('de')} className='hover:text-sky-400 transition-colors'>🇩🇪 Deutsch</button></li>
-            </ul>
+            <nav role="navigation" aria-label={isHe ? 'בחירת שפה בתחתית העמוד' : 'Footer Language Selector'}>
+              <ul className='space-y-1.5 text-xs text-slate-400 font-medium'>
+                <li><button onClick={() => setLang('he')} className='hover:text-sky-400 transition-colors'>🇮🇱 עברית</button></li>
+                <li><button onClick={() => setLang('en')} className='hover:text-sky-400 transition-colors'>🇺🇸 English</button></li>
+                <li><button onClick={() => setLang('fr')} className='hover:text-sky-400 transition-colors'>🇫🇷 Français</button></li>
+                <li><button onClick={() => setLang('de')} className='hover:text-sky-400 transition-colors'>🇩🇪 Deutsch</button></li>
+              </ul>
+            </nav>
 
             <h4 className='text-xs font-bold text-white uppercase tracking-wider pt-3'>
               {isHe ? 'מסמכים רשמיים' : 'Documents'}

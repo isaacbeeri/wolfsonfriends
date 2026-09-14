@@ -13,5 +13,149 @@
   <body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- RTL Semantic HTML and WCAG Accessibility Remediation Script -->
+    <script>
+      (function() {
+        function remediateAccessibility() {
+          var html = document.documentElement;
+          var currentLang = html.getAttribute('lang') || 'he';
+          var isRtlLang = currentLang === 'he';
+
+          if (!html.getAttribute('lang')) {
+            html.setAttribute('lang', 'he');
+          }
+          var targetDir = isRtlLang ? 'rtl' : 'ltr';
+          if (html.getAttribute('dir') !== targetDir) {
+            html.setAttribute('dir', targetDir);
+          }
+
+          var labels = {
+            he: {
+              mainNav: 'ניווט ראשי',
+              mobileNav: 'תפריט ניווט לנייד',
+              menuNav: 'ניווט תפריט',
+              footerNav: 'ניווט קישורים מהירים',
+              donationForm: 'טופס תרומה לעמותת ידידי המרכז הרפואי וולפסון',
+              donationBtnPrefix: 'תרומה: ',
+              donationBtnFallback: 'מעבר לעמוד תרומה לעמותה'
+            },
+            en: {
+              mainNav: 'Main Navigation',
+              mobileNav: 'Mobile Navigation Menu',
+              menuNav: 'Menu Navigation',
+              footerNav: 'Quick Links Navigation',
+              donationForm: 'Donation Form - Friends of Edith Wolfson Medical Center',
+              donationBtnPrefix: 'Donate: ',
+              donationBtnFallback: 'Proceed to Wolfson donation page'
+            },
+            fr: {
+              mainNav: 'Navigation principale',
+              mobileNav: 'Menu de navigation mobile',
+              menuNav: 'Menu de navigation',
+              footerNav: 'Navigation liens rapides',
+              donationForm: 'Formulaire de don - Les Amis du Centre Médical Wolfson',
+              donationBtnPrefix: 'Faire un don: ',
+              donationBtnFallback: 'Accéder à la page de don'
+            },
+            de: {
+              mainNav: 'Hauptnavigation',
+              mobileNav: 'Mobiles Navigationsmenü',
+              menuNav: 'Menü-Navigation',
+              footerNav: 'Schnellnavigation',
+              donationForm: 'Spendenformular - Fördergesellschaft des Edith Wolfson Medical Center',
+              donationBtnPrefix: 'Spenden: ',
+              donationBtnFallback: 'Zur Spendenseite'
+            }
+          };
+          var t = labels[currentLang] || labels.he;
+
+          // Navigation Elements
+          var navElements = document.querySelectorAll('nav, .nav, .navigation, #header-menu, [class*="menu"], [class*="nav"]');
+          navElements.forEach(function(nav, index) {
+            if (nav.tagName === 'NAV' || nav.classList.contains('navigation') || nav.classList.contains('nav')) {
+              if (!nav.getAttribute('role')) {
+                nav.setAttribute('role', 'navigation');
+              }
+              if (!nav.getAttribute('aria-label')) {
+                if (index === 0) {
+                  nav.setAttribute('aria-label', t.mainNav);
+                } else if (nav.closest('footer')) {
+                  nav.setAttribute('aria-label', t.footerNav);
+                } else {
+                  nav.setAttribute('aria-label', t.mobileNav || t.menuNav);
+                }
+              }
+            }
+          });
+
+          // Donation Forms
+          var donationForms = document.querySelectorAll('form[action*="donate"], form[action*="troma"], form.donation, .donation-form, #donation-form, form[role="form"]');
+          donationForms.forEach(function(form) {
+            if (!form.getAttribute('role')) {
+              form.setAttribute('role', 'form');
+            }
+            if (!form.getAttribute('aria-label')) {
+              form.setAttribute('aria-label', t.donationForm);
+            }
+          });
+
+          // Donation Buttons
+          var donationButtons = document.querySelectorAll('a[href*="donate"], a[href*="troma"], button.donate, .donate-btn, [class*="donate"]');
+          donationButtons.forEach(function(btn) {
+            if (btn.tagName === 'A' || btn.tagName === 'BUTTON' || btn.getAttribute('role') === 'button') {
+              if (!btn.getAttribute('role')) {
+                btn.setAttribute('role', 'button');
+              }
+              var text = btn.textContent ? btn.textContent.trim() : '';
+              if (!btn.getAttribute('aria-label')) {
+                btn.setAttribute('aria-label', text ? t.donationBtnPrefix + text : t.donationBtnFallback);
+              }
+            }
+          });
+
+          // Interactive Elements
+          var interactiveElements = document.querySelectorAll('div[onclick], span[onclick], [role="button"]:not(button):not(a)');
+          interactiveElements.forEach(function(el) {
+            if (!el.getAttribute('tabindex')) {
+              el.setAttribute('tabindex', '0');
+            }
+            if (!el.getAttribute('role')) {
+              el.setAttribute('role', 'button');
+            }
+            if (!el.dataset.keyboardRemediated) {
+              el.dataset.keyboardRemediated = 'true';
+              el.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' || event.key === ' ' || event.keyCode === 13 || event.keyCode === 32) {
+                  event.preventDefault();
+                  el.click();
+                }
+              });
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', remediateAccessibility);
+        } else {
+          remediateAccessibility();
+        }
+
+        var debounceTimeout = null;
+        if (typeof MutationObserver !== 'undefined') {
+          var observer = new MutationObserver(function() {
+            if (debounceTimeout) clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(remediateAccessibility, 150);
+          });
+          var targetNode = document.body || document.documentElement;
+          if (targetNode) {
+            observer.observe(targetNode, {
+              childList: true,
+              subtree: true
+            });
+          }
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -41,7 +41,7 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
   };
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
+    <header role="banner" className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
       scrolled 
         ? "bg-white/95 backdrop-blur-md shadow-lg py-2 border-b border-slate-200" 
         : "bg-white/95 backdrop-blur-md py-3 sm:py-3.5 border-b border-slate-100"
@@ -53,7 +53,7 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
           href="#" 
           onClick={(e) => handleLinkClick(e, "#")}
           className="flex items-center shrink-0 me-6 md:me-10 lg:me-14 xl:me-16 py-0.5 group" 
-          aria-label="Home"
+          aria-label={lang === "he" ? "דף הבית - עמותת ידידי המרכז הרפואי וולפסון" : "Home - Friends of Edith Wolfson Medical Center"}
         >
           <img 
             src="/logos/logo-transparent.png" 
@@ -63,8 +63,12 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
           />
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6 text-xs xl:text-sm font-semibold text-slate-700">
+        {/* Desktop Navigation Links (WCAG 2.1 SC 1.3.1 / 2.4.1) */}
+        <nav 
+          role="navigation" 
+          aria-label={lang === "he" ? "ניווט ראשי" : (lang === "fr" ? "Navigation principale" : (lang === "de" ? "Hauptnavigation" : "Main Navigation"))}
+          className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6 text-xs xl:text-sm font-semibold text-slate-700"
+        >
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -86,7 +90,7 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
             onClick={onToggleAccessibility}
             title={t.accessibility.menuTitle}
             className="p-2.5 rounded-xl text-slate-700 hover:text-wolfson-blue hover:bg-slate-100 transition-colors border border-slate-200 flex items-center justify-center shadow-xs"
-            aria-label="Accessibility settings"
+            aria-label={lang === "he" ? "הגדרות נגישות והתאמת תצוגה" : "Accessibility display settings"}
           >
             <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
@@ -96,7 +100,9 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
             <button
               onClick={() => setLangMenuOpen(!langMenuOpen)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors shadow-xs"
+              aria-haspopup="listbox"
               aria-expanded={langMenuOpen}
+              aria-label={lang === "he" ? "בחירת שפה" : "Select language"}
             >
               <Globe className="w-4 h-4 text-wolfson-blue" />
               <span>{currentLangObj.flag} {currentLangObj.label}</span>
@@ -104,10 +110,12 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
             </button>
 
             {langMenuOpen && (
-              <div className="absolute top-full mt-2 end-0 w-44 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className="absolute top-full mt-2 end-0 w-44 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2" role="listbox">
                 {languages.map((l) => (
                   <button
                     key={l.code}
+                    role="option"
+                    aria-selected={lang === l.code}
                     onClick={() => {
                       setLang(l.code);
                       setLangMenuOpen(false);
@@ -130,6 +138,7 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
           {/* High-Converting Donate CTA Button */}
           <button
             onClick={() => onOpenDonate()}
+            aria-label={lang === "he" ? "תרומה לעמותת ידידי המרכז הרפואי וולפסון" : (lang === "fr" ? "Faire un don aux Amis de Wolfson" : (lang === "de" ? "Spenden für Freunde von Wolfson" : "Donate to Friends of Edith Wolfson"))}
             className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <Heart className="w-4 h-4 fill-white text-white animate-pulse" />
@@ -140,7 +149,8 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200"
-            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? (lang === "he" ? "סגירת תפריט ניווט" : "Close navigation menu") : (lang === "he" ? "פתיחת תפריט ניווט" : "Open navigation menu")}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -150,7 +160,11 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-2xl animate-in fade-in">
-          <nav className="flex flex-col space-y-1 font-semibold text-slate-800">
+          <nav 
+            role="navigation" 
+            aria-label={lang === "he" ? "תפריט ניווט לנייד" : "Mobile Navigation"}
+            className="flex flex-col space-y-1 font-semibold text-slate-800"
+          >
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -172,9 +186,10 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
                 setMobileMenuOpen(false);
                 onOpenDonate();
               }}
+              aria-label={lang === "he" ? "תרומה לעמותת ידידי המרכז הרפואי וולפסון" : "Donate to Friends of Edith Wolfson"}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold text-base shadow-md"
             >
-              <Heart className="w-5 h-5 fill-white" />
+              <Heart className="w-4 h-4 fill-white" />
               <span>{t.nav.donate}</span>
             </button>
           </div>

@@ -50,6 +50,7 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <button
                 onClick={() => onOpenDonate()}
+                aria-label={lang === "he" ? "מעבר לטופס תרומה לעמותת ידידי וולפסון" : "Open donation modal"}
                 className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-base shadow-lg shadow-red-900/30 hover:shadow-red-700/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 <Heart className="w-5 h-5 fill-white" />
@@ -58,6 +59,7 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
 
               <a
                 href="#projects"
+                aria-label={lang === "he" ? "גלילה למקטע פרויקטים אסטרטגיים" : "Scroll to strategic projects"}
                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-base backdrop-blur-md transition-all"
               >
                 <span>{t.hero.ctaProjects}</span>
@@ -66,6 +68,7 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
 
               <a
                 href="#video"
+                aria-label={lang === "he" ? "צפייה בסרטון המרכז הרפואי וולפסון" : "Watch Wolfson Medical Center showcase video"}
                 className="inline-flex items-center gap-2 px-4 py-3.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 transition-all text-sm font-medium"
               >
                 <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">

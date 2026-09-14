@@ -164,6 +164,7 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
                   </div>
                   <button
                     onClick={() => onOpenDonate(item)}
+                    aria-label={`${pText.supportBtn}: ${itemTitle}`}
                     className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     <Heart className="w-4 h-4 fill-white" />
