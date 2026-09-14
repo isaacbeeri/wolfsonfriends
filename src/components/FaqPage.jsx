@@ -12,7 +12,8 @@ import {
   Copy, 
   Check, 
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 
 export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
@@ -30,7 +31,7 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
   }, []);
 
   const items = useMemo(() => {
-    const list = faqData[lang] || faqData.en;
+    const list = faqData[lang] || faqData.he || [];
     if (!searchQuery.trim()) return list;
 
     const q = searchQuery.toLowerCase().trim();
@@ -40,7 +41,7 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
     );
   }, [lang, searchQuery]);
 
-  const totalCount = (faqData[lang] || []).length;
+  const totalCount = (faqData[lang] || faqData.he || []).length;
 
   const toggleItem = (id) => {
     setOpenIds(prev => {
@@ -55,7 +56,8 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
   };
 
   const handleExpandAll = () => {
-    setOpenIds(new Set(items.map(i => i.id)));
+    const list = faqData[lang] || faqData.he || [];
+    setOpenIds(new Set(list.map(i => i.id)));
   };
 
   const handleCollapseAll = () => {
@@ -128,6 +130,85 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
             {ui.subtitle}
           </p>
         </div>
+
+        {/* Donation Impact Highlights (WCAG & GEO Enhanced) */}
+        <section 
+          aria-label={isRtl ? "השפעת התרומה שלך על המרכז הרפואי וולפסון" : "Your Donation Impact"}
+          className="mb-10 p-6 sm:p-7 rounded-3xl bg-slate-800/80 border border-slate-700/80 shadow-xl"
+        >
+          <div className="flex items-center gap-2.5 mb-3 text-sky-400 font-extrabold text-base sm:text-lg">
+            <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
+            <h2>
+              {lang === "he" ? "השפעת התרומה שלך על המרכז הרפואי וולפסון" : 
+               (lang === "fr" ? "L'impact de votre don sur le Centre Médical Wolfson" : 
+               (lang === "de" ? "Die Wirkung Ihrer Spende auf das Wolfson Medical Center" : 
+               "Your Donation Impact on Edith Wolfson Medical Center"))}
+            </h2>
+          </div>
+          
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
+            {lang === "he" 
+              ? "התרומה שלך לעמותת ידידי המרכז הרפואי ע״ש אדית וולפסון מצילה חיים ומאפשרת לנו להמשיך להעניק טיפול רפואי מתקדם, שוויוני ואיכותי לכלל המטופלים. להלן נתוני ההשפעה המרכזיים שלנו:"
+              : (lang === "fr"
+                ? "Votre contribution à l'Association des Amis du Centre Médical Edith Wolfson sauve des vies et permet de prodiguer des soins d'excellence à tous les patients. Voici nos principaux indicateurs d'impact :"
+                : (lang === "de"
+                  ? "Ihre Zuwendung an den Freundeskreis rettet Leben und ermöglicht Spitzenmedizin für alle Patienten. Hier sind unsere zentralen Wirkungskennzahlen:"
+                  : "Your donation to the Friends of Edith Wolfson Medical Center saves lives and enables us to provide advanced, equitable, and compassionate care to all patients. Here are our key impact metrics:"
+                )
+              )
+            }
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/50 flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-slate-200">
+                <strong className="block font-bold text-white mb-0.5">
+                  {lang === "he" ? "120,000+ מטופלים בשנה" : 
+                   (lang === "fr" ? "120 000+ patients par an" : 
+                   (lang === "de" ? "120.000+ Patienten jährlich" : 
+                   "120,000+ Patients Annually"))}
+                </strong>
+                <span className="text-slate-400 text-xs">
+                  {lang === "he" ? "נהנים מציוד רפואי חדיש ומציל חיים שנרכש הודות לתרומות." : 
+                   "Benefiting directly from life-saving medical equipment and modernized clinical care."}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/50 flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-slate-200">
+                <strong className="block font-bold text-white mb-0.5">
+                  {lang === "he" ? "100% מהתרומות" : 
+                   (lang === "fr" ? "100% des dons" : 
+                   (lang === "de" ? "100% der Spenden" : 
+                   "100% of Donations"))}
+                </strong>
+                <span className="text-slate-400 text-xs">
+                  {lang === "he" ? "מועברות ישירות לרכישת מכשור רפואי, שדרוג מחלקות ומחקר קליני." : 
+                   "Directly channeled to critical equipment purchases, patient ward upgrades, and clinical research."}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/50 flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-slate-200">
+                <strong className="block font-bold text-white mb-0.5">
+                  {lang === "he" ? "אישור סעיף 46 (עד 2029)" : 
+                   (lang === "fr" ? "Avantages fiscaux (Article 46)" : 
+                   (lang === "de" ? "Steuerabzugsfähig (Abschnitt 46)" : 
+                   "Tax-Deductible (Sec 46 & 501c3)"))}
+                </strong>
+                <span className="text-slate-400 text-xs">
+                  {lang === "he" ? "מוכר לזיכוי מס בישראל לפי סעיף 46 ובארה״ב לפי 501(c)(3) דרך JGive." : 
+                   "Valid through 31.12.2029 in Israel, and US 501(c)(3) deduction through JGive."}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Search Bar Box */}
         <div className="mb-8">

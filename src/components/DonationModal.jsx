@@ -145,9 +145,31 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                   {d.jgiveTitle}
                 </h4>
 
-                <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed mb-5">
                   {d.jgiveDesc}
                 </p>
+
+                {/* Structured Impact Highlights (GEO & Conversion) */}
+                <div className="max-w-md mx-auto mb-5 p-3.5 sm:p-4 rounded-2xl bg-white/90 border border-slate-200/90 text-start shadow-xs">
+                  <div className="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1.5">
+                    <Heart className="w-3.5 h-3.5 text-rose-600 fill-rose-600" />
+                    <span>{isHe ? "השפעת התרומה שלך על המרכז הרפואי וולפסון:" : "Your Direct Impact on Wolfson Medical Center:"}</span>
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-slate-600 font-medium">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                      <span>{isHe ? "120,000+ מטופלים בשנה נהנים מרכש ציוד רפואי חדיש ומציל חיים." : "120,000+ patients annually benefit from life-saving medical technology."}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                      <span>{isHe ? "100% מהתרומות מועברות ישירות לציוד רפואי, שדרוג מחלקות ומחקר." : "100% of donations are directed straight to clinical equipment and care."}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                      <span>{isHe ? "אישור סעיף 46 (בתוקף עד 31.12.2029) וזיכוי מס 501(c)(3) בארה״ב דרך JGive." : "Section 46 tax deduction (valid through 31.12.2029) & US 501(c)(3) via JGive."}</span>
+                    </li>
+                  </ul>
+                </div>
 
                 {/* Pre-donation Project Selection with Auto-Copy to Clipboard */}
                 <form 

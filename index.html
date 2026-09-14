@@ -9,6 +9,96 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Structured Data (Schema.org NGO, MedicalOrganization & FAQPage) for SEO & GEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["NGO", "MedicalOrganization"],
+          "@id": "https://wolfsonfriends.com/#organization",
+          "name": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון",
+          "alternateName": [
+            "ידידי וולפסון",
+            "Friends of Edith Wolfson Medical Center"
+          ],
+          "url": "https://wolfsonfriends.com",
+          "logo": "https://wolfsonfriends.com/logos/logo-transparent.png",
+          "image": "https://wolfsonfriends.com/images/hero-aerial.jpg",
+          "description": "עמותת ידידי המרכז הרפואי וולפסון בחולון (ע״ר 580022507) פועלת משנת 1983 לפיתוח קליני, רכש ציוד רפואי מתקדם, שוויון בריאותי ותשתיות מצילות חיים.",
+          "identifier": "580022507",
+          "taxID": "580022507",
+          "email": "friends2@wmc.gov.il",
+          "telephone": "+972-3-5028211",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "רחוב הלוחמים 62",
+            "addressLocality": "חולון",
+            "postalCode": "58100",
+            "addressCountry": "IL"
+          },
+          "hasCertification": {
+            "@type": "Certification",
+            "name": "אישור מוסד ציבורי לעניין תרומות לפי סעיף 46 לפקודת מס הכנסה",
+            "description": "אישור סעיף 46 בתוקף עד 31.12.2029",
+            "url": "https://wolfsonfriends.com/documents/section-46-certificate.pdf"
+          },
+          "potentialAction": {
+            "@type": "DonateAction",
+            "name": "תרומה מאובטחת לעמותת ידידי המרכז הרפואי וולפסון",
+            "target": "https://www.jgive.com/new/he/ils/charity-organizations/4565/donate/amount"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://wolfsonfriends.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "כיצד התרומה שלי משפיעה על המרכז הרפואי וולפסון?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "התרומות לעמותת ידידי המרכז הרפואי וולפסון מועברות ישירות לרכישת ציוד רפואי מתקדם ומציל חיים (כגון ניידת PET-CT ומערכות רובוטיות), שדרוג מחלקות האשפוז והפגייה, ומימון מחקרים קליניים פורצי דרך לטובת מעל 700,000 תושבי חולון, בת ים, יפו ודרום תל אביב."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "האם התרומה לעמותה מוכרת לצורכי מס?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "כן. עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון (ע״ר 580022507) מחזיקה באישור מוסד ציבורי לעניין תרומות לפי סעיף 46 לפקודת מס הכנסה, בתוקף עד 31 בדצמבר 2029. לתורמים מארה״ב וממדינות נוספות מוכרת התרומה לצורכי מס (US 501(c)(3)) דרך פלטפורמת JGive המורשית."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "כיצד ניתן לתרום לעמותת הידידים?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ניתן לתרום באופן מאובטח אונליין בכרטיס אשראי או ארנק דיגיטלי דרך קמפיין JGive הרשמי, באמצעות העברה בנקאית ישירה לחשבון העמותה בבנק לאומי, או בפנייה ישירה למשרדי העמותה בדוא״ל friends2@wmc.gov.il או בטלפון 03-5028211."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "האם עמותת הידידים היא הגוף הרשמי לגיוס משאבים עבור בית החולים וולפסון?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "כן. עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון היא עמותה רשומה עצמאית (ע״ר 580022507) הפועלת משנת 1983 בתיאום אסטרטגי מלא עם הנהלת בית החולים, ומהווה את הזרוע הפילנתרופית הרשמית לפיתוח בית החולים."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "האם תורמים יכולים לייעד את תרומתם למחלקה או פרויקט ספציפי?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "בהחלט. ניתן לייעד תרומה לכל אחד מיעדי הפיתוח האסטרטגיים — כגון הקמת יחידת PET-CT ניידת, מרכז שד אינטגרטיבי, מונשמים מורכבים, טיפול נמרץ ילדים, או חדר ניתוח ממוגן. העמותה מבטיחה שקיפות מלאה והקצאה של 100% מהתרומה לייעודה המדויק."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
     <div id="root"></div>

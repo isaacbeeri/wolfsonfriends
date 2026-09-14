@@ -20,6 +20,11 @@ export const faqData = {
       "id": "de-4",
       "question": "Können Spenden für bestimmte Abteilungen oder Vorhaben zweckgebunden werden?",
       "answer": "Ja. Spender können ihre Beiträge gezielt für bestimmte Schwerpunkte bestimmen, beispielsweise für die Kinderklinik, Kardiologie, innovative chirurgische Verfahren oder die medizinische Forschung. Der Verein stellt gemeinsam mit der Klinikleitung sicher, dass zweckgebundene Mittel exakt dem festgelegten Ziel zugeführt werden."
+    },
+    {
+      "id": "de-5",
+      "question": "Wie kann ich an den Freundeskreis spenden?",
+      "answer": "Spenden können sicher online per Kreditkarte über die autorisierte Plattform JGive getätigt werden (mit steuerlicher Absetzbarkeit nach israelischem Abschnitt 46 und US 501(c)(3)), per direkter Banküberweisung auf das Vereinskonto oder durch Kontaktaufnahme mit unserer Geschäftsstelle unter friends2@wmc.gov.il bzw. +972-3-5028211."
     }
   ],
   "en": [
@@ -42,6 +47,11 @@ export const faqData = {
       "id": "en-4",
       "question": "Can donors designate contributions to specific departments or initiatives?",
       "answer": "Yes. Donors may earmark gifts for specific departments and initiatives, including pediatric care, cardiology, advanced robotics, medical research, or specialized facilities. The association coordinates directly with clinical leadership to ensure every designated gift is applied strictly to the donor's intended purpose."
+    },
+    {
+      "id": "en-5",
+      "question": "How can I donate to the Friends Association?",
+      "answer": "You can donate securely online by credit card or digital wallet via the authorized JGive campaign (providing Israeli Section 46 and US 501(c)(3) tax deductions), by direct bank wire transfer to the association's official account, or by contacting our offices at friends2@wmc.gov.il or +972-3-5028211."
     }
   ],
   "fr": [
@@ -64,6 +74,11 @@ export const faqData = {
       "id": "fr-4",
       "question": "Les donateurs peuvent-ils affecter leur contribution à un projet ou à un service particulier ?",
       "answer": "Absolument. Les donateurs ont la possibilité de dédier leurs fonds à des départements précis, tels que la pédiatrie, la cardiologie, la robotique médicale ou la recherche clinique. L'association veille personnellement à ce que chaque don fléché soit utilisé en parfaite conformité avec le souhait du donateur."
+    },
+    {
+      "id": "fr-5",
+      "question": "Comment puis-je faire un don à l'Association des Amis ?",
+      "answer": "Vous pouvez effectuer un don sécurisé en ligne par carte bancaire via la plateforme agréée JGive (ouvrant droit aux déductions fiscales en Israël art. 46 et aux États-Unis US 501(c)(3)), par virement bancaire direct sur le compte officiel de l'association, ou en contactant nos bureaux par e-mail à friends2@wmc.gov.il ou au +972-3-5028211."
     }
   ],
   "he": [
@@ -86,6 +101,11 @@ export const faqData = {
       "id": "he-4",
       "question": "האם תורמים יכולים לייעד את תרומתם למחלקה או פרויקט ספציפי?",
       "answer": "בהחלט. תורמים יכולים לייעד את כספי התרומה לתחום ספציפי, כגון רפואת ילדים, קרדיולוגיה, טכנולוגיה כירורגית מתקדמת, מחקר רפואי או שדרוג תשתיות. העמותה פועלת בשיתוף פעולה ישיר עם הנהלת המרכז הרפואי להבטחת מימוש מלא ומדויק של ייעוד התרומה."
+    },
+    {
+      "id": "he-5",
+      "question": "כיצד ניתן לתרום לעמותת הידידים?",
+      "answer": "ניתן לתרום באופן מאובטח אונליין בכרטיס אשראי או ארנק דיגיטלי דרך פלטפורמת JGive הרשמית (המוכרת לזיכוי מס בישראל לפי סעיף 46 ומוכרת בארה״ב לפי סעיף US 501(c)(3)), באמצעות העברה בנקאית ישירה לחשבון העמותה, או בפנייה למשרדי העמותה בדוא״ל friends2@wmc.gov.il או בטלפון 03-5028211."
     }
   ]
 };
