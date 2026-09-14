@@ -87,7 +87,7 @@ export function FaqPage({ lang = 'he', t, onBackHome, onOpenDonate }) {
   }, [lang]);
 
   return (
-    <div className="bg-slate-900 min-h-screen text-slate-100 py-8 sm:py-12 selection:bg-sky-500 selection:text-white">
+    <div className="bg-slate-900 min-h-screen text-slate-100 pt-24 sm:pt-28 pb-12 selection:bg-sky-500 selection:text-white">
       
       {/* Dynamic Schema.org structured data */}
       <script

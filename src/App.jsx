@@ -42,19 +42,6 @@ export function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      if (window.location.hash === "#faq") {
-        setCurrentView("faq");
-      } else if (window.location.hash === "" || window.location.hash === "#") {
-        setCurrentView("home");
-      }
-    };
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
   const handleOpenFaq = () => {
     setCurrentView("faq");
     window.location.hash = "faq";
@@ -68,6 +55,63 @@ export function App() {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleNavigate = (targetHash) => {
+    if (targetHash === "#faq") {
+      handleOpenFaq();
+      return;
+    }
+    
+    // Transition to home view
+    setCurrentView("home");
+    
+    if (!targetHash || targetHash === "#") {
+      if (window.location.hash) {
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+
+    // Scroll to target element with brief delay to allow home DOM to mount if coming from FAQ
+    setTimeout(() => {
+      const targetId = targetHash.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, currentView === "faq" ? 100 : 20);
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === "#faq") {
+        setCurrentView("faq");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        setCurrentView("home");
+        if (hash && hash !== "#" && hash !== "") {
+          setTimeout(() => {
+            const targetId = hash.replace("#", "");
+            const element = document.getElementById(targetId);
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
+        }
+      }
+    };
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   const handleOpenDonate = (project = null) => {
     setSelectedProject(project);
@@ -86,6 +130,8 @@ export function App() {
         lang={lang}
         setLang={setLang}
         t={t}
+        currentView={currentView}
+        onNavigate={handleNavigate}
         onOpenDonate={handleOpenDonate}
         onToggleAccessibility={() => setIsAccessibilityOpen(!isAccessibilityOpen)}
       />
@@ -121,6 +167,7 @@ export function App() {
         lang={lang}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenFaq={handleOpenFaq}
+        onNavigate={handleNavigate}
       />
 
       {/* Interactive Modals */}

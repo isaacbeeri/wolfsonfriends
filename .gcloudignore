@@ -1,0 +1,36 @@
+# This file specifies files to ignore when uploading source code to Google Cloud Build.
+.gcloudignore
+.git
+.github
+node_modules/
+dist/
+build/
+extracted_*/
+temp_*/
+*.log
+.env*
+desktop.ini
+
+# Ignore raw asset dumps in root
+*.pdf
+*.docx
+*.xlsx
+*.mp4
+*.htm
+*.cjs
+*.png
+*.jpg
+*.jpeg
+
+# Ensure essential source directories and files are included
+!public/**
+!src/**
+!Dockerfile
+!nginx.conf
+!package.json
+!package-lock.json
+!index.html
+!vite.config.js
+!tailwind.config.js
+!postcss.config.js
+!build.js

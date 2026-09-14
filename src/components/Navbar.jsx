@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Globe, Heart, Menu, X, Eye, ChevronDown } from "lucide-react";
 
-export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility }) {
+export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, onNavigate, currentView }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
@@ -33,6 +33,13 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility }
     { href: "#contact", label: t.nav.contact }
   ];
 
+  const handleLinkClick = (e, href) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(href);
+    }
+  };
+
   return (
     <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
       scrolled 
@@ -42,7 +49,12 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility }
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
         
         {/* Single Large & Clear Logo in Top Corner */}
-        <a href="#" className="flex items-center shrink-0 me-6 md:me-10 lg:me-14 xl:me-16 py-0.5 group" aria-label="Home">
+        <a 
+          href="#" 
+          onClick={(e) => handleLinkClick(e, "#")}
+          className="flex items-center shrink-0 me-6 md:me-10 lg:me-14 xl:me-16 py-0.5 group" 
+          aria-label="Home"
+        >
           <img 
             src="/logos/logo-transparent.png" 
             alt="Friends of Edith Wolfson Medical Center" 
@@ -57,6 +69,7 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility }
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className="px-2.5 xl:px-3 py-1.5 rounded-xl text-slate-700 hover:text-wolfson-blue hover:bg-sky-50/80 transition-all duration-150 relative group whitespace-nowrap"
             >
               <span>{link.label}</span>
@@ -142,7 +155,10 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility }
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleLinkClick(e, link.href);
+                }}
                 className="px-3 py-2.5 rounded-xl hover:bg-slate-100 transition-colors text-sm"
               >
                 {link.label}

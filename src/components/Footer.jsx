@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart, ShieldCheck, Mail, Phone, MapPin, ExternalLink, Zap, Download, HelpCircle } from 'lucide-react';
 
-export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq }) {
+export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq, onNavigate }) {
   const f = t.footer;
   const isHe = lang === 'he';
   const faqTitles = {
@@ -11,6 +11,13 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq 
     de: 'Häufig gestellte Fragen (FAQ)'
   };
   const faqTitle = faqTitles[lang] || faqTitles.he;
+
+  const handleNavClick = (e, href) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(href);
+    }
+  };
 
   return (
     <footer className='bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800'>
@@ -65,13 +72,13 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq 
               {isHe ? 'קישורים מהירים' : 'Quick Navigation'}
             </h4>
             <ul className='space-y-2 text-xs text-slate-400 font-medium'>
-              <li><a href='#projects' className='hover:text-white transition-colors'>{t.nav.projects}</a></li>
-              <li><a href='#disparity' className='hover:text-white transition-colors'>{t.nav.disparity}</a></li>
-              <li><a href='#video' className='hover:text-white transition-colors'>{t.nav.video}</a></li>
-              <li><a href='#about' className='hover:text-white transition-colors'>{t.nav.about}</a></li>
-              <li><a href='#transparency' className='hover:text-white transition-colors'>{t.nav.transparency}</a></li>
-              <li><a href='#campus' className='hover:text-white transition-colors'>{t.nav.map}</a></li>
-              <li><a href='#contact' className='hover:text-white transition-colors'>{t.nav.contact}</a></li>
+              <li><a href='#projects' onClick={(e) => handleNavClick(e, '#projects')} className='hover:text-white transition-colors'>{t.nav.projects}</a></li>
+              <li><a href='#disparity' onClick={(e) => handleNavClick(e, '#disparity')} className='hover:text-white transition-colors'>{t.nav.disparity}</a></li>
+              <li><a href='#video' onClick={(e) => handleNavClick(e, '#video')} className='hover:text-white transition-colors'>{t.nav.video}</a></li>
+              <li><a href='#about' onClick={(e) => handleNavClick(e, '#about')} className='hover:text-white transition-colors'>{t.nav.about}</a></li>
+              <li><a href='#transparency' onClick={(e) => handleNavClick(e, '#transparency')} className='hover:text-white transition-colors'>{t.nav.transparency}</a></li>
+              <li><a href='#campus' onClick={(e) => handleNavClick(e, '#campus')} className='hover:text-white transition-colors'>{t.nav.map}</a></li>
+              <li><a href='#contact' onClick={(e) => handleNavClick(e, '#contact')} className='hover:text-white transition-colors'>{t.nav.contact}</a></li>
               <li>
                 <a
                   href='#faq'
