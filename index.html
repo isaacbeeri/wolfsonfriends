@@ -10,23 +10,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Structured Data (Schema.org NGO, MedicalOrganization & FAQPage) for SEO & GEO -->
+    <!-- Structured Data (Schema.org NGO, Hospital & FAQPage) for SEO & GEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["NGO", "MedicalOrganization"],
-          "@id": "https://wolfsonfriends.com/#organization",
+          "@type": "NGO",
+          "@id": "https://wolfsonfriends.com/#ngo",
           "name": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון",
           "alternateName": [
-            "ידידי וולפסון",
-            "Friends of Edith Wolfson Medical Center"
+            "Friends of Edith Wolfson Medical Center",
+            "ידידי וולפסון"
           ],
           "url": "https://wolfsonfriends.com",
-          "logo": "https://wolfsonfriends.com/logos/logo-transparent.png",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wolfsonfriends.com/logos/logo-transparent.png",
+            "caption": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון"
+          },
           "image": "https://wolfsonfriends.com/images/hero-aerial.jpg",
-          "description": "עמותת ידידי המרכז הרפואי וולפסון בחולון (ע״ר 580022507) פועלת משנת 1983 לפיתוח קליני, רכש ציוד רפואי מתקדם, שוויון בריאותי ותשתיות מצילות חיים.",
+          "description": "עמותת ידידי המרכז הרפואי וולפסון פועלת לגיוס משאבים ותמיכה לפיתוח המרכז הרפואי, רכישת ציוד רפואי מתקדם, ושיפור רווחת המטופלים והצוות הרפואי.",
+          "sameAs": [
+            "https://www.linkedin.com/company/friends-of-the-edith-wolfson-medical-center"
+          ],
+          "sponsor": {
+            "@type": "Hospital",
+            "@id": "https://www.wolfson.org.il/#hospital",
+            "name": "המרכז הרפואי ע״ש אדית וולפסון",
+            "alternateName": "Edith Wolfson Medical Center",
+            "url": "https://www.wolfson.org.il"
+          },
           "identifier": "580022507",
           "taxID": "580022507",
           "email": "friends2@wmc.gov.il",
@@ -48,6 +62,16 @@
             "@type": "DonateAction",
             "name": "תרומה מאובטחת לעמותת ידידי המרכז הרפואי וולפסון",
             "target": "https://www.jgive.com/new/he/ils/charity-organizations/4565/donate/amount"
+          }
+        },
+        {
+          "@type": "Hospital",
+          "@id": "https://www.wolfson.org.il/#hospital",
+          "name": "המרכז הרפואי ע״ש אדית וולפסון",
+          "alternateName": "Edith Wolfson Medical Center",
+          "url": "https://www.wolfson.org.il",
+          "funder": {
+            "@id": "https://wolfsonfriends.com/#ngo"
           }
         },
         {
