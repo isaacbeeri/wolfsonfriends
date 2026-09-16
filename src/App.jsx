@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { translations } from "./data/translations/index.js";
+import { detectSessionLanguage } from "./data/geoLang.js";
 import { Navbar } from "./components/Navbar.jsx";
 import { Hero } from "./components/Hero.jsx";
 import { BrandPillars } from "./components/BrandPillars.jsx";
@@ -16,7 +17,39 @@ import { AccessibilityToolbar } from "./components/AccessibilityToolbar.jsx";
 import { FaqPage } from "./components/FaqPage.jsx";
 
 export function App() {
-  const [lang, setLang] = useState("he");
+  const [lang, setLang] = useState(() => {
+    try {
+      const saved = localStorage.getItem("fwmc_lang");
+      if (saved && translations[saved]) return saved;
+      if (typeof window !== "undefined" && window.location && window.location.search) {
+        const params = new URLSearchParams(window.location.search);
+        const urlLang = params.get("lang");
+        if (urlLang && translations[urlLang]) return urlLang;
+      }
+    } catch (e) {}
+    return "he";
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    detectSessionLanguage().then(detected => {
+      if (isMounted && detected && detected.lang && translations[detected.lang]) {
+        try {
+          const saved = localStorage.getItem("fwmc_lang");
+          if (saved && translations[saved]) return;
+        } catch (e) {}
+        setLang(detected.lang);
+      }
+    });
+    return () => { isMounted = false; };
+  }, []);
+
+  const handleSetLang = (newLang) => {
+    setLang(newLang);
+    try {
+      localStorage.setItem("fwmc_lang", newLang);
+    } catch (e) {}
+  };
   const [currentView, setCurrentView] = useState("home"); // 'home' | 'faq'
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -136,7 +169,7 @@ export function App() {
       {/* Top Navbar */}
       <Navbar
         lang={lang}
-        setLang={setLang}
+        setLang={handleSetLang}
         t={t}
         currentView={currentView}
         onNavigate={handleNavigate}
@@ -171,7 +204,7 @@ export function App() {
       <Footer
         t={t}
         onOpenDonate={handleOpenDonate}
-        setLang={setLang}
+        setLang={handleSetLang}
         lang={lang}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenFaq={handleOpenFaq}

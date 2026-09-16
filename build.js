@@ -19,7 +19,7 @@ async function runBuild() {
       base: './',
       build: {
         outDir: 'dist',
-        emptyOutDir: true,
+        emptyOutDir: false,
         sourcemap: false,
         chunkSizeWarningLimit: 1500
       }
