@@ -1,8 +1,29 @@
 import React from "react";
 import { Heart, Cpu, Shield, Users, Sparkles, Scale, Building2 } from "lucide-react";
 
-export function BrandPillars({ t }) {
+export function BrandPillars({ t, lang }) {
   const p = t.pillars;
+
+  const pillarTags = {
+    care: {
+      he: "חזון מוביל", en: "Overarching Vision", ar: "الرؤية الشاملة", ru: "Главная миссия", es: "Visión Global", ja: "包括的ビジョン", pt: "Visão Abrangente", fr: "Vision Globale", de: "Übergeordnete Vision"
+    },
+    innovation: {
+      he: "ריבוע כחול", en: "Blue Square", ar: "المربع الأزرق", ru: "Синий квадрат", es: "Cuadrado Azul", ja: "青い正方形", pt: "Quadrado Azul", fr: "Carré Bleu", de: "Blaues Quadrat"
+    },
+    infrastructure: {
+      he: "משולש צהוב", en: "Yellow Triangle", ar: "المثلث الأصفر", ru: "Желтый треугольник", es: "Triángulo Amarillo", ja: "黄色い三角形", pt: "Triângulo Amarelo", fr: "Triangle Jaune", de: "Gelbes Dreieck"
+    },
+    workforce: {
+      he: "לב ומעגל אדום", en: "Red Heart & Circle", ar: "القلب والدائرة الحمراء", ru: "Красное сердце", es: "Corazón y Círculo Rojo", ja: "赤いハートと円", pt: "Coração e Círculo Vermelho", fr: "Cœur et Cercle Rouge", de: "Rotes Herz & Kreis"
+    },
+    community: {
+      he: "פסים ירוקים", en: "Green Stripes", ar: "الخطوط الخضراء", ru: "Зеленые полосы", es: "Franjas Verdes", ja: "緑のストライプ", pt: "Listras Verdes", fr: "Bandes Vertes", de: "Grüne Streifen"
+    }
+  };
+
+  const getTag = (key) => (pillarTags[key] && (pillarTags[key][t.lang || 'he'] || pillarTags[key].en)) || '';
+
 
   const pillarsList = [
     {
@@ -17,7 +38,7 @@ export function BrandPillars({ t }) {
           <path d="M3 18C3 10.5 7.5 5 12 5C16.5 5 21 10.5 21 18" strokeLinecap="round" />
         </svg>
       ),
-      tag: "Overarching Vision"
+      tag: (pillarTags.care[lang] || pillarTags.care.en)
     },
     {
       key: "innovation",
@@ -27,7 +48,7 @@ export function BrandPillars({ t }) {
       iconBg: "bg-gradient-to-br from-blue-700 to-blue-900",
       shape: "rounded-xl",
       icon: <Cpu className="w-5 h-5 text-white" />,
-      tag: "Blue Square"
+      tag: (pillarTags.innovation[lang] || pillarTags.innovation.en)
     },
     {
       key: "infrastructure",
@@ -37,7 +58,7 @@ export function BrandPillars({ t }) {
       iconBg: "bg-gradient-to-br from-amber-500 to-amber-600",
       shape: "rounded-xl",
       icon: <Building2 className="w-5 h-5 text-white" />,
-      tag: "Yellow Triangle"
+      tag: (pillarTags.infrastructure[lang] || pillarTags.infrastructure.en)
     },
     {
       key: "workforce",
@@ -47,7 +68,7 @@ export function BrandPillars({ t }) {
       iconBg: "bg-gradient-to-br from-red-600 to-rose-700",
       shape: "rounded-full",
       icon: <Heart className="w-5 h-5 fill-white text-white" />,
-      tag: "Red Heart & Circle"
+      tag: (pillarTags.workforce[lang] || pillarTags.workforce.en)
     },
     {
       key: "community",
@@ -57,7 +78,7 @@ export function BrandPillars({ t }) {
       iconBg: "bg-gradient-to-br from-emerald-600 to-teal-700",
       shape: "rounded-xl",
       icon: <Users className="w-5 h-5 text-white" />,
-      tag: "Green Stripes"
+      tag: (pillarTags.community[lang] || pillarTags.community.en)
     }
   ];
 

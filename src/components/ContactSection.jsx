@@ -11,6 +11,56 @@ export function ContactSection({ t, lang }) {
   const [subject, setSubject] = useState(c.formSubjectOptions[0]);
   const [message, setMessage] = useState("");
 
+  
+  const contactTextMap = {
+    catchmentPill: {
+      he: "חולון • בת ים • יפו • דרום תל אביב",
+      ar: "حولون • بات يام • يافا • جنوب تل أبيب",
+      ru: "Холон • Бат-Ям • Яффо • Южный Тель-Авив",
+      es: "Holón • Bat Yam • Jaffa • Sur de Tel Aviv",
+      ja: "ホロン • バット・ヤム • ヤッファ • 南テルアビブ",
+      pt: "Holon • Bat Yam • Jaffa • Zona Sul de Tel Aviv",
+      fr: "Holon • Bat Yam • Jaffa • Sud de Tel Aviv",
+      de: "Holon • Bat Jam • Jaffa • Süd-Tel Aviv",
+      en: "Holon • Bat Yam • Jaffa • South Tel Aviv"
+    },
+    inquiryRouted: {
+      he: "הפנייה נותבה ישירות לכתובת friends2@wmc.gov.il. באפשרותך גם לפתוח ישירות בתוכנת הדוא״ל שלך או לשלוח הודעה נוספת:",
+      ar: "تم توجيه رسالتكم مباشرة إلى friends2@wmc.gov.il. يمكنك أيضاً فتحها في تطبيق البريد الخاص بك أو إرسال رسالة أخرى:",
+      ru: "Ваш запрос направлен на friends2@wmc.gov.il. Вы также можете открыть его в почтовом клиенте или отправить еще одно сообщение:",
+      es: "Su consulta fue dirigida directamente a friends2@wmc.gov.il. También puede abrirla en su aplicación de correo o enviar otro mensaje:",
+      ja: "お問い合わせは直接 friends2@wmc.gov.il へ送信されました。メールアプリから送信、または新しいメッセージを作成できます：",
+      pt: "Sua mensagem foi direcionada diretamente para friends2@wmc.gov.il. Você também pode abrir no seu cliente de e-mail ou enviar outra mensagem:",
+      fr: "Votre demande a été transmise à friends2@wmc.gov.il. Vous pouvez également l'ouvrir dans votre messagerie ou envoyer un autre message :",
+      de: "Ihre Anfrage wurde direkt an friends2@wmc.gov.il weitergeleitet. Sie können diese auch in Ihrem E-Mail-Programm öffnen oder eine weitere Nachricht senden:",
+      en: "Your inquiry is routed directly to friends2@wmc.gov.il. You can also open it in your email client or send another message:"
+    },
+    openEmailApp: {
+      he: "שליחה ישירה בדוא״ל",
+      ar: "إرسال عبر تطبيق البريد",
+      ru: "Открыть в почтовом клиенте",
+      es: "Abrir en aplicación de correo",
+      ja: "メールアプリで開く",
+      pt: "Abrir no app de e-mail",
+      fr: "Ouvrir dans la messagerie",
+      de: "In E-Mail-App öffnen",
+      en: "Open in Email App"
+    },
+    sendAnother: {
+      he: "שליחת הודעה נוספת",
+      ar: "إرسال رسالة أخرى",
+      ru: "Отправить еще сообщение",
+      es: "Enviar otro mensaje",
+      ja: "別のメッセージを送信",
+      pt: "Enviar outra mensagem",
+      fr: "Envoyer un autre message",
+      de: "Weitere Nachricht senden",
+      en: "Send Another Message"
+    }
+  };
+
+  const getC = (key) => (contactTextMap[key] && (contactTextMap[key][lang] || contactTextMap[key].en)) || '';
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -95,7 +145,7 @@ export function ContactSection({ t, lang }) {
               />
               <div className="absolute inset-0 bg-slate-900/30 flex items-center justify-center">
                 <span className="px-3 py-1.5 rounded-xl bg-white/95 text-xs font-bold text-slate-800 shadow">
-                  חולון • בת ים • יפו • דרום תל אביב
+                  {getC('catchmentPill')}
                 </span>
               </div>
             </div>
@@ -112,9 +162,7 @@ export function ContactSection({ t, lang }) {
                   {c.formSuccess}
                 </h4>
                 <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                  {isHe
-                    ? 'הפנייה נותבה ישירות לכתובת friends2@wmc.gov.il. באפשרותך גם לפתוח ישירות בתוכנת הדוא״ל שלך או לשלוח הודעה נוספת:'
-                    : 'Your inquiry is routed directly to friends2@wmc.gov.il. You can also open it in your email client or send another message:'}
+                  {getC('inquiryRouted')}
                 </p>
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
@@ -122,7 +170,7 @@ export function ContactSection({ t, lang }) {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-xs shadow transition-all"
                   >
                     <Mail className="w-4 h-4" />
-                    <span>{isHe ? 'שליחה ישירה בדוא״ל' : 'Open in Email App'}</span>
+                    <span>{getC('openEmailApp')}</span>
                   </a>
                   <button
                     type="button"
@@ -135,7 +183,7 @@ export function ContactSection({ t, lang }) {
                     }}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all"
                   >
-                    <span>{isHe ? 'שליחת הודעה נוספת' : 'Send Another Message'}</span>
+                    <span>{getC('sendAnother')}</span>
                   </button>
                 </div>
               </div>

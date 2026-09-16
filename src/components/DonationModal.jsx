@@ -18,12 +18,32 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
       if (lang === "he") return "תרומה כללית לצרכים הרפואיים הדחופים - עמותת ידידי המרכז הרפואי וולפסון (ע״ר 580022507)";
       if (lang === "fr") return "Fonds général des besoins urgents - Société des Amis du Centre Médical Wolfson";
       if (lang === "de") return "Allgemeiner Notfallfonds - Fördergesellschaft des Edith Wolfson Medical Center";
+      if (lang === "ar") return "صندوق الاحتياجات العاجلة العامة - جمعية أصدقاء مركز إديث فولفسون الطبي";
+      if (lang === "ru") return "Общий фонд неотложных нужд — Общество друзей Медицинского центра им. Эдит Вольфсон";
+      if (lang === "es") return "Fondo general de necesidades urgentes - Sociedad de Amigos del Centro Médico Edith Wolfson";
+      if (lang === "ja") return "一般緊急医療ニーズ基金 - エディス・ウォルフソン医療センター友の会";
+      if (lang === "pt") return "Fundo geral de necessidades urgentes - Sociedade de Amigos do Centro Médico Edith Wolfson";
       return "General Urgent Needs Fund - Friends of Edith Wolfson Medical Center";
     }
     const proj = projects.find(p => p.id === selectedId);
     const title = proj ? (proj.title[lang] || proj.title.en) : selectedId;
     if (lang === "he") {
       return `ייעוד תרומה: ${title} (עמותת ידידי המרכז הרפואי וולפסון, ע״ר 580022507)`;
+    }
+    if (lang === "ar") {
+      return `تخصيص التبرع: ${title} (جمعية أصدقاء مركز إديث فولفسون الطبي)`;
+    }
+    if (lang === "ru") {
+      return `Назначение пожертвования: ${title} (Общество друзей Медицинского центра им. Эдит Вольфсон)`;
+    }
+    if (lang === "es") {
+      return `Destino de la donación: ${title} (Sociedad de Amigos del Centro Médico Edith Wolfson)`;
+    }
+    if (lang === "ja") {
+      return `寄付の使途: ${title}（エディス・ウォルフソン医療センター友の会）`;
+    }
+    if (lang === "pt") {
+      return `Destinação da doação: ${title} (Sociedade de Amigos do Centro Médico Edith Wolfson)`;
     }
     return `Donation Designation: ${title} (Friends of Edith Wolfson Medical Center)`;
   };
@@ -49,6 +69,121 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
       setCopiedField(fieldName);
       setTimeout(() => setCopiedField(null), 2500);
     }
+  };
+
+
+  
+  const modalTextMap = {
+    impactTitle: {
+      he: "השפעת התרומה שלך על המרכז הרפואי וולפסון:",
+      ar: "أثر تبرعكم على مركز إديث فولفسون الطبي:",
+      ru: "Влияние вашего пожертвования на Медицинский центр Вольфсон:",
+      es: "El impacto de su donación en el Centro Médico Wolfson:",
+      ja: "ウォルフソン医療センターへのご寄付の直接的効果:",
+      pt: "O impacto da sua doação no Centro Médico Wolfson:",
+      fr: "L'impact direct de votre don sur le Centre Médical Wolfson :",
+      de: "Die direkte Wirkung Ihrer Spende auf das Wolfson Medical Center:",
+      en: "Your Direct Impact on Wolfson Medical Center:"
+    },
+    impactPoint1: {
+      he: "120,000+ מטופלים בשנה נהנים מרכש ציוד רפואי חדיש ומציל חיים.",
+      ar: "أكثر من 120,000 مريض سنوياً يستفيدون من شراء معدات طبية متطورة ومنقذة للحياة.",
+      ru: "120 000+ пациентов ежегодно получают помощь благодаря современному медоборудованию.",
+      es: "120.000+ pacientes al año se benefician de equipamiento médico moderno y vital.",
+      ja: "年間12万人以上の患者様が最新鋭の救命医療機器による恩恵を受けています。",
+      pt: "Mais de 120.000 pacientes por ano são beneficiados por equipamentos médicos modernos.",
+      fr: "120 000+ patients par an bénéficient d'équipements médicaux modernes et vitaux.",
+      de: "120.000+ Patienten jährlich profitieren von lebensrettenden modernen Medizingeräten.",
+      en: "120,000+ patients annually benefit from life-saving medical technology."
+    },
+    impactPoint2: {
+      he: "100% מהתרומות מועברות בהתאם לבקשת התורם, בין השאר לרכישת מכשור רפואי, פעילויות לצוותים, לשדרוג מחלקות ומחקר קליני.",
+      ar: "100% من التبرعات تخصص وفقاً لرغبة المتبرع، بما يشمل شراء الأجهزة الطبية ودعم الطواقم وتحديث الأقسام والأبحاث السريرية.",
+      ru: "100% пожертвований распределяются по желанию дарителя: на медоборудование, поддержку персонала, обновление отделений и исследования.",
+      es: "100% de las donaciones se destinan según la voluntad del donante: equipos médicos, apoyo al personal, mejoras de salas e investigación.",
+      ja: "寄付金の100％が寄付者様の意向に沿って医療機器、スタッフ支援、病棟改修、臨床研究等へ配分されます。",
+      pt: "100% das doações são destinadas conforme a vontade do doador: equipamentos, apoio aos profissionais, melhorias e pesquisa.",
+      fr: "100% des dons sont alloués selon la volonté du donateur, notamment pour les équipements, le soutien aux équipes et la recherche.",
+      de: "100% der Spenden werden zweckgebunden nach Wunsch des Spenders verwendet: Medizingeräte, Mitarbeiterförderung und Forschung.",
+      en: "100% of donations are allocated according to donor intent, including medical equipment, staff support, ward modernization, and clinical research."
+    },
+    impactPoint3: {
+      he: "אישור סעיף 46 (בתוקף עד 31.12.2029) וזיכוי מס 501(c)(3) בארה״ב דרך JGive.",
+      ar: "إعفاء ضريبي بموجب المادة 46 (ساري حتى 31.12.2029) و501(c)(3) في أمريكا عبر JGive.",
+      ru: "Налоговый вычет по Ст. 46 (до 31.12.2029) и 501(c)(3) в США через JGive.",
+      es: "Deducción fiscal por Art. 46 (hasta 31.12.2029) y 501(c)(3) en EE. UU. vía JGive.",
+      ja: "第46条税金控除（2029年12月31日まで有効）およびJGive経由での米国501(c)(3)免税認可。",
+      pt: "Dedução fiscal pelo Art. 46 (até 31.12.2029) e 501(c)(3) nos EUA via JGive.",
+      fr: "Déduction fiscale article 46 (valable jusqu'au 31.12.2029) et US 501(c)(3) via JGive.",
+      de: "Steuerabzug nach Art. 46 (gültig bis 31.12.2029) & US 501(c)(3) über JGive.",
+      en: "Section 46 tax deduction (valid through 31.12.2029) & US 501(c)(3) via JGive."
+    },
+    autoCopiedTip: {
+      he: "(מועתק אוטומטית ללוח)",
+      ar: "(يتم نسخه تلقائياً إلى الحافظة)",
+      ru: "(Автоматически копируется в буфер)",
+      es: "(Copiado automáticamente al portapapeles)",
+      ja: "(クリップボードへ自動コピーされます)",
+      pt: "(Copiado automaticamente para a área de transferência)",
+      fr: "(Copié automatiquement dans le presse-papiers)",
+      de: "(Wird automatisch in die Zwischenablage kopiert)",
+      en: "(Auto-copied to clipboard)"
+    },
+    jgiveAria: {
+      he: "תרומה באמצעות JGive (ייפתח בחלון מאובטח חדש)",
+      ar: "التبرع عبر JGive (يفتح في نافذة آمنة جديدة)",
+      ru: "Пожертвовать через JGive (откроется в новом защищенном окне)",
+      es: "Donar a través de JGive (se abre en nueva ventana segura)",
+      ja: "JGive経由で寄付する（安全な新しいウィンドウが開きます）",
+      pt: "Doar via JGive (abre em nova janela segura)",
+      fr: "Faire un don via JGive (ouvre une nouvelle fenêtre sécurisée)",
+      de: "Spenden über JGive (öffnet in neuem sicherem Fenster)",
+      en: "Donate via JGive (opens in a secure new window)"
+    }
+  };
+
+  const getModalText = (key) => (modalTextMap[key] && (modalTextMap[key][lang] || modalTextMap[key].en)) || '';
+
+  const getBeneficiaryLabel = (l) => {
+    const map = {
+      he: "שם המוטב:",
+      ar: "اسم المستفيد:",
+      ru: "Получатель:",
+      es: "Beneficiario:",
+      ja: "受取人名義:",
+      pt: "Beneficiário:",
+      fr: "Bénéficiaire :",
+      de: "Empfänger:"
+    };
+    return map[l] || "Beneficiary:";
+  };
+
+  const getBankBranchLabel = (l) => {
+    const map = {
+      he: "בנק וסניף:",
+      ar: "البنك والفرع:",
+      ru: "Банк и отделение:",
+      es: "Banco y sucursal:",
+      ja: "銀行・支店:",
+      pt: "Banco e agência:",
+      fr: "Banque & Agence :",
+      de: "Bank & Filiale:"
+    };
+    return map[l] || "Bank & Branch:";
+  };
+
+  const getAccountNumLabel = (l) => {
+    const map = {
+      he: "מספר חשבון:",
+      ar: "رقم الحساب:",
+      ru: "Номер счета:",
+      es: "Número de cuenta:",
+      ja: "口座番号:",
+      pt: "Número da conta:",
+      fr: "Numéro de compte :",
+      de: "Kontonummer:"
+    };
+    return map[l] || "Account Number:";
   };
 
   const getJGiveUrl = () => {
@@ -153,20 +288,20 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                 <div className="max-w-md mx-auto mb-5 p-3.5 sm:p-4 rounded-2xl bg-white/90 border border-slate-200/90 text-start shadow-xs">
                   <div className="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1.5">
                     <Heart className="w-3.5 h-3.5 text-rose-600 fill-rose-600" />
-                    <span>{isHe ? "השפעת התרומה שלך על המרכז הרפואי וולפסון:" : "Your Direct Impact on Wolfson Medical Center:"}</span>
+                    <span>{getModalText('impactTitle')}</span>
                   </div>
                   <ul className="space-y-1.5 text-xs text-slate-600 font-medium">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{isHe ? "120,000+ מטופלים בשנה נהנים מרכש ציוד רפואי חדיש ומציל חיים." : "120,000+ patients annually benefit from life-saving medical technology."}</span>
+                      <span>{getModalText('impactPoint1')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{isHe ? "100% מהתרומות מועברות בהתאם לבקשת התורם, בין השאר לרכישת מכשור רפואי, פעילויות לצוותים, לשדרוג מחלקות ומחקר קליני." : "100% of donations are allocated according to donor intent, including medical equipment, staff support, ward modernization, and clinical research."}</span>
+                      <span>{getModalText('impactPoint2')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{isHe ? "אישור סעיף 46 (בתוקף עד 31.12.2029) וזיכוי מס 501(c)(3) בארה״ב דרך JGive." : "Section 46 tax deduction (valid through 31.12.2029) & US 501(c)(3) via JGive."}</span>
+                      <span>{getModalText('impactPoint3')}</span>
                     </li>
                   </ul>
                 </div>
@@ -183,7 +318,7 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                       {d.selectProject}
                     </label>
                     <span className="text-[11px] text-slate-500">
-                      {isHe ? "(מועתק אוטומטית ללוח)" : "(Auto-copied to clipboard)"}
+                      {getModalText('autoCopiedTip')}
                     </span>
                   </div>
                   
@@ -253,7 +388,7 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   role="button"
-                  aria-label={isHe ? `תרומה באמצעות JGive: ${d.jgiveBtn} (ייפתח בחלון מאובטח חדש)` : `Donate via JGive: ${d.jgiveBtn} (opens in new window)`}
+                  aria-label={getModalText('jgiveAria')}
                   onClick={handleProceedToJGive}
                   className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-700 hover:to-rose-700 text-white font-black text-base sm:text-lg shadow-xl shadow-rose-600/30 hover:shadow-rose-600/50 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
                 >
@@ -297,19 +432,19 @@ export function DonationModal({ isOpen, onClose, defaultProject, lang, t }) {
                 
                 {/* Account Name */}
                 <div className="flex justify-between items-center py-2.5 border-b border-slate-200 text-xs sm:text-sm">
-                  <span className="text-slate-500 font-medium">{lang === "he" ? "שם המוטב:" : "Beneficiary:"}</span>
+                  <span className="text-slate-500 font-medium">{getBeneficiaryLabel(lang)}</span>
                   <strong className="text-slate-900 font-bold">{d.accountName}</strong>
                 </div>
 
                 {/* Bank and Branch */}
                 <div className="flex justify-between items-center py-2.5 border-b border-slate-200 text-xs sm:text-sm">
-                  <span className="text-slate-500 font-medium">{lang === "he" ? "בנק וסניף:" : "Bank & Branch:"}</span>
+                  <span className="text-slate-500 font-medium">{getBankBranchLabel(lang)}</span>
                   <strong className="text-slate-900 font-bold">{d.bankName}, {d.branch}</strong>
                 </div>
 
                 {/* Account Number with Copy */}
                 <div className="flex justify-between items-center py-2.5 border-b border-slate-200 text-xs sm:text-sm">
-                  <span className="text-slate-500 font-medium">{lang === "he" ? "מספר חשבון:" : "Account Number:"}</span>
+                  <span className="text-slate-500 font-medium">{getAccountNumLabel(lang)}</span>
                   <div className="flex items-center gap-2">
                     <strong className="text-slate-900 font-mono text-base">{d.accountNum}</strong>
                     <button

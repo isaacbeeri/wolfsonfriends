@@ -1,63 +1,277 @@
 import React from "react";
 import { 
+  HeartHandshake, 
   ShieldCheck, 
+  Award, 
   ExternalLink, 
   Download, 
-  CheckCircle2, 
-  Award, 
   Users, 
-  HeartHandshake, 
+  Briefcase, 
   Building2, 
-  Briefcase,
-  Scale,  
-  UserCheck 
+  UserCheck, 
+  Scale 
 } from "lucide-react";
 
 export function AboutAndLeadership({ t, onOpenDonate, lang }) {
   const a = t.about;
   const isHe = lang === "he";
 
-  // Board of directors with titles
+  const labels = {
+    fiduciaryBadge: {
+      he: "שקיפות ומופת ציבורי",
+      en: "Fiduciary Integrity",
+      fr: "Intégrité & Transparence",
+      de: "Vorbildliche Transparenz",
+      ar: "النزاهة والشفافية العامة",
+      ru: "Прозрачность и ответственность",
+      es: "Integridad Fiduciaria",
+      ja: "財務の健全性と透明性",
+      pt: "Integridade Fiduciária"
+    },
+    validUntil: {
+      he: "בתוקף עד 31.12.2029",
+      en: "Valid to 31.12.2029",
+      fr: "Valide jusqu'au 31.12.2029",
+      de: "Gültig bis 31.12.2029",
+      ar: "ساري حتى 31.12.2029",
+      ru: "Действительно до 31.12.2029",
+      es: "Válido hasta 31.12.2029",
+      ja: "有効期限：2029年12月31日",
+      pt: "Válido até 31.12.2029"
+    },
+    leadershipBadge: {
+      he: "מנהיגות ציבורית",
+      en: "Civic Leadership",
+      fr: "Leadership Civique",
+      de: "Vorstand & Leitung",
+      ar: "القيادة العامة",
+      ru: "Руководство ассоциации",
+      es: "Liderazgo Cívico",
+      ja: "役員・リーダーシップ",
+      pt: "Liderança Institucional"
+    },
+    chiefSignatory: {
+      he: "בעל זכות חתימה ראשי",
+      en: "Chief Authorized Signatory",
+      fr: "Signataire Officiel Principal",
+      de: "Hauptzeichnungsberechtigter",
+      ar: "صاحب حق التوقيع الرئيسي",
+      ru: "Главный уполномоченный с правом подписи",
+      es: "Firmante Autorizado Principal",
+      ja: "筆頭公認署名権者",
+      pt: "Signatário Autorizado Principal"
+    },
+    executiveBadge: {
+      he: "הנהלה ראשית",
+      en: "Executive Leadership",
+      fr: "Direction Générale",
+      de: "Geschäftsführung",
+      ar: "الإدارة التنفيذية",
+      ru: "Исполнительное руководство",
+      es: "Dirección Ejecutiva",
+      ja: "事務局長・執行部",
+      pt: "Direção Executiva"
+    },
+    ceoSubtext: {
+      he: "ניהול אסטרטגי ופיתוח משאבים",
+      en: "Strategic Operations & Philanthropy",
+      fr: "Gestion Stratégique & Partenariats",
+      de: "Strategische Leitung & Mittelbeschaffung",
+      ar: "الإدارة الاستراتيجية وتنمية الموارد",
+      ru: "Стратегическое управление и развитие фондов",
+      es: "Gestión Estratégica y Recaudación de Fondos",
+      ja: "戦略的運営およびフィランソロピー統括",
+      pt: "Gestão Estratégica e Captação de Recursos"
+    },
+    financeBadge: {
+      he: "כספים ומינהל",
+      en: "Finance & Administration",
+      fr: "Finances & Administration",
+      de: "Finanzen & Verwaltung",
+      ar: "المالية والإدارة",
+      ru: "Финансы и управление",
+      es: "Finanzas y Administración",
+      ja: "財務・経理統括",
+      pt: "Finanças e Administração"
+    },
+    bookkeeperSubtext: {
+      he: "ניהול חשבונות וכספי העמותה",
+      en: "Financial Controller & Reporting",
+      fr: "Contrôle de Gestion & Comptabilité",
+      de: "Rechnungswesen & Finanzberichterstattung",
+      ar: "المحاسبة وإدارة أموال الجمعية",
+      ru: "Бухгалтерский учет и финотчетность",
+      es: "Control Financiero y Contabilidad",
+      ja: "経理管理・財務報告",
+      pt: "Controladoria e Gestão Contábil"
+    },
+    auditorFirmLink: {
+      he: "אתר קדמי - אלחנתי",
+      en: "Kedmi - Elhanati Firm",
+      fr: "Cabinet Kedmi - Elhanati",
+      de: "Kanzlei Kedmi - Elhanati",
+      ar: "مكتب كيدمي - إلحناتي",
+      ru: "Фирма Кедми — Эльханати",
+      es: "Firma Kedmi - Elhanati",
+      ja: "ケドミ・エルハナティ公認会計士事務所",
+      pt: "Firma Kedmi - Elhanati"
+    },
+    cpaSubtext: {
+      he: "רואי חשבון רשמיים של העמותה",
+      en: "Official CPAs of the Friends Association",
+      fr: "Experts-Comptables Officiels de l'Association",
+      de: "Offizielle Wirtschaftsprüfer des Fördervereins",
+      ar: "مدققو الحسابات القانونيون الرسميون للجمعية",
+      ru: "Официальные аудиторы Общества друзей",
+      es: "Auditores Contables Oficiales de la Asociación",
+      ja: "友の会公認外部会計監査法人",
+      pt: "Auditores Contábeis Oficiais da Associação"
+    },
+    legalFirmLink: {
+      he: "אתר המשרד הרשמי",
+      en: "Official Firm Website",
+      fr: "Site Officiel du Cabinet",
+      de: "Offizielle Kanzlei-Website",
+      ar: "الموقع الرسمي للمكتب",
+      ru: "Официальный сайт коллегии",
+      es: "Sitio Web Oficial del Bufete",
+      ja: "法律事務所公式サイト",
+      pt: "Site Oficial do Escritório"
+    }
+  };
+
+  const getL = (key) => (labels[key] && (labels[key][lang] || labels[key].en)) || '';
+
+  // Board of directors with multilingual roles and tags
+  const boardRoleDict = {
+    treasurer: {
+      role: {
+        he: "חבר וועד מנהל, גזבר וחבר וועדת כספים",
+        en: "Board Member, Treasurer & Finance Committee",
+        fr: "Membre du Conseil, Trésorier & Comité des Finances",
+        de: "Vorstandsmitglied, Schatzmeister & Finanzausschuss",
+        ar: "عضو مجلس الإدارة وأمين الصندوق ولجنة المالية",
+        ru: "Член правления, казначей и финкомитет",
+        es: "Miembro de la Junta, Tesorero y Comité de Finanzas",
+        ja: "理事・財務担当・財務委員会委員",
+        pt: "Membro da Diretoria, Tesoureiro e Comitê Financeiro"
+      },
+      tag: {
+        he: "גזבר", en: "Treasurer", fr: "Trésorier", de: "Schatzmeister", ar: "أمين الصندوق", ru: "Казначей", es: "Tesorero", ja: "財務担当", pt: "Tesoureiro"
+      }
+    },
+    financeChair: {
+      role: {
+        he: "חבר וועד מנהל, יו״ר וועדת כספים (יו״ר בדימוס)",
+        en: "Board Member, Chair of Finance Committee (Past Board Chair)",
+        fr: "Membre du Conseil, Président du Comité des Finances (Ancien Président)",
+        de: "Vorstandsmitglied, Vorsitzender des Finanzausschusses (Ehem. Vorsitzender)",
+        ar: "عضو مجلس الإدارة، رئيس لجنة المالية (رئيس سابق)",
+        ru: "Член правления, глава финкомитета (экс-председатель)",
+        es: "Miembro de la Junta, Presidente de Finanzas (Expresidente)",
+        ja: "理事・財務委員長（元理事長）",
+        pt: "Membro da Diretoria, Presidente do Comitê Financeiro (Ex-presidente)"
+      },
+      tag: {
+        he: "יו״ר כספים", en: "Finance Chair", fr: "Président Finances", de: "Finanzvorsitz", ar: "رئيس المالية", ru: "Финкомитет", es: "Presidente Finanzas", ja: "財務委員長", pt: "Presidente Finanças"
+      }
+    },
+    legal: {
+      role: {
+        he: "חבר וועד מנהל ובעל זכות חתימה",
+        en: "Board Member & Signatory",
+        fr: "Membre du Conseil & Signataire",
+        de: "Vorstandsmitglied & Zeichnungsberechtigter",
+        ar: "عضو مجلس الإدارة وصاحب حق التوقيع",
+        ru: "Член правления с правом подписи",
+        es: "Miembro de la Junta y Firmante",
+        ja: "理事・署名権者",
+        pt: "Membro da Diretoria e Signatário"
+      },
+      tag: {
+        he: "משפט", en: "Legal", fr: "Juridique", de: "Recht", ar: "قانوني", ru: "Юрист", es: "Jurídico", ja: "法務担当", pt: "Jurídico"
+      }
+    },
+    finance: {
+      role: {
+        he: "חבר וועד מנהל וחבר וועדת כספים",
+        en: "Board Member & Finance Committee",
+        fr: "Membre du Conseil & Comité des Finances",
+        de: "Vorstandsmitglied & Finanzausschuss",
+        ar: "عضو مجلس الإدارة ولجنة المالية",
+        ru: "Член правления и финкомитет",
+        es: "Miembro de la Junta y Comité de Finanzas",
+        ja: "理事・財務委員会委員",
+        pt: "Membro da Diretoria e Comitê Financeiro"
+      },
+      tag: {
+        he: "כספים", en: "Finance", fr: "Finances", de: "Finanzen", ar: "مالية", ru: "Финансы", es: "Finanzas", ja: "財務", pt: "Finanças"
+      }
+    },
+    board: {
+      role: {
+        he: "חבר וועד מנהל",
+        en: "Board Member",
+        fr: "Membre du Conseil d'Administration",
+        de: "Vorstandsmitglied",
+        ar: "عضو مجلس الإدارة",
+        ru: "Член исполнительного совета",
+        es: "Miembro de la Junta Directiva",
+        ja: "理事",
+        pt: "Membro da Diretoria Executiva"
+      },
+      tag: {
+        he: "הנהלה", en: "Board", fr: "Conseil", de: "Vorstand", ar: "عضو إدارة", ru: "Совет", es: "Junta", ja: "理事", pt: "Conselho"
+      }
+    }
+  };
+
+  const getBR = (type, field) => {
+    const item = boardRoleDict[type];
+    if (!item) return "";
+    return item[field][lang] || item[field].en || "";
+  };
+
   const boardMembersList = [
     {
       name: isHe ? "עמוס שלפמן (רו״ח)" : "Amos Shlafman, CPA",
-      role: isHe ? "חבר וועד מנהל, גזבר וחבר וועדת כספים" : "Board Member, Treasurer & Finance Committee",
-      tag: isHe ? "גזבר" : "Treasurer"
+      role: getBR("treasurer", "role"),
+      tag: getBR("treasurer", "tag")
     },
     {
       name: isHe ? "שלמה רכט" : "Shlomo Recht",
-      role: isHe ? "חבר וועד מנהל, יו״ר וועדת כספים (יו״ר בדימוס)" : "Board Member, Chair of Finance Committee (Past Board Chair)",
-      tag: isHe ? "יו״ר כספים" : "Finance Chair"
+      role: getBR("financeChair", "role"),
+      tag: getBR("financeChair", "tag")
     },
     {
       name: isHe ? "עו״ד מאיר הולנדר" : "Adv. Meir Hollander",
-      role: isHe ? "חבר וועד מנהל ובעל זכות חתימה" : "Board Member & Signatory",
-      tag: isHe ? "משפט" : "Legal"
+      role: getBR("legal", "role"),
+      tag: getBR("legal", "tag")
     },
     {
       name: isHe ? "נתן שרפמן" : "Nathan Sharfman",
-      role: isHe ? "חבר וועד מנהל וחבר וועדת כספים" : "Board Member & Finance Committee",
-      tag: isHe ? "כספים" : "Finance"
+      role: getBR("finance", "role"),
+      tag: getBR("finance", "tag")
     },
     {
       name: isHe ? "יעקב הרן" : "Yaacov Haran",
-      role: isHe ? "חבר וועד מנהל" : "Board Member",
-      tag: isHe ? "הנהלה" : "Board"
+      role: getBR("board", "role"),
+      tag: getBR("board", "tag")
     },
     {
       name: isHe ? "אלי טרטנר" : "Eli Tratner",
-      role: isHe ? "חבר וועד מנהל" : "Board Member",
-      tag: isHe ? "הנהלה" : "Board"
+      role: getBR("board", "role"),
+      tag: getBR("board", "tag")
     },
     {
       name: isHe ? "גיטה גופר" : "Gita Goffer",
-      role: isHe ? "חברת וועד מנהל" : "Board Member",
-      tag: isHe ? "הנהלה" : "Board"
+      role: getBR("board", "role"),
+      tag: getBR("board", "tag")
     },
     {
       name: isHe ? "מוני אברהם" : "Moni Avraham",
-      role: isHe ? "חבר וועד מנהל" : "Board Member",
-      tag: isHe ? "הנהלה" : "Board"
+      role: getBR("board", "role"),
+      tag: getBR("board", "tag")
     }
   ];
 
@@ -125,7 +339,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
             <div className="max-w-3xl mb-10">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold uppercase tracking-wider mb-3">
                 <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                <span>{isHe ? "שקיפות ומופת ציבורי" : "Fiduciary Integrity"}</span>
+                <span>{getL('fiduciaryBadge')}</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
                 {a.transparencyTitle}
@@ -146,7 +360,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                       <ShieldCheck className="w-5 h-5" />
                     </span>
                     <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                      {isHe ? "בתוקף עד 31.12.2029" : "Valid to 31.12.2029"}
+                      {getL('validUntil')}
                     </span>
                   </div>
                   <h4 className="font-bold text-base text-slate-900 mb-2">
@@ -172,7 +386,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold">
-                      <CheckCircle2 className="w-5 h-5" />
+                      <ShieldCheck className="w-5 h-5" />
                     </span>
                     <span className="text-[11px] font-bold text-sky-800 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
                       2025–2026
@@ -200,13 +414,13 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
           </div>
         </div>
 
-        {/* Leadership & Governance Section (דף קשר רשמי) */}
+        {/* Leadership & Governance Section */}
         <div>
           
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
               <Users className="w-3.5 h-3.5 text-wolfson-blue" />
-              <span>{isHe ? "מנהיגות ציבורית" : "Leadership"}</span>
+              <span>{getL('leadershipBadge')}</span>
             </div>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
               {a.leadershipTitle}
@@ -236,7 +450,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                 </p>
               </div>
               <div className="pt-4 mt-6 border-t border-white/10 text-[11px] text-slate-300 font-medium flex items-center justify-between">
-                <span>{isHe ? "בעל זכות חתימה ראשי" : "Chief Authorized Signatory"}</span>
+                <span>{getL('chiefSignatory')}</span>
                 <a
                   href="https://www.linkedin.com/in/thegib/"
                   target="_blank"
@@ -258,7 +472,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
-                    {isHe ? "הנהלה ראשית" : "Executive"}
+                    {getL('executiveBadge')}
                   </span>
                   <Briefcase className="w-5 h-5 text-wolfson-blue" />
                 </div>
@@ -270,7 +484,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                 </p>
               </div>
               <div className="pt-4 mt-6 border-t border-slate-100 text-[11px] text-slate-400 font-medium">
-                {isHe ? "ניהול אסטרטגי ופיתוח משאבים" : "Strategic Operations & Philanthropy"}
+                {getL('ceoSubtext')}
               </div>
             </div>
 
@@ -279,7 +493,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
-                    {isHe ? "כספים ומינהל" : "Finance"}
+                    {getL('financeBadge')}
                   </span>
                   <Building2 className="w-5 h-5 text-emerald-600" />
                 </div>
@@ -291,7 +505,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                 </p>
               </div>
               <div className="pt-4 mt-6 border-t border-slate-100 text-[11px] text-slate-400 font-medium">
-                {isHe ? "ניהול חשבונות וכספי העמותה" : "Financial Controller & Reporting"}
+                {getL('bookkeeperSubtext')}
               </div>
             </div>
 
@@ -350,7 +564,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-900 hover:underline"
                 >
-                  <span>{isHe ? "אתר קדמי - אלחנתי" : "Kedmi - Elhanati Firm"}</span>
+                  <span>{getL('auditorFirmLink')}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -369,7 +583,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                   {a.cpaOfficeName}
                 </h5>
                 <p className="text-xs text-slate-600 mt-0.5">
-                  {isHe ? "רואי חשבון רשמיים של העמותה" : "Official CPAs of the Friends Association"}
+                  {getL('cpaSubtext')}
                 </p>
               </div>
             </div>
@@ -395,7 +609,7 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-900 hover:underline"
                 >
-                  <span>{isHe ? "אתר המשרד הרשמי" : "Official Firm Website"}</span>
+                  <span>{getL('legalFirmLink')}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -419,3 +633,5 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
     </section>
   );
 }
+
+export default AboutAndLeadership;

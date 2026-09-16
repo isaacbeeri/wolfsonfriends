@@ -4,6 +4,19 @@ import { Heart, CheckCircle2, TrendingUp, Sparkles, Filter } from "lucide-react"
 
 export function ProjectsSection({ t, lang, onOpenDonate }) {
   const [filter, setFilter] = useState("all");
+
+  const statusPillMap = {
+    he: 'פרויקט בתכנון וגיוס שותפים',
+    ar: 'مشروع قيد التخطيط والشراكة',
+    ru: 'Проект в стадии планирования',
+    es: 'Proyecto en planificación y alianzas',
+    ja: '計画・パートナーシップ募集中',
+    pt: 'Projeto em planejamento e captação',
+    fr: 'Projet en planification',
+    de: 'Projekt in Planung',
+    en: 'Proposed Strategic Initiative'
+  };
+
   const pText = t.projectsSection;
 
   const filteredProjects = projects.filter((item) => {
@@ -20,7 +33,17 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
   ];
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat(lang === "he" ? "he-IL" : "en-US", {
+    const localeMap = {
+      he: 'he-IL',
+      ar: 'ar-IL',
+      ru: 'ru-RU',
+      es: 'es-ES',
+      ja: 'ja-JP',
+      pt: 'pt-BR',
+      fr: 'fr-FR',
+      de: 'de-DE'
+    };
+    return new Intl.NumberFormat(localeMap[lang] || 'en-US', {
       style: "currency",
       currency: "USD",
       maximumFractionDigits: 0
@@ -49,16 +72,39 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0 mt-1.5 animate-pulse"></span>
             <div>
               <strong className="block font-bold mb-0.5 text-amber-950">
-                {lang === 'he' ? 'יעדי פיתוח ושאיפות אסטרטגיות בתכנון וגיוס' : (lang === 'fr' ? 'Objectifs stratégiques & projets en phase de levée de fonds' : (lang === 'de' ? 'Strategische Entwicklungsziele in Planung & Mittelbeschaffung' : 'Strategic Development Objectives & Proposed Campaigns'))}
+                {lang === 'he' ? 'יעדי פיתוח ושאיפות אסטרטגיות בתכנון וגיוס' : 
+                 (lang === 'ar' ? 'أهداف التطوير والتطلعات الاستراتيجية قيد التخطيط وجمع التبرعات' :
+                 (lang === 'ru' ? 'Стратегические цели и направления развития в стадии планирования и сбора средств' :
+                 (lang === 'es' ? 'Objetivos estratégicos y proyectos en fase de planificación y recaudación' :
+                 (lang === 'ja' ? '計画および募金活動中の戦略的開発目標・重点ビジョン' :
+                 (lang === 'pt' ? 'Objetivos estratégicos e projetos em fase de planejamento e captação' :
+                 (lang === 'fr' ? 'Objectifs stratégiques & projets en phase de levée de fonds' : 
+                 (lang === 'de' ? 'Strategische Entwicklungsziele in Planung & Mittelbeschaffung' : 
+                 'Strategic Development Objectives & Proposed Campaigns')))))))}
               </strong>
               <span>
                 {lang === 'he' 
                   ? 'הפרויקטים המוצגים להלן מהווים את חזון הדגל ויעדי הפיתוח הקריטיים של המרכז הרפואי וולפסון. העמותה מגייסת שותפויות פילנתרופיות מייסדות על מנת להביאם לכדי מימוש מלא.'
-                  : (lang === 'fr'
-                    ? 'Les projets ci-dessous représentent la vision d\'avenir et les ambitions majeures du Centre Médical Wolfson. L\'Association recherche activement des partenaires fondateurs pour leur concrétisation.'
-                    : (lang === 'de'
-                      ? 'Die nachfolgenden Projekte verkörpern die strategischen Zukunftsziele des Wolfson Medical Centers. Die Fördergesellschaft wirbt um philanthropische Partnerschaften zu deren Verwirklichung.'
-                      : 'The initiatives below represent the flagship vision and priority strategic objectives of Edith Wolfson Medical Center. The Friends Association is actively seeking founding philanthropic partners to bring them into full reality.'
+                  : (lang === 'ar'
+                    ? 'تمثل المشاريع المعروضة أدناه الرؤية الريادية والأهداف الاستراتيجية الحيوية لمركز إديث فولفسون الطبي. تعمل الجمعية على تجنيد شراكات خيرية مؤسسة لتحقيقها على أرض الواقع بالكامل.'
+                    : (lang === 'ru'
+                      ? 'Представленные ниже проекты олицетворяют ключевое видение будущего и стратегические цели Медицинского центра Вольфсон. Общество друзей активно привлекает партнеров-основателей для их полного воплощения в жизнь.'
+                      : (lang === 'es'
+                        ? 'Los proyectos presentados a continuación representan la visión emblemática y las metas estratégicas de desarrollo del Centro Médico Wolfson. La Asociación busca socios filantrópicos fundadores para hacerlos realidad.'
+                        : (lang === 'ja'
+                          ? '以下に紹介するプロジェクトは、ウォルフソン医療センターの将来を拓く中核的な重点開発目標です。友の会はこれらを完全に実現するための共同設立パートナーを求めています。'
+                          : (lang === 'pt'
+                            ? 'Os projetos apresentados a seguir representam a visão prioritária e as metas estratégicas de desenvolvimento do Centro Médico Wolfson. A Associação busca parceiros filantrópicos fundadores para concretizá-los plenamente.'
+                            : (lang === 'fr'
+                              ? 'Les projets ci-dessous représentent la vision d\'avenir et les ambitions majeures du Centre Médical Wolfson. L\'Association recherche activement des partenaires fondateurs pour leur concrétisation.'
+                              : (lang === 'de'
+                                ? 'Die nachfolgenden Projekte verkörpern die strategischen Zukunftsziele des Wolfson Medical Centers. Die Fördergesellschaft wirbt um philanthropische Partnerschaften zu deren Verwirklichung.'
+                                : 'The initiatives below represent the flagship vision and priority strategic objectives of Edith Wolfson Medical Center. The Friends Association is actively seeking founding philanthropic partners to bring them into full reality.'
+                              )
+                            )
+                          )
+                        )
+                      )
                     )
                   )
                 }
@@ -123,7 +169,7 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
                     <div className="absolute bottom-3 inset-x-4 text-white">
                       <div className="flex justify-between items-center bg-slate-950/80 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10">
                         <span className="text-[11px] font-bold text-sky-300">
-                          {lang === 'he' ? 'יעד תקציבי נדרש' : (lang === 'fr' ? 'Objectif de Financement' : (lang === 'de' ? 'Finanzierungsziel' : 'Funding Target'))}
+                          {pText.goalLabel}
                         </span>
                         <span className="text-amber-300 font-black text-sm">{formatCurrency(item.goal)}</span>
                       </div>
@@ -156,7 +202,7 @@ export function ProjectsSection({ t, lang, onOpenDonate }) {
                   <div className="flex items-center justify-between py-3 text-xs text-slate-500 font-medium">
                     <span className="inline-flex items-center gap-1.5 text-slate-700 font-semibold">
                       <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                      {lang === 'he' ? 'פרויקט בתכנון וגיוס שותפים' : (lang === 'fr' ? 'Projet en planification' : (lang === 'de' ? 'Projekt in Planung' : 'Proposed Strategic Initiative'))}
+                      {statusPillMap[lang] || statusPillMap.en}
                     </span>
                     {item.annualOp && (
                       <span className="text-slate-400 font-mono text-[11px]">+{formatCurrency(item.annualOp)}/yr</span>

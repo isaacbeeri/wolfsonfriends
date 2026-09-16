@@ -130,7 +130,7 @@ export function App() {
         href="#main-content" 
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-wolfson-blue focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-4 focus:ring-sky-400 focus:font-bold text-sm"
       >
-        {lang === "he" ? "דלג לתוכן המרכזי" : (lang === "fr" ? "Passer au contenu principal" : (lang === "de" ? "Zum Hauptinhalt springen" : "Skip to main content"))}
+        {lang === "he" ? "דלג לתוכן המרכזי" : (lang === "ar" ? "الانتقال إلى المحتوى الرئيسي" : (lang === "ru" ? "Перейти к основному контенту" : (lang === "es" ? "Saltar al contenido principal" : (lang === "ja" ? "メインコンテンツへスキップ" : (lang === "pt" ? "Pular para o conteúdo principal" : (lang === "fr" ? "Passer au contenu principal" : (lang === "de" ? "Zum Hauptinhalt springen" : "Skip to main content")))))))}
       </a>
 
       {/* Top Navbar */}
@@ -156,7 +156,7 @@ export function App() {
         ) : (
           <>
             <Hero t={t} onOpenDonate={handleOpenDonate} dir={dir} lang={lang} />
-            <BrandPillars t={t} />
+            <BrandPillars t={t} lang={lang} />
             <ProjectsSection t={t} lang={lang} onOpenDonate={handleOpenDonate} />
             <DisparityComparison t={t} dir={dir} />
             <VideoShowcase t={t} onOpenDonate={handleOpenDonate} />

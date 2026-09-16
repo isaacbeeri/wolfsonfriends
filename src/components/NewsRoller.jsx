@@ -2,6 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft, ExternalLink, ArrowRight, ArrowLeft, Radio, Sparkles, Pause, Play } from "lucide-react";
 import { getStoredNews } from "../data/newsData";
 
+
+  const liveTextMap = {
+    he: "עדכונים שוטפים",
+    ar: "تحديثات حية",
+    ru: "Новости и события",
+    es: "Actualizaciones en vivo",
+    ja: "最新ニュース",
+    pt: "Atualizações ao vivo",
+    fr: "Actualités en direct",
+    de: "Aktuelle Meldungen",
+    en: "Live Updates"
+  };
+
 export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
   const [items, setItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -109,7 +122,7 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
           </span>
           <span className="tracking-wide">
-            {isRtl ? "עדכונים שוטפים" : "Live Updates"}
+            {liveTextMap[lang] || liveTextMap.en}
           </span>
         </div>
 
