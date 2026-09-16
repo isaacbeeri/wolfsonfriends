@@ -127,7 +127,9 @@
   <body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
     <!-- Skip Link: Must be the very first focusable element (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">דלג לתוכן המרכזי</a>
-    <div id="root"></div>
+    <div id="root">
+      <main id="main-content" tabindex="-1"></main>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
 
     <!-- RTL Semantic HTML and WCAG Accessibility Remediation Script -->
