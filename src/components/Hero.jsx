@@ -7,7 +7,7 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
 
   return (
-    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-wolfson-navy text-white">
+    <section aria-labelledby="main-heading" className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-wolfson-navy text-white">
       {/* Background Aerial Photo with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -39,7 +39,7 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
           
           {/* Main Pitch & CTAs Column */}
           <div className="lg:col-span-7 xl:col-span-7">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight sm:leading-tight mb-6">
+            <h1 id="main-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight sm:leading-tight mb-6">
               {t.hero.title}
             </h1>
             <p className="text-base sm:text-xl text-slate-200 leading-relaxed mb-8 font-normal">

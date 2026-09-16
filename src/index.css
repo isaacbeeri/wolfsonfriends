@@ -58,3 +58,65 @@ body.accessibility-stop-animations * {
   animation: none !important;
   transition: none !important;
 }
+
+/* WCAG 2.1 AA Compliant Semantic Layout & RTL Accessibility Patch */
+:root {
+  --primary-accessible-blue: #005A9C; /* WCAG AA compliant contrast ratio >= 4.5:1 against white */
+  --text-dark: #212121;
+  --bg-light: #FFFFFF;
+  --focus-outline-color: #FFBF47;
+}
+
+/* Skip Link styling for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  right: 10px; /* RTL placement */
+  background: var(--primary-accessible-blue);
+  color: white;
+  padding: 10px 20px;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.2s ease;
+}
+
+[dir="rtl"] .skip-link {
+  right: 10px;
+  left: auto;
+}
+
+[dir="ltr"] .skip-link {
+  left: 10px;
+  right: auto;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--focus-outline-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Visible focus indicators for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus-outline-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

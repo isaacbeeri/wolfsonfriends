@@ -128,7 +128,7 @@ export function App() {
       {/* Skip to Main Content (WCAG 2.1 SC 2.4.1) */}
       <a 
         href="#main-content" 
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-wolfson-blue focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-4 focus:ring-sky-400 focus:font-bold text-sm"
+        className="skip-link"
       >
         {lang === "he" ? "דלג לתוכן המרכזי" : (lang === "ar" ? "الانتقال إلى المحتوى الرئيسي" : (lang === "ru" ? "Перейти к основному контенту" : (lang === "es" ? "Saltar al contenido principal" : (lang === "ja" ? "メインコンテンツへスキップ" : (lang === "pt" ? "Pular para o conteúdo principal" : (lang === "fr" ? "Passer au contenu principal" : (lang === "de" ? "Zum Hauptinhalt springen" : "Skip to main content")))))))}
       </a>
@@ -145,7 +145,7 @@ export function App() {
       />
 
       {/* Main Content Sections */}
-      <main id="main-content" role="main" className="flex-1">
+      <main id="main-content" tabIndex={-1} role="main" className="flex-1 focus:outline-none">
         {currentView === "faq" ? (
           <FaqPage
             lang={lang}
