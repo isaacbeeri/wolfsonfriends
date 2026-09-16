@@ -132,7 +132,30 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
       es: 'Art. 46 vigente hasta 31.12.2029 | Gestión Correcta | 501(c)(3) vía JGive',
       ja: '第46条免税認可（2029年12月31日まで有効）| 適正管理認可 | 米国501(c)(3)対応（JGive経由）',
       pt: 'Art. 46 válido até 31.12.2029 | Gestão Idônea | US 501(c)(3) via JGive'
+    },
+    legalDisclaimerTitle: {
+      he: 'הבהרה משפטית ועצמאות ארגונית',
+      en: 'Legal Disclaimer & Organizational Independence',
+      fr: 'Mentions Légales & Indépendance',
+      de: 'Rechtlicher Hinweis & Unabhängigkeit',
+      ar: 'إخلاء مسؤولية قانوني والاستقلالية',
+      ru: 'Юридическое уведомление и независимость',
+      es: 'Aviso Legal e Independencia',
+      ja: '法的免責事項および組織の独立性',
+      pt: 'Aviso Legal e Independência'
+    },
+    legalDisclaimerBody: {
+      he: 'עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון (ע״ר 580022507) הינה עמותה רשומה עצמאית ונפרדת משפטית וארגונית מהמרכז הרפואי ע״ש אדית וולפסון וכן מקרן וולפסון (Wolfson Foundation). העמותה פועלת באופן עצמאי לגיוס משאבים, פיתוח ותמיכה בפעילות המרכז הרפואי ולרווחת המטופלים והצוות.',
+      en: 'Friends of the Edith Wolfson Medical Center (Registered NGO 580022507) is an independent non-profit organization, legally and organizationally separate from the Edith Wolfson Medical Center and from the Wolfson Foundation (Wolfson Foundation). The association operates independently to raise funds and support healthcare development and patient welfare at the medical center.',
+      fr: "L'Association des Amis du Centre Médical Edith Wolfson (ONG déposée 580022507) est une organisation à but non lucratif indépendante, juridiquement et organisationnellement distincte du Centre Médical Edith Wolfson et de la Fondation Wolfson (Wolfson Foundation).",
+      de: 'Der Verein der Freunde des Edith Wolfson Medical Center (Eingetragene NGO 580022507) ist eine unabhängige gemeinnützige Organisation, die rechtlich und organisatorisch vom Edith Wolfson Medical Center sowie von der Wolfson Foundation getrennt ist.',
+      ar: 'جمعية أصدقاء مركز إديث فولفسون الطبي (جمعية مسجلة 580022507) هي جمعية مستقلة غير ربحية، منفصلة قانونياً وتنظيمياً عن مركز إديث فولفسون الطبي وعن مؤسسة فولفسون (Wolfson Foundation).',
+      ru: 'Общество друзей Медицинского центра им. Эдит Вольфсон (Зарегистрированное НКО 580022507) является независимой некоммерческой организацией, юридически и организационно отделенной от Медицинского центра им. Эдит Вольфсон и Фонда Вольфсона (Wolfson Foundation).',
+      es: 'La Asociación de Amigos del Centro Médico Edith Wolfson (ONG registrada 580022507) es una organización independiente sin fines de lucro, legalmente separada del Centro Médico Edith Wolfson y de la Fundación Wolfson (Wolfson Foundation).',
+      ja: 'エディス・ウルフソン・メディカルセンター友の会（登録非営利団体 580022507）は、エディス・ウルフソン・メディカルセンターおよびウルフソン財団（Wolfson Foundation）から法的・組織的に独立した非営利団体です。',
+      pt: 'A Associação de Amigos do Centro Médico Edith Wolfson (ONG registrada 580022507) é uma organização independente sem fins lucrativos, legalmente e organizacionalmente separada do Centro Médico Edith Wolfson e da Fundação Wolfson (Wolfson Foundation).'
     }
+
   };
 
   const getF = (key) => (footerDict[key] && (footerDict[key][lang] || footerDict[key].en)) || '';
@@ -306,6 +329,17 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
           <p className='text-slate-600 text-[11px] leading-relaxed'>
             {f.taxNotice} {f.usNotice}
           </p>
+
+          {/* Official Israeli Law Independence Legal Disclaimer */}
+          <div className='mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/60'>
+            <div className='font-bold text-slate-300 mb-1 flex items-center gap-1.5'>
+              <ShieldCheck className='w-3.5 h-3.5 text-sky-400 shrink-0' />
+              <span>{getF('legalDisclaimerTitle')}</span>
+            </div>
+            <p className='text-slate-400 leading-normal'>
+              {getF('legalDisclaimerBody')}
+            </p>
+          </div>
         </div>
 
       </div>
