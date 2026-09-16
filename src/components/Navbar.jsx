@@ -46,12 +46,19 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
   };
 
   return (
-    <header role="banner" className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
+    <header role="banner" className={`site-header fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
       scrolled 
         ? "bg-white/95 backdrop-blur-md shadow-lg py-2 border-b border-slate-200" 
         : "bg-white/95 backdrop-blur-md py-3 sm:py-3.5 border-b border-slate-100"
     }`}>
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
+      <div className="header-container w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
+        
+        {/* Semantic H1 representing the core entity */}
+        <h1 className="site-title sr-only">
+          <a href="https://wolfsonfriends.com/" rel="home" title={lang === "he" ? "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון - דף הבית" : "Friends of Edith Wolfson Medical Center - Home"}>
+            {lang === "he" ? "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון" : "Friends of Edith Wolfson Medical Center"}
+          </a>
+        </h1>
         
         {/* Single Large & Clear Logo in Top Corner */}
         <a 

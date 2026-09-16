@@ -39,9 +39,9 @@ export function Hero({ t, onOpenDonate, dir, lang }) {
           
           {/* Main Pitch & CTAs Column */}
           <div className="lg:col-span-7 xl:col-span-7">
-            <h1 id="main-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight sm:leading-tight mb-6">
+            <h2 id="main-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight sm:leading-tight mb-6">
               {t.hero.title}
-            </h1>
+            </h2>
             <p className="text-base sm:text-xl text-slate-200 leading-relaxed mb-8 font-normal">
               {t.hero.subtitle}
             </p>
