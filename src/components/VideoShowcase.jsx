@@ -1,19 +1,26 @@
 import React, { useState, useRef } from "react";
-import { Play, CheckCircle2, Film, Heart } from "lucide-react";
+import { Play, CheckCircle2, Film, Heart, ExternalLink } from "lucide-react";
 
 export function VideoShowcase({ t, onOpenDonate }) {
   const v = t.videoSection;
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handleTogglePlay = () => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        videoRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch((err) => {
-          console.warn("Playback prevented or deferred:", err);
-        });
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch((err) => {
+              console.warn("Playback gesture deferral:", err);
+              setIsPlaying(true);
+            });
+        }
       } else {
         videoRef.current.pause();
         setIsPlaying(false);
@@ -51,16 +58,22 @@ export function VideoShowcase({ t, onOpenDonate }) {
               
               <video
                 ref={videoRef}
+                src="/video/pet-ct-showcase.mp4"
                 controls
                 playsInline
                 webkit-playsinline="true"
                 x5-playsinline="true"
+                aria-label={v.title}
                 className="w-full h-full object-cover cursor-pointer"
                 poster="/images/hero-aerial.jpg"
                 preload="auto"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
+                onError={(e) => {
+                  console.error("Video element error:", e);
+                  setHasError(true);
+                }}
               >
                 <source src="/video/pet-ct-showcase.mp4" type="video/mp4" />
                 <source src="./video/pet-ct-showcase.mp4" type="video/mp4" />
@@ -81,8 +94,18 @@ export function VideoShowcase({ t, onOpenDonate }) {
               )}
 
             </div>
-            <div className="text-center mt-3 text-xs text-slate-400">
-              {v.duration} • Edith Wolfson Medical Center
+
+            <div className="flex items-center justify-between mt-3 text-xs text-slate-400 px-1">
+              <span>{v.duration} • Edith Wolfson Medical Center</span>
+              <a
+                href="/video/pet-ct-showcase.mp4"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors font-medium"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>MP4 Video Direct Link</span>
+              </a>
             </div>
           </div>
 
