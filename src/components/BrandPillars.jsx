@@ -6,24 +6,21 @@ export function BrandPillars({ t, lang }) {
 
   const pillarTags = {
     care: {
-      he: "חזון מוביל", en: "Overarching Vision", ar: "الرؤية الشاملة", ru: "Главная миссия", es: "Visión Global", ja: "包括的ビジョン", pt: "Visão Abrangente", fr: "Vision Globale", de: "Übergeordnete Vision"
+      he: "קשת כחולה | חזון מוביל", en: "Blue Arc | Vision", ar: "القوس الأزرق | الرؤية", ru: "Голубая дуга | Миссия", es: "Arco Azul | Visión", ja: "青い弧 | ビジョン", pt: "Arco Azul | Visão", fr: "Arc Bleu | Vision", de: "Blauer Bogen | Vision"
     },
     innovation: {
-      he: "ריבוע כחול", en: "Blue Square", ar: "المربع الأزرق", ru: "Синий квадрат", es: "Cuadrado Azul", ja: "青い正方形", pt: "Quadrado Azul", fr: "Carré Bleu", de: "Blaues Quadrat"
+      he: "ריבוע כחול | חדשנות", en: "Blue Square | Innovation", ar: "المربع الأزرق | الابتكار", ru: "Синий квадрат | Инновации", es: "Cuadrado Azul | Innovación", ja: "青い正方形 | イノベーション", pt: "Quadrado Azul | Inovação", fr: "Carré Bleu | Innovation", de: "Blaues Quadrat | Innovation"
     },
     infrastructure: {
-      he: "משולש צהוב", en: "Yellow Triangle", ar: "المثلث الأصفر", ru: "Желтый треугольник", es: "Triángulo Amarillo", ja: "黄色い三角形", pt: "Triângulo Amarelo", fr: "Triangle Jaune", de: "Gelbes Dreieck"
+      he: "משולש צהוב | תשתיות", en: "Yellow Triangle | Infrastructure", ar: "المثلث الأصفر | البنية التحتية", ru: "Желтый треугольник | Инфраструктура", es: "Triángulo Amarillo | Infraestructura", ja: "黄色い三角形 | インフラ", pt: "Triângulo Amarelo | Infraestrutura", fr: "Triangle Jaune | Infrastructure", de: "Gelbes Dreieck | Infrastruktur"
     },
     workforce: {
-      he: "לב ומעגל אדום", en: "Red Heart & Circle", ar: "القلب والدائرة الحمراء", ru: "Красное сердце", es: "Corazón y Círculo Rojo", ja: "赤いハートと円", pt: "Coração e Círculo Vermelho", fr: "Cœur et Cercle Rouge", de: "Rotes Herz & Kreis"
+      he: "מעגל אדום | צוות וחמלה", en: "Red Circle | Workforce", ar: "الدائرة الحمراء | الكוادر", ru: "Красный круг | Команда", es: "Círculo Rojo | Personal", ja: "赤い円 | 人材", pt: "Círculo Vermelho | Equipe", fr: "Cercle Rouge | Équipe", de: "Roter Kreis | Personal"
     },
     community: {
-      he: "פסים ירוקים", en: "Green Stripes", ar: "الخطوط الخضراء", ru: "Зеленые полосы", es: "Franjas Verdes", ja: "緑のストライプ", pt: "Listras Verdes", fr: "Bandes Vertes", de: "Grüne Streifen"
+      he: "פסים ירוקים | קהילה ושוויון", en: "Green Stripes | Community Equity", ar: "الخطوط الخضراء | المجتمع", ru: "Зеленые полосы | Сообщество", es: "Franjas Verdes | Comunidad", ja: "緑のストライプ | 地域社会", pt: "Listras Verdes | Comunidade", fr: "Bandes Vertes | Communauté", de: "Grüne Streifen | Gemeinschaft"
     }
   };
-
-  const getTag = (key) => (pillarTags[key] && (pillarTags[key][t.lang || 'he'] || pillarTags[key].en)) || '';
-
 
   const pillarsList = [
     {
@@ -38,6 +35,11 @@ export function BrandPillars({ t, lang }) {
           <path d="M3 18C3 10.5 7.5 5 12 5C16.5 5 21 10.5 21 18" strokeLinecap="round" />
         </svg>
       ),
+      logoSymbol: (
+        <svg className="w-3.5 h-3.5 text-sky-500 fill-sky-500 shrink-0" viewBox="0 0 16 16">
+          <path d="M2 14C2 7.373 7.373 2 14 2V6C9.582 6 6 9.582 6 14H2Z" />
+        </svg>
+      ),
       tag: (pillarTags.care[lang] || pillarTags.care.en)
     },
     {
@@ -48,6 +50,9 @@ export function BrandPillars({ t, lang }) {
       iconBg: "bg-gradient-to-br from-blue-700 to-blue-900",
       shape: "rounded-xl",
       icon: <Cpu className="w-5 h-5 text-white" />,
+      logoSymbol: (
+        <span className="w-3 h-3 bg-blue-700 rounded-[2px] inline-block shrink-0 ring-1 ring-blue-900/30" />
+      ),
       tag: (pillarTags.innovation[lang] || pillarTags.innovation.en)
     },
     {
@@ -58,6 +63,11 @@ export function BrandPillars({ t, lang }) {
       iconBg: "bg-gradient-to-br from-amber-500 to-amber-600",
       shape: "rounded-xl",
       icon: <Building2 className="w-5 h-5 text-white" />,
+      logoSymbol: (
+        <svg className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0" viewBox="0 0 16 16">
+          <polygon points="8,2 15,14 1,14" />
+        </svg>
+      ),
       tag: (pillarTags.infrastructure[lang] || pillarTags.infrastructure.en)
     },
     {
@@ -68,6 +78,9 @@ export function BrandPillars({ t, lang }) {
       iconBg: "bg-gradient-to-br from-red-600 to-rose-700",
       shape: "rounded-full",
       icon: <Heart className="w-5 h-5 fill-white text-white" />,
+      logoSymbol: (
+        <span className="w-3 h-3 bg-red-600 rounded-full inline-block shrink-0 ring-1 ring-red-700/30" />
+      ),
       tag: (pillarTags.workforce[lang] || pillarTags.workforce.en)
     },
     {
@@ -78,6 +91,14 @@ export function BrandPillars({ t, lang }) {
       iconBg: "bg-gradient-to-br from-emerald-600 to-teal-700",
       shape: "rounded-xl",
       icon: <Users className="w-5 h-5 text-white" />,
+      logoSymbol: (
+        <svg className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600 shrink-0" viewBox="0 0 16 16">
+          <rect x="1" y="2" width="14" height="2" rx="0.5" />
+          <rect x="1" y="6" width="14" height="2" rx="0.5" />
+          <rect x="1" y="10" width="14" height="2" rx="0.5" />
+          <rect x="1" y="14" width="14" height="2" rx="0.5" />
+        </svg>
+      ),
       tag: (pillarTags.community[lang] || pillarTags.community.en)
     }
   ];
@@ -109,8 +130,9 @@ export function BrandPillars({ t, lang }) {
                   <span className={`w-12 h-12 ${item.shape} ${item.iconBg} text-white flex items-center justify-center shadow-md`}>
                     {item.icon}
                   </span>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/80 text-slate-700 shadow-xs border border-slate-200/50">
-                    {item.tag}
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-lg bg-white/90 text-slate-800 shadow-xs border border-slate-200/60">
+                    {item.logoSymbol}
+                    <span>{item.tag}</span>
                   </span>
                 </div>
                 <h3 className="text-lg font-bold mb-2 tracking-tight">
@@ -156,3 +178,5 @@ export function BrandPillars({ t, lang }) {
     </section>
   );
 }
+
+export default BrandPillars;
