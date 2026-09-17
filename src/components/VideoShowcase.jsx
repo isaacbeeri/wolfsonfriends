@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Play, CheckCircle2, Film, Heart } from "lucide-react";
 
 export function VideoShowcase({ t, onOpenDonate }) {
   const v = t.videoSection;
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleTogglePlay = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.warn("Playback prevented or deferred:", err);
+        });
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
 
   return (
     <section id="video" className="py-20 bg-slate-900 text-white relative overflow-hidden">
@@ -31,15 +48,38 @@ export function VideoShowcase({ t, onOpenDonate }) {
           {/* Video Player Column */}
           <div className="lg:col-span-7">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black aspect-video group">
+              
               <video
+                ref={videoRef}
                 controls
-                className="w-full h-full object-cover"
+                playsInline
+                webkit-playsinline="true"
+                x5-playsinline="true"
+                className="w-full h-full object-cover cursor-pointer"
                 poster="/images/hero-aerial.jpg"
-                preload="metadata"
+                preload="auto"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onEnded={() => setIsPlaying(false)}
               >
                 <source src="/video/pet-ct-showcase.mp4" type="video/mp4" />
+                <source src="./video/pet-ct-showcase.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+
+              {/* Big Interactive Play Button Overlay for Mobile & Desktop */}
+              {!isPlaying && (
+                <button
+                  onClick={handleTogglePlay}
+                  aria-label="Play video"
+                  className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/25 transition-all z-20 cursor-pointer group"
+                >
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform ring-8 ring-white/30">
+                    <Play className="w-10 h-10 sm:w-12 sm:h-12 fill-white ms-1" />
+                  </div>
+                </button>
+              )}
+
             </div>
             <div className="text-center mt-3 text-xs text-slate-400">
               {v.duration} • Edith Wolfson Medical Center
@@ -86,3 +126,5 @@ export function VideoShowcase({ t, onOpenDonate }) {
     </section>
   );
 }
+
+export default VideoShowcase;
