@@ -434,31 +434,31 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             
             {/* Chairman Card */}
-            <div className="p-7 rounded-3xl bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 text-white shadow-xl flex flex-col justify-between border-2 border-sky-500/30">
+            <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-md flex flex-col justify-between hover:shadow-lg transition-shadow">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-xs font-extrabold uppercase tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
                     {a.chairmanBadge}
                   </span>
-                  <Award className="w-5 h-5 text-amber-400" />
+                  <Award className="w-5 h-5 text-amber-500" />
                 </div>
-                <h4 className="text-2xl font-black mb-1.5 text-white tracking-tight">
+                <h4 className="text-2xl font-bold mb-1.5 text-slate-900 tracking-tight">
                   {a.chairmanName}
                 </h4>
-                <p className="text-xs sm:text-sm text-sky-200 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
                   {a.chairmanRole}
                 </p>
               </div>
-              <div className="pt-4 mt-6 border-t border-white/10 text-[11px] text-slate-300 font-medium flex items-center justify-between">
+              <div className="pt-4 mt-6 border-t border-slate-100 text-[11px] text-slate-500 font-medium flex items-center justify-between">
                 <span>{getL('chiefSignatory')}</span>
                 <a
                   href="https://www.linkedin.com/in/thegib/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/35 text-sky-200 hover:text-white transition-colors text-[11px] font-bold border border-sky-400/30"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 transition-colors text-[11px] font-bold border border-sky-200 shadow-xs"
                   title="Isaac Beeri | LinkedIn"
                 >
-                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 fill-current text-sky-700" viewBox="0 0 24 24">
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
                   </svg>
                   <span>LinkedIn</span>
