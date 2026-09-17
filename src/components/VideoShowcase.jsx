@@ -1,32 +1,8 @@
-import React, { useState, useRef } from "react";
-import { Play, CheckCircle2, Film, Heart, ExternalLink } from "lucide-react";
+import React from "react";
+import { CheckCircle2, Film, Heart, ExternalLink } from "lucide-react";
 
 export function VideoShowcase({ t, onOpenDonate }) {
   const v = t.videoSection;
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  const handleTogglePlay = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setIsPlaying(true);
-            })
-            .catch((err) => {
-              console.warn("Playback gesture deferral:", err);
-              setIsPlaying(true);
-            });
-        }
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
-    }
-  };
 
   return (
     <section id="video" className="py-20 bg-slate-900 text-white relative overflow-hidden">
@@ -52,59 +28,28 @@ export function VideoShowcase({ t, onOpenDonate }) {
         {/* Video Player & Insights Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto">
           
-          {/* Video Player Column */}
+          {/* Video Player Column (Responsive Embedded YouTube Player) */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black aspect-video group">
-              
-              <video
-                ref={videoRef}
-                src="/video/pet-ct-showcase.mp4"
-                controls
-                playsInline
-                webkit-playsinline="true"
-                x5-playsinline="true"
-                aria-label={v.title}
-                className="w-full h-full object-cover cursor-pointer"
-                poster="/images/hero-aerial.jpg"
-                preload="auto"
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                onEnded={() => setIsPlaying(false)}
-                onError={(e) => {
-                  console.error("Video element error:", e);
-                  setHasError(true);
-                }}
-              >
-                <source src="/video/pet-ct-showcase.mp4" type="video/mp4" />
-                <source src="./video/pet-ct-showcase.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-
-              {/* Big Interactive Play Button Overlay for Mobile & Desktop */}
-              {!isPlaying && (
-                <button
-                  onClick={handleTogglePlay}
-                  aria-label="Play video"
-                  className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/25 transition-all z-20 cursor-pointer group"
-                >
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform ring-8 ring-white/30">
-                    <Play className="w-10 h-10 sm:w-12 sm:h-12 fill-white ms-1" />
-                  </div>
-                </button>
-              )}
-
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black aspect-video">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/Z1Z1xyqyyxw?rel=0&autoplay=0"
+                title={v.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full border-0 rounded-3xl"
+              ></iframe>
             </div>
 
             <div className="flex items-center justify-between mt-3 text-xs text-slate-400 px-1">
               <span>{v.duration} • Edith Wolfson Medical Center</span>
               <a
-                href="/video/pet-ct-showcase.mp4"
+                href="https://youtu.be/Z1Z1xyqyyxw"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors font-medium"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>MP4 Video Direct Link</span>
+                <span>YouTube Link</span>
               </a>
             </div>
           </div>
