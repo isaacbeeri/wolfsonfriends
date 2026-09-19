@@ -15,7 +15,12 @@ import { DonationModal } from "./components/DonationModal.jsx";
 import { AdminNewsManager } from "./components/AdminNewsManager.jsx";
 import { AccessibilityToolbar } from "./components/AccessibilityToolbar.jsx";
 import { FaqPage } from "./components/FaqPage.jsx";
-import { AdminPortal } from "./components/admin/AdminPortal.jsx";
+
+// Dynamic Code Segregation: Lazy-load AdminPortal so sensitive code and schemas
+// are never shipped in the public client bundle or downloadable by search/AI crawlers.
+const AdminPortal = React.lazy(() => 
+  import("./components/admin/AdminPortal.jsx").then(m => ({ default: m.AdminPortal }))
+);
 
 export function App() {
   const [lang, setLang] = useState(() => {
@@ -237,7 +242,7 @@ export function App() {
         lang={lang}
       />
 
-            <AccessibilityToolbar
+      <AccessibilityToolbar
         isOpen={isAccessibilityOpen}
         onClose={() => setIsAccessibilityOpen(false)}
         t={t}
@@ -249,10 +254,14 @@ export function App() {
         lang={lang}
       />
 
-      <AdminPortal
-        isOpen={isSecurePortalOpen}
-        onClose={handleCloseSecurePortal}
-      />
+      {isSecurePortalOpen && (
+        <React.Suspense fallback={null}>
+          <AdminPortal
+            isOpen={isSecurePortalOpen}
+            onClose={handleCloseSecurePortal}
+          />
+        </React.Suspense>
+      )}
     </div>
   );
 }

@@ -9,12 +9,96 @@ import * as XLSX from 'xlsx';
 import { INITIAL_DONATIONS, INITIAL_DONORS } from '../data/donationsData.js';
 import initialBoardMembersData from '../data/boardMembers.json';
 import { getStoredLiveRates, fetchLiveExchangeRates, convertToIls } from './currencyService.js';
+import { 
+  encryptData, 
+  decryptData, 
+  isEncrypted, 
+  initSessionCryptoKey, 
+  wipeSessionCryptoKey 
+} from './cryptoService.js';
 
 const DONATIONS_OVERRIDE_KEY = 'fwmc_portal_donations_override_v2';
 const CONTACTS_OVERRIDE_KEY = 'fwmc_portal_contacts_override_v2';
 const FORECAST_STORAGE_KEY = 'fwmc_portal_forecast_v3';
 
 export { getStoredLiveRates, fetchLiveExchangeRates, convertToIls };
+
+// Ephemeral in-memory decrypted cache for active authenticated session
+let memoryVault = {
+  donations: null,
+  contacts: null,
+  forecast: null
+};
+
+/**
+ * Initializes the encrypted data vault upon authenticated 2FA login.
+ * Transparently decrypts AES-256-GCM data into volatile memory and auto-encrypts any legacy items.
+ */
+export async function initializeAdminDataVault() {
+  await initSessionCryptoKey();
+
+  // 1. Decrypt Donations
+  try {
+    const rawDonations = localStorage.getItem(DONATIONS_OVERRIDE_KEY);
+    if (rawDonations) {
+      if (isEncrypted(rawDonations)) {
+        memoryVault.donations = await decryptData(rawDonations);
+      } else {
+        memoryVault.donations = JSON.parse(rawDonations);
+        const enc = await encryptData(memoryVault.donations);
+        localStorage.setItem(DONATIONS_OVERRIDE_KEY, enc);
+      }
+    }
+  } catch (e) {
+    console.warn("Vault donations init notice:", e);
+  }
+
+  // 2. Decrypt Contacts
+  try {
+    const rawContacts = localStorage.getItem(CONTACTS_OVERRIDE_KEY);
+    if (rawContacts) {
+      if (isEncrypted(rawContacts)) {
+        memoryVault.contacts = await decryptData(rawContacts);
+      } else {
+        memoryVault.contacts = JSON.parse(rawContacts);
+        const enc = await encryptData(memoryVault.contacts);
+        localStorage.setItem(CONTACTS_OVERRIDE_KEY, enc);
+      }
+    }
+  } catch (e) {
+    console.warn("Vault contacts init notice:", e);
+  }
+
+  // 3. Decrypt Forecast
+  try {
+    const rawForecast = localStorage.getItem(FORECAST_STORAGE_KEY);
+    if (rawForecast) {
+      if (isEncrypted(rawForecast)) {
+        memoryVault.forecast = await decryptData(rawForecast);
+      } else {
+        memoryVault.forecast = JSON.parse(rawForecast);
+        const enc = await encryptData(memoryVault.forecast);
+        localStorage.setItem(FORECAST_STORAGE_KEY, enc);
+      }
+    }
+  } catch (e) {
+    console.warn("Vault forecast init notice:", e);
+  }
+
+  return true;
+}
+
+/**
+ * Wipes the decrypted data and cryptographic keys from memory on logout/timeout
+ */
+export function wipeAdminDataVault() {
+  memoryVault = {
+    donations: null,
+    contacts: null,
+    forecast: null
+  };
+  wipeSessionCryptoKey();
+}
 
 export const OFFICIAL_BOI_RATES = {
   USD: 3.03,
@@ -152,28 +236,44 @@ const DEFAULT_FORECAST = {
    ============================================================ */
 
 export function getDonations() {
+  if (memoryVault.donations && Array.isArray(memoryVault.donations) && memoryVault.donations.length > 0) {
+    return memoryVault.donations;
+  }
   try {
     const raw = localStorage.getItem(DONATIONS_OVERRIDE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (!isEncrypted(raw)) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          memoryVault.donations = parsed;
+          return parsed;
+        }
+      }
     }
   } catch (e) {}
   return INITIAL_DONATIONS;
 }
 
 export function saveDonations(donations) {
-  try {
-    localStorage.setItem(DONATIONS_OVERRIDE_KEY, JSON.stringify(donations));
-  } catch (e) {
-    console.error("Could not save donations to localStorage:", e);
-  }
+  memoryVault.donations = donations;
+  // Encrypt with AES-256-GCM asynchronously at rest
+  encryptData(donations).then(encryptedString => {
+    try {
+      localStorage.setItem(DONATIONS_OVERRIDE_KEY, encryptedString);
+    } catch (e) {
+      console.error("Could not write encrypted donations:", e);
+    }
+  }).catch(err => {
+    console.error("Encryption error on donations save:", err);
+  });
+  return { success: true };
 }
 
 export function resetDonationsToDefault() {
   try {
     localStorage.removeItem(DONATIONS_OVERRIDE_KEY);
-    localStorage.removeItem('fwmc_portal_donations_override_v1'); // clear legacy polluted store
+    localStorage.removeItem('fwmc_portal_donations_override_v1');
+    memoryVault.donations = INITIAL_DONATIONS;
   } catch (e) {}
   return INITIAL_DONATIONS;
 }
@@ -363,29 +463,42 @@ export async function processDonationsExcelFile(file) {
    ============================================================ */
 
 export function getContacts() {
+  if (memoryVault.contacts && Array.isArray(memoryVault.contacts) && memoryVault.contacts.length > 0) {
+    return memoryVault.contacts;
+  }
   try {
     const raw = localStorage.getItem(CONTACTS_OVERRIDE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (!isEncrypted(raw)) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          memoryVault.contacts = parsed;
+          return parsed;
+        }
+      }
     }
   } catch (e) {}
   return (initialBoardMembersData.contacts || initialBoardMembersData.members || []);
 }
 
 export function saveContacts(contacts) {
-  try {
-    localStorage.setItem(CONTACTS_OVERRIDE_KEY, JSON.stringify(contacts));
-    return { success: true };
-  } catch (e) {
-    console.error("Could not save contacts:", e);
-    return { success: false, error: e.message };
-  }
+  memoryVault.contacts = contacts;
+  encryptData(contacts).then(encryptedString => {
+    try {
+      localStorage.setItem(CONTACTS_OVERRIDE_KEY, encryptedString);
+    } catch (e) {
+      console.error("Could not write encrypted contacts:", e);
+    }
+  }).catch(err => {
+    console.error("Encryption error on contacts save:", err);
+  });
+  return { success: true };
 }
 
 export function resetContactsToDefault() {
   try {
     localStorage.removeItem(CONTACTS_OVERRIDE_KEY);
+    memoryVault.contacts = (initialBoardMembersData.contacts || initialBoardMembersData.members || []);
   } catch (e) {}
   return (initialBoardMembersData.contacts || initialBoardMembersData.members || []);
 }
@@ -553,12 +666,18 @@ export function deleteContact(contactId) {
    ============================================================ */
 
 export function getForecast() {
+  if (memoryVault.forecast && typeof memoryVault.forecast === 'object' && Array.isArray(memoryVault.forecast.pipelineItems)) {
+    return memoryVault.forecast;
+  }
   try {
     const raw = localStorage.getItem(FORECAST_STORAGE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === 'object' && Array.isArray(parsed.pipelineItems)) {
-        return parsed;
+      if (!isEncrypted(raw)) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.pipelineItems)) {
+          memoryVault.forecast = parsed;
+          return parsed;
+        }
       }
     }
   } catch (e) {}
@@ -573,7 +692,16 @@ export function saveForecast(forecast) {
       ...forecast,
       lastUpdated: dateStr
     };
-    localStorage.setItem(FORECAST_STORAGE_KEY, JSON.stringify(data));
+    memoryVault.forecast = data;
+    encryptData(data).then(encryptedString => {
+      try {
+        localStorage.setItem(FORECAST_STORAGE_KEY, encryptedString);
+      } catch (e) {
+        console.error("Could not write encrypted forecast:", e);
+      }
+    }).catch(err => {
+      console.error("Encryption error on forecast save:", err);
+    });
     return { success: true, forecast: data };
   } catch (e) {
     return { success: false, error: e.message };

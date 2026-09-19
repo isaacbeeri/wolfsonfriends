@@ -1,18 +1,64 @@
 /**
  * Authentication and Role-Based Access Control (RBAC) Service
  * Supports Master Admin (Isaac Beeri) + Multi-User management with 2FA
+ * Defense-in-Depth:
+ * - Brute-Force Throttling: Locks after 5 failed attempts for 5 minutes
+ * - Mandatory 2FA for all accounts
+ * - 15-minute inactivity session tracking
  */
 
 import { generateBase32Secret, verifyTOTP, getOtpAuthUrl } from './totp.js';
 
 const USERS_STORAGE_KEY = 'fwmc_portal_users_v2';
 const SESSION_STORAGE_KEY = 'fwmc_portal_session_v1';
-const SESSION_DURATION_MS = 60 * 60 * 1000; // 60 minutes
+const FAILED_ATTEMPTS_KEY = 'fwmc_auth_failed_throttle_v1';
+
+const SESSION_DURATION_MS = 60 * 60 * 1000; // 60 minutes absolute max
+export const SESSION_INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes idle timeout
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_TIME_MS = 5 * 60 * 1000; // 5 minutes lockout
 
 // Fixed Master Secret for Isaac Beeri to enable instant setup with Google Authenticator
-// Note: RFC 4648 Base32 strictly allows characters A-Z and 2-7 (no 0, 1, 8, 9).
-// 'FWMCWOLFSONADMIN' is 16 chars, 100% valid Base32 letters.
 const MASTER_DEFAULT_SECRET = 'FWMCWOLFSONADMIN';
+
+function checkThrottle() {
+  try {
+    const raw = sessionStorage.getItem(FAILED_ATTEMPTS_KEY);
+    if (!raw) return { locked: false };
+    const data = JSON.parse(raw);
+    if (data.count >= MAX_FAILED_ATTEMPTS) {
+      const remainingMs = data.lockedUntil - Date.now();
+      if (remainingMs > 0) {
+        const remainingMin = Math.ceil(remainingMs / 60000);
+        return { 
+          locked: true, 
+          error: `הגישה נחסמה זמנית עקב ${MAX_FAILED_ATTEMPTS} ניסיונות שגויים רצופים. נסה שוב בעוד ${remainingMin} דקות מטעמי אבטחה.` 
+        };
+      } else {
+        sessionStorage.removeItem(FAILED_ATTEMPTS_KEY);
+      }
+    }
+  } catch (e) {}
+  return { locked: false };
+}
+
+function recordFailedAttempt() {
+  try {
+    const raw = sessionStorage.getItem(FAILED_ATTEMPTS_KEY);
+    let data = raw ? JSON.parse(raw) : { count: 0, lockedUntil: 0 };
+    data.count += 1;
+    if (data.count >= MAX_FAILED_ATTEMPTS) {
+      data.lockedUntil = Date.now() + LOCKOUT_TIME_MS;
+    }
+    sessionStorage.setItem(FAILED_ATTEMPTS_KEY, JSON.stringify(data));
+  } catch (e) {}
+}
+
+function clearFailedAttempts() {
+  try {
+    sessionStorage.removeItem(FAILED_ATTEMPTS_KEY);
+  } catch (e) {}
+}
 
 async function hashPassword(password, salt = 'wolfson_salt_2026') {
   const enc = new TextEncoder();
@@ -76,9 +122,14 @@ export async function getUsers() {
 }
 
 /**
- * Step 1 Login: Validate Username & Password
+ * Step 1 Login: Validate Username & Password with Throttling
  */
 export async function validateCredentials(identifier, password) {
+  const throttle = checkThrottle();
+  if (throttle.locked) {
+    return { success: false, error: throttle.error };
+  }
+
   const users = await getUsers();
   const cleanId = identifier.trim().toLowerCase();
   
@@ -88,6 +139,7 @@ export async function validateCredentials(identifier, password) {
   );
 
   if (!user) {
+    recordFailedAttempt();
     return { success: false, error: 'שם משתמש או סיסמה שגויים' };
   }
 
@@ -96,12 +148,13 @@ export async function validateCredentials(identifier, password) {
   const isMatch = (user.passwordHash === enteredHash) || (password === 'Wolfson2026!' && user.username === 'isaac');
 
   if (!isMatch) {
+    recordFailedAttempt();
     return { success: false, error: 'שם משתמש או סיסמה שגויים' };
   }
 
   return {
     success: true,
-    requires2FA: user.totpEnabled,
+    requires2FA: true, // Strictly mandatory 2FA
     user: {
       id: user.id,
       username: user.username,
@@ -117,6 +170,11 @@ export async function validateCredentials(identifier, password) {
  * Step 2 Login: Validate TOTP 6-digit code
  */
 export async function complete2FALogin(userId, totpCode) {
+  const throttle = checkThrottle();
+  if (throttle.locked) {
+    return { success: false, error: throttle.error };
+  }
+
   const users = await getUsers();
   const userIndex = users.findIndex(u => u.id === userId);
   
@@ -128,8 +186,12 @@ export async function complete2FALogin(userId, totpCode) {
   const isValid = await verifyTOTP(totpCode, user.totpSecret);
 
   if (!isValid) {
+    recordFailedAttempt();
     return { success: false, error: 'קוד אימות 2FA שגוי או פג תוקף' };
   }
+
+  // Clear throttle on verified successful login
+  clearFailedAttempts();
 
   // Update last login
   users[userIndex].lastLogin = new Date().toISOString();
