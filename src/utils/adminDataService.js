@@ -11,7 +11,7 @@ import initialBoardMembersData from '../data/boardMembers.json';
 import { getStoredLiveRates, fetchLiveExchangeRates, convertToIls } from './currencyService.js';
 
 const DONATIONS_OVERRIDE_KEY = 'fwmc_portal_donations_override_v2';
-const CONTACTS_OVERRIDE_KEY = 'fwmc_portal_contacts_override_v1';
+const CONTACTS_OVERRIDE_KEY = 'fwmc_portal_contacts_override_v2';
 const FORECAST_STORAGE_KEY = 'fwmc_portal_forecast_v3';
 
 export { getStoredLiveRates, fetchLiveExchangeRates, convertToIls };
@@ -370,15 +370,146 @@ export function getContacts() {
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch (e) {}
-  return initialBoardMembersData.members || [];
+  return (initialBoardMembersData.contacts || initialBoardMembersData.members || []);
 }
 
 export function saveContacts(contacts) {
   try {
     localStorage.setItem(CONTACTS_OVERRIDE_KEY, JSON.stringify(contacts));
+    return { success: true };
   } catch (e) {
     console.error("Could not save contacts:", e);
+    return { success: false, error: e.message };
   }
+}
+
+export function resetContactsToDefault() {
+  try {
+    localStorage.removeItem(CONTACTS_OVERRIDE_KEY);
+  } catch (e) {}
+  return (initialBoardMembersData.contacts || initialBoardMembersData.members || []);
+}
+
+/**
+ * Parses an uploaded Excel file for Contacts Directory (.xlsx)
+ */
+export async function processContactsExcelFile(file) {
+  const data = await file.arrayBuffer();
+  const workbook = XLSX.read(data, { type: 'array' });
+  if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
+    throw new Error('קובץ האקסל אינו מכיל גיליונות.');
+  }
+
+  // Use the first sheet or the sheet named דף קשר
+  let targetSheetName = workbook.SheetNames.find(n => n.includes('קשר') || n.includes('ועד')) || workbook.SheetNames[0];
+  const ws = workbook.Sheets[targetSheetName];
+  const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+  if (rawRows.length < 2) {
+    throw new Error('קובץ האקסל ריק או אינו מכיל שורות נתונים.');
+  }
+
+  function classifyRole(role) {
+    const r = (role || '').toLowerCase();
+    if (r.includes('ועד מנהל') || r.includes('יושב ראש') || r.includes('יו"ר') || r.includes('גזבר') || r.includes('חתימה')) {
+      return 'board';
+    }
+    if (r.includes('רו"ח') || r.includes('רואה חשבון') || r.includes('מנכ"ל') || r.includes('חשבונות') || r.includes('ביקורת')) {
+      return 'management_and_audit';
+    }
+    if (r.includes('בדימוס') || r.includes('יועץ') || r.includes('לשעבר') || r.includes('מתנדב')) {
+      return 'advisors_and_emeriti';
+    }
+    return 'general_members';
+  }
+
+  function parsePhone(val) {
+    if (!val) return '';
+    let s = String(val).trim().replace(/[^\d]/g, '');
+    if (s.startsWith('972')) s = '0' + s.slice(3);
+    if (s.length === 9 && s.startsWith('5')) s = '0' + s;
+    if (s.length === 10 && s.startsWith('05')) {
+      return s.slice(0, 3) + '-' + s.slice(3);
+    }
+    if (s.length === 9 && s.startsWith('0')) {
+      return s.slice(0, 2) + '-' + s.slice(2);
+    }
+    return String(val).trim();
+  }
+
+  let headerIdx = -1;
+  let colMap = { role: -1, firstName: -1, lastName: -1, fullName: -1, phone: -1, email: -1 };
+
+  for (let i = 0; i < Math.min(15, rawRows.length); i++) {
+    const row = rawRows[i].map(c => String(c).trim().toLowerCase());
+    for (let c = 0; c < row.length; c++) {
+      const cell = row[c];
+      if (cell.includes('מחלקה') || cell.includes('תפקיד') || cell.includes('הגדרה') || cell === 'role') colMap.role = c;
+      if (cell.includes('שם פרטי') || cell === 'פרטי' || cell === 'first name') colMap.firstName = c;
+      if (cell.includes('שם משפחה') || cell === 'משפחה' || cell === 'last name') colMap.lastName = c;
+      if (cell === 'שם מלא' || cell === 'שם' || cell === 'שם חבר' || cell === 'full name') colMap.fullName = c;
+      if (cell.includes('נייד') || cell.includes('סלולרי') || cell.includes('טלפון') || cell.includes('phone') || cell.includes('mobile')) colMap.phone = c;
+      if (cell.includes('מייל') || cell.includes('אימייל') || cell.includes('דוא"ל') || cell.includes('email')) colMap.email = c;
+    }
+    if (colMap.phone !== -1 || (colMap.firstName !== -1 && colMap.lastName !== -1) || colMap.role !== -1) {
+      headerIdx = i;
+      break;
+    }
+  }
+
+  if (headerIdx === -1) {
+    headerIdx = 0;
+    colMap = { role: 0, firstName: 1, lastName: 2, fullName: -1, phone: 3, email: 4 };
+  }
+
+  const parsedContacts = [];
+  for (let i = headerIdx + 1; i < rawRows.length; i++) {
+    const row = rawRows[i];
+    if (!row || row.every(cell => !String(cell).trim())) continue;
+
+    const firstName = colMap.firstName !== -1 ? String(row[colMap.firstName] || '').trim() : '';
+    const lastName = colMap.lastName !== -1 ? String(row[colMap.lastName] || '').trim() : '';
+    let fullName = '';
+    if (colMap.fullName !== -1 && row[colMap.fullName]) {
+      fullName = String(row[colMap.fullName]).trim();
+    } else {
+      fullName = `${firstName} ${lastName}`.trim();
+    }
+    
+    // Skip empty names or duplicate headers
+    if (!fullName || fullName === 'שם מלא' || fullName.includes('שם פרטי')) continue;
+
+    const role = colMap.role !== -1 ? String(row[colMap.role] || '').trim() : '';
+    const phone = colMap.phone !== -1 ? parsePhone(row[colMap.phone]) : '';
+    const email = colMap.email !== -1 ? String(row[colMap.email] || '').trim() : '';
+    const category = classifyRole(role);
+
+    parsedContacts.push({
+      id: Date.now() + i,
+      excelRow: i + 1,
+      firstName: firstName || fullName.split(' ')[0] || '',
+      lastName: lastName || fullName.split(' ').slice(1).join(' ') || '',
+      fullName,
+      role,
+      category,
+      phone,
+      email,
+      allEmails: email ? [email] : []
+    });
+  }
+
+  if (parsedContacts.length === 0) {
+    throw new Error('לא זוהו רשומות אנשי קשר תקינות בקובץ.');
+  }
+
+  saveContacts(parsedContacts);
+
+  return {
+    success: true,
+    totalParsed: parsedContacts.length,
+    contacts: parsedContacts,
+    message: `נקלטו בהצלחה ${parsedContacts.length} אנשי קשר מדף הקשר המעודכן.`
+  };
 }
 
 export function updateContact(contactId, updatedFields) {
