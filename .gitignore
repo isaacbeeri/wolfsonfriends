@@ -20,6 +20,10 @@ lerna-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+private_data/
+*.db
+*.sqlite
+*.sqlite3
 
 # Operating System & Editor files
 .DS_Store
@@ -44,6 +48,8 @@ temp_*/
 /*.jpg
 /*.jpeg
 /*.cjs
+/*.mjs
+serve_portal.js
 
 # Exception: keep index.html and root configuration files
 !/index.html

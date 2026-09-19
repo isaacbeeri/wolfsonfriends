@@ -1,0 +1,80 @@
+# Robots.txt for Friends of Edith Wolfson Medical Center
+# Public content allowed, Private administrative areas strictly forbidden
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /secure-portal/
+Disallow: /portal
+Disallow: /portal/
+Disallow: /private_data/
+Disallow: /*?admin=*
+
+# Strict Disallow for Artificial Intelligence & LLM Scrapers
+User-agent: GPTBot
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: ChatGPT-User
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: CCBot
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: Google-Extended
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: Anthropic-ai
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: Claude-Web
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: PerplexityBot
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: Bytespider
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: cohere-ai
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: Omgilibot
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/
+
+User-agent: FacebookBot
+Disallow: /admin
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private_data/

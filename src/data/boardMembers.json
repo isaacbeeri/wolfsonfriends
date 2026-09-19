@@ -1,0 +1,535 @@
+{
+  "sourceFile": "- דף קשר - ועד עמותה  (012026).xlsx",
+  "lastUpdated": "2026-09-19",
+  "totalRecords": 35,
+  "categories": {
+    "board": "ועד מנהל (כולל יו\"ר, גזבר, בעלי זכות חתימה וחברי ועד)",
+    "management_and_audit": "הנהלה, תפעול וביקורת (מנכ\"לית, מנהלת חשבונות, רואי חשבון)",
+    "general_members": "חברי עמותה כלליים",
+    "advisors_and_emeriti": "יועצים ובדימוס"
+  },
+  "contacts": [
+    {
+      "id": 1,
+      "excelRow": 2,
+      "firstName": "צחי",
+      "lastName": "בארי",
+      "fullName": "צחי בארי",
+      "role": "יושב ראש, וועד מנהל ובעל זכות חתימה ראשי",
+      "category": "board",
+      "phone": "052-6272820",
+      "rawPhone": "052-6272820",
+      "email": "isaac.beeri@gmail.com",
+      "allEmails": [
+        "isaac.beeri@gmail.com"
+      ]
+    },
+    {
+      "id": 2,
+      "excelRow": 3,
+      "firstName": "עמוס",
+      "lastName": "שלפמן",
+      "fullName": "עמוס שלפמן",
+      "role": "חבר וועד מנהל, גזבר חבר וועדת כספים, בעל זכות חתימה ראשי",
+      "category": "board",
+      "phone": "054-4559673",
+      "rawPhone": "054-4559673",
+      "email": "amos@s-lcpa.co.il",
+      "allEmails": [
+        "amos@s-lcpa.co.il"
+      ]
+    },
+    {
+      "id": 3,
+      "excelRow": 4,
+      "firstName": "שלמה",
+      "lastName": "רכט",
+      "fullName": "שלמה רכט",
+      "role": "חבר וועד מנהל, יו\"ר וועדת כספים (יו\"ר בדימוס) בעל זכות חתימה",
+      "category": "board",
+      "phone": "052-3252555",
+      "rawPhone": "052-3252555",
+      "email": "recht@netvision.net.il",
+      "allEmails": [
+        "recht@netvision.net.il"
+      ]
+    },
+    {
+      "id": 4,
+      "excelRow": 5,
+      "firstName": "מאיר",
+      "lastName": "הולנדר",
+      "fullName": "מאיר הולנדר",
+      "role": "וועד מנהל, בעל זכות חתימה",
+      "category": "board",
+      "phone": "054-4338600",
+      "rawPhone": "054-4338600",
+      "email": "meir@hollander-law.co.il",
+      "allEmails": [
+        "meir@hollander-law.co.il"
+      ]
+    },
+    {
+      "id": 5,
+      "excelRow": 6,
+      "firstName": "נתן",
+      "lastName": "שרפמן",
+      "fullName": "נתן שרפמן",
+      "role": "חבר וועד מנהל ,חבר וועדת כספים",
+      "category": "board",
+      "phone": "050-7413355",
+      "rawPhone": "050-7413355",
+      "email": "nathan@sharfman.co.il",
+      "allEmails": [
+        "nathan@sharfman.co.il"
+      ]
+    },
+    {
+      "id": 6,
+      "excelRow": 7,
+      "firstName": "יעקב",
+      "lastName": "הרן",
+      "fullName": "יעקב הרן",
+      "role": "חבר וועד מנהל",
+      "category": "board",
+      "phone": "052-2633000",
+      "rawPhone": "052-263-3000",
+      "email": "Yaacovharan@gmail.com",
+      "allEmails": [
+        "Yaacovharan@gmail.com"
+      ]
+    },
+    {
+      "id": 7,
+      "excelRow": 8,
+      "firstName": "אלי",
+      "lastName": "טרטנר",
+      "fullName": "אלי טרטנר",
+      "role": "חבר וועד מנהל",
+      "category": "board",
+      "phone": "053-2503555",
+      "rawPhone": "053-2503555",
+      "email": "elitra7@gmail.com",
+      "allEmails": [
+        "elitra7@gmail.com"
+      ]
+    },
+    {
+      "id": 8,
+      "excelRow": 9,
+      "firstName": "גיטה",
+      "lastName": "גופר",
+      "fullName": "גיטה גופר",
+      "role": "חבר וועד מנהל",
+      "category": "board",
+      "phone": "050-7786309",
+      "rawPhone": "050-7786309",
+      "email": "gitago@walla.com",
+      "allEmails": [
+        "gitago@walla.com"
+      ]
+    },
+    {
+      "id": 9,
+      "excelRow": 10,
+      "firstName": "מוני",
+      "lastName": "אברהם",
+      "fullName": "מוני אברהם",
+      "role": "חבר וועד מנהל",
+      "category": "board",
+      "phone": "054-4974981",
+      "rawPhone": "054-497-4981",
+      "email": "moniav@gmail.com",
+      "allEmails": [
+        "moniav@gmail.com"
+      ]
+    },
+    {
+      "id": 10,
+      "excelRow": 12,
+      "firstName": "רו\"ח גלעד",
+      "lastName": "קדמי",
+      "fullName": "רו\"ח גלעד קדמי",
+      "role": "רו\"ח חיצוני - משמש ועדת ביקורת לעמותה",
+      "category": "management_and_audit",
+      "phone": "054-2055116",
+      "rawPhone": "054-205-5116",
+      "email": "gilad@kacpa.co.il",
+      "allEmails": [
+        "gilad@kacpa.co.il"
+      ]
+    },
+    {
+      "id": 11,
+      "excelRow": 15,
+      "firstName": "אביבית",
+      "lastName": "אשכנזי",
+      "fullName": "אביבית אשכנזי",
+      "role": "עמותת הידידים, מנהלת חשבונות, מגיעה לכל הישיבות",
+      "category": "management_and_audit",
+      "phone": "050-3440029",
+      "rawPhone": "050-3440029",
+      "email": "avivita@wmc.gov.il",
+      "allEmails": [
+        "avivita@wmc.gov.il"
+      ]
+    },
+    {
+      "id": 12,
+      "excelRow": 17,
+      "firstName": "בשמת",
+      "lastName": "כרמון",
+      "fullName": "בשמת כרמון",
+      "role": "עמותת הידידים, מנכ\"לית (מאפריל 2025)",
+      "category": "management_and_audit",
+      "phone": "052-3760415",
+      "rawPhone": "052-376-0415",
+      "email": "bosmatcrmo3@gmail.com",
+      "allEmails": [
+        "bosmatcrmo3@gmail.com"
+      ]
+    },
+    {
+      "id": 13,
+      "excelRow": 18,
+      "firstName": "חנוך",
+      "lastName": "סנדמן",
+      "fullName": "חנוך סנדמן",
+      "role": "רו\"ח העמותה",
+      "category": "management_and_audit",
+      "phone": "054-6972563",
+      "rawPhone": "054-697-2563",
+      "email": "cpasandman@gmail.com",
+      "allEmails": [
+        "cpasandman@gmail.com"
+      ]
+    },
+    {
+      "id": 14,
+      "excelRow": 19,
+      "firstName": "אלי",
+      "lastName": "גוף-גפן",
+      "fullName": "אלי גוף-גפן",
+      "role": "רו\"ח העמותה",
+      "category": "management_and_audit",
+      "phone": "052-6006610",
+      "rawPhone": "052-600-6610",
+      "email": "elieygg@gmail.com",
+      "allEmails": [
+        "elieygg@gmail.com"
+      ]
+    },
+    {
+      "id": 15,
+      "excelRow": 20,
+      "firstName": "בן חור",
+      "lastName": "ירושלמי",
+      "fullName": "בן חור ירושלמי",
+      "role": "חבר עמותה, יו\"ר פורש",
+      "category": "general_members",
+      "phone": "052-2432055",
+      "rawPhone": "052-2432055",
+      "email": "modaot@netvision.net.il",
+      "allEmails": [
+        "modaot@netvision.net.il",
+        "yerushalmibenhur@gmail.com"
+      ]
+    },
+    {
+      "id": 16,
+      "excelRow": 23,
+      "firstName": "אילנה",
+      "lastName": "ליברמן",
+      "fullName": "אילנה ליברמן",
+      "role": "חברת עמותה, חברת וועדת ביקורת (עד מרץ 2025)",
+      "category": "general_members",
+      "phone": "054-2638873",
+      "rawPhone": "054-2638873",
+      "email": "ilanalib7@gmail.com",
+      "allEmails": [
+        "ilanalib7@gmail.com"
+      ]
+    },
+    {
+      "id": 17,
+      "excelRow": 24,
+      "firstName": "אסנת",
+      "lastName": "שטרזניס",
+      "fullName": "אסנת שטרזניס",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "osnats38@walla.com",
+      "allEmails": [
+        "osnats38@walla.com"
+      ]
+    },
+    {
+      "id": 18,
+      "excelRow": 25,
+      "firstName": "יהודית",
+      "lastName": "מנצור",
+      "fullName": "יהודית מנצור",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "054-6203660",
+      "rawPhone": "054-6203660",
+      "email": "judy.manzur@gmail.com",
+      "allEmails": [
+        "judy.manzur@gmail.com"
+      ]
+    },
+    {
+      "id": 19,
+      "excelRow": 26,
+      "firstName": "אתי",
+      "lastName": "אשכנזי",
+      "fullName": "אתי אשכנזי",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "052-4483789",
+      "rawPhone": "05-24483789",
+      "email": "",
+      "allEmails": []
+    },
+    {
+      "id": 20,
+      "excelRow": 27,
+      "firstName": "נועה",
+      "lastName": "ירושלמי",
+      "fullName": "נועה ירושלמי",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "054-6790676",
+      "rawPhone": "054-6790676",
+      "email": "noayerushalmi196@gmail.com",
+      "allEmails": [
+        "noayerushalmi196@gmail.com"
+      ]
+    },
+    {
+      "id": 21,
+      "excelRow": 28,
+      "firstName": "איה",
+      "lastName": "קנר",
+      "fullName": "איה קנר",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "054-5749719",
+      "rawPhone": "054-5749719",
+      "email": "",
+      "allEmails": []
+    },
+    {
+      "id": 22,
+      "excelRow": 29,
+      "firstName": "אלה",
+      "lastName": "יהלום",
+      "fullName": "אלה יהלום",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "ella.yahalom1951@gmail.com",
+      "allEmails": [
+        "ella.yahalom1951@gmail.com"
+      ]
+    },
+    {
+      "id": 23,
+      "excelRow": 30,
+      "firstName": "אברהם",
+      "lastName": "קוטלר",
+      "fullName": "אברהם קוטלר",
+      "role": "חבר עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "aikotler46@gmail.com",
+      "allEmails": [
+        "aikotler46@gmail.com"
+      ]
+    },
+    {
+      "id": 24,
+      "excelRow": 31,
+      "firstName": "רוז'ט",
+      "lastName": "חינאווי",
+      "fullName": "רוז'ט חינאווי",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "rogettekitchen@gmail.com",
+      "allEmails": [
+        "rogettekitchen@gmail.com"
+      ]
+    },
+    {
+      "id": 25,
+      "excelRow": 32,
+      "firstName": "ריקי",
+      "lastName": "זאבי",
+      "fullName": "ריקי זאבי",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "rickyzeevi50@gmail.com",
+      "allEmails": [
+        "rickyzeevi50@gmail.com"
+      ]
+    },
+    {
+      "id": 26,
+      "excelRow": 33,
+      "firstName": "יונה",
+      "lastName": "אלון",
+      "fullName": "יונה אלון",
+      "role": "חברת עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "y-alon@zahav.net.il",
+      "allEmails": [
+        "y-alon@zahav.net.il"
+      ]
+    },
+    {
+      "id": 27,
+      "excelRow": 34,
+      "firstName": "ואליד",
+      "lastName": "אבולעפיה",
+      "fullName": "ואליד אבולעפיה",
+      "role": "חבר עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "maorieli@walla.com",
+      "allEmails": [
+        "maorieli@walla.com"
+      ]
+    },
+    {
+      "id": 28,
+      "excelRow": 35,
+      "firstName": "זוהר",
+      "lastName": "נוימרק",
+      "fullName": "זוהר נוימרק",
+      "role": "חבר עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "znoymark@zn-cpa.com",
+      "allEmails": [
+        "znoymark@zn-cpa.com"
+      ]
+    },
+    {
+      "id": 29,
+      "excelRow": 36,
+      "firstName": "אברהם",
+      "lastName": "אלה",
+      "fullName": "אברהם אלה",
+      "role": "חבר עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "avi.f@homotor.co.il",
+      "allEmails": [
+        "avi.f@homotor.co.il"
+      ]
+    },
+    {
+      "id": 30,
+      "excelRow": 37,
+      "firstName": "יורם",
+      "lastName": "שמיר",
+      "fullName": "יורם שמיר",
+      "role": "חבר עמותה",
+      "category": "general_members",
+      "phone": "",
+      "rawPhone": null,
+      "email": "yoshamir@inter.net.il",
+      "allEmails": [
+        "yoshamir@inter.net.il"
+      ]
+    },
+    {
+      "id": 31,
+      "excelRow": 41,
+      "firstName": "דן",
+      "lastName": "שפי",
+      "fullName": "דן שפי",
+      "role": "יועץ משפטי, מתנדב, מגיע לכל ישיבות וועד המנהל והעמותה בדימוס",
+      "category": "advisors_and_emeriti",
+      "phone": "050-7874715",
+      "rawPhone": "050-7874715",
+      "email": "shefidani@gmail.com",
+      "allEmails": [
+        "shefidani@gmail.com"
+      ]
+    },
+    {
+      "id": 32,
+      "excelRow": 42,
+      "firstName": "אסנת",
+      "lastName": "מוסקוביץ",
+      "fullName": "אסנת מוסקוביץ",
+      "role": "עמותת הידידים, מנכ\"לית (עד אפריל 2025)",
+      "category": "advisors_and_emeriti",
+      "phone": "050-7874130",
+      "rawPhone": "050-7874130",
+      "email": "osnatmo@wmc.gov.il",
+      "allEmails": [
+        "osnatmo@wmc.gov.il"
+      ]
+    },
+    {
+      "id": 33,
+      "excelRow": 43,
+      "firstName": "חנה",
+      "lastName": "גוכשטט",
+      "fullName": "חנה גוכשטט",
+      "role": "חברת עמותה, מנהלת עמותה בדימוס",
+      "category": "advisors_and_emeriti",
+      "phone": "052-4662888",
+      "rawPhone": "052-4662888",
+      "email": "gochshtat@gmail.com",
+      "allEmails": [
+        "gochshtat@gmail.com"
+      ]
+    },
+    {
+      "id": 34,
+      "excelRow": 44,
+      "firstName": "סמי",
+      "lastName": "שמואלי",
+      "fullName": "סמי שמואלי",
+      "role": "יו\"ר וועדת ביקורת (עד מרץ 2025) חבר עמותה",
+      "category": "advisors_and_emeriti",
+      "phone": "050-5277017",
+      "rawPhone": "050-5277017",
+      "email": "sami_s@orange.net.il",
+      "allEmails": [
+        "sami_s@orange.net.il"
+      ]
+    },
+    {
+      "id": 35,
+      "excelRow": 45,
+      "firstName": "שבתאי",
+      "lastName": "סלינס",
+      "fullName": "שבתאי סלינס",
+      "role": "רואה חשבון, בדימוס",
+      "category": "advisors_and_emeriti",
+      "phone": "050-8383000",
+      "rawPhone": "050-8383000",
+      "email": "shabi@shabicpa.co.il",
+      "allEmails": [
+        "shabi@shabicpa.co.il"
+      ]
+    }
+  ]
+}

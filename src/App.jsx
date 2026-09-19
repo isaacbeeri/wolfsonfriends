@@ -15,6 +15,7 @@ import { DonationModal } from "./components/DonationModal.jsx";
 import { AdminNewsManager } from "./components/AdminNewsManager.jsx";
 import { AccessibilityToolbar } from "./components/AccessibilityToolbar.jsx";
 import { FaqPage } from "./components/FaqPage.jsx";
+import { AdminPortal } from "./components/admin/AdminPortal.jsx";
 
 export function App() {
   const [lang, setLang] = useState(() => {
@@ -55,6 +56,7 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isSecurePortalOpen, setIsSecurePortalOpen] = useState(false);
 
   const t = translations[lang] || translations.he;
   const dir = t.dir || "ltr";
@@ -66,7 +68,13 @@ export function App() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a")) {
+      // Secret Admin Portal: Ctrl+Shift+L
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "L" || e.key === "l" || e.key === "ך")) {
+        e.preventDefault();
+        setIsSecurePortalOpen(prev => !prev);
+      }
+      // News Manager: Ctrl+Shift+A
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a" || e.key === "ש")) {
         e.preventDefault();
         setIsAdminOpen(prev => !prev);
       }
@@ -125,7 +133,9 @@ export function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === "#faq") {
+      if (hash === "#secure-portal" || hash === "#admin") {
+        setIsSecurePortalOpen(true);
+      } else if (hash === "#faq") {
         setCurrentView("faq");
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -145,6 +155,13 @@ export function App() {
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
+
+  const handleCloseSecurePortal = () => {
+    setIsSecurePortalOpen(false);
+    if (window.location.hash === "#secure-portal" || window.location.hash === "#admin") {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  };
 
   const handleOpenDonate = (project = null) => {
     setSelectedProject(project);
@@ -230,6 +247,11 @@ export function App() {
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         lang={lang}
+      />
+
+      <AdminPortal
+        isOpen={isSecurePortalOpen}
+        onClose={handleCloseSecurePortal}
       />
     </div>
   );
