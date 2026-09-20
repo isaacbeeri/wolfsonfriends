@@ -63,6 +63,27 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
     setItems(getStoredNews());
   }, []);
 
+  // Strict anti-crawling meta tags while Admin News Manager is active
+  useEffect(() => {
+    const metaRobots = document.createElement('meta');
+    metaRobots.name = 'robots';
+    metaRobots.content = 'noindex, nofollow, noarchive, nosnippet';
+    document.head.appendChild(metaRobots);
+
+    const metaGoogle = document.createElement('meta');
+    metaGoogle.name = 'googlebot';
+    metaGoogle.content = 'noindex, nofollow';
+    document.head.appendChild(metaGoogle);
+
+    return () => {
+      try {
+        document.head.removeChild(metaRobots);
+        document.head.removeChild(metaGoogle);
+      } catch (e) {}
+    };
+  }, []);
+
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (Date.now() < lockedUntil) {

@@ -1,49 +1,188 @@
-# Strictly forbidden for ALL crawlers, search engines, and AI bots (Private / Stealth Mode)
-User-agent: *
-Disallow: /
+# Robots.txt for Friends of Edith Wolfson Medical Center
+# Public homepage and content allowed for search & AI discovery.
+# All administrative, management, private, and credentialed portals strictly forbidden.
 
-# Strict Disallow for Artificial Intelligence & LLM Scrapers
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /secure-portal/
+Disallow: /portal
+Disallow: /portal/
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
+Disallow: /*#admin*
+Disallow: /*?portal=*
+
+# Strict Disallow for Artificial Intelligence & LLM Scrapers on administrative areas
 User-agent: GPTBot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: ChatGPT-User
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: CCBot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Google-Extended
-Disallow: /
-
-User-agent: Googlebot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Anthropic-ai
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Claude-Web
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: ClaudeBot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: PerplexityBot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Bytespider
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: cohere-ai
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Omgilibot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: FacebookBot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Applebot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
 
 User-agent: Bingbot
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /secure-portal
+Disallow: /portal
+Disallow: /private/
+Disallow: /private_data/
+Disallow: /management/
+Disallow: /manage/
+Disallow: /*?admin=*
