@@ -40,6 +40,8 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
+  const [failCount, setFailCount] = useState(0);
+  const [lockedUntil, setLockedUntil] = useState(0);
 
   const [items, setItems] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -63,11 +65,23 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (Date.now() < lockedUntil) {
+      const remainingSec = Math.ceil((lockedUntil - Date.now()) / 1000);
+      alert("הגישה נחסמה זמנית עקב ריבוי ניסיונות שגויים. נסה שוב בעוד " + remainingSec + " שניות.");
+      return;
+    }
     if (pinInput.trim() === DEFAULT_PIN) {
       setIsAuthenticated(true);
       setPinError(false);
+      setFailCount(0);
     } else {
       setPinError(true);
+      const newFails = failCount + 1;
+      setFailCount(newFails);
+      if (newFails >= 5) {
+        setLockedUntil(Date.now() + 5 * 60 * 1000);
+        alert("הגישה נחסמה ל-5 דקות עקב 5 ניסיונות שגויים רצופים.");
+      }
     }
   };
 

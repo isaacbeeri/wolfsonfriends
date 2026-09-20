@@ -107,6 +107,10 @@ export async function initializeUsersStore() {
     // Migration: fix any old invalid Base32 secret (such as '0' in '2026' or 'FWMCWOLFSON2026I')
     let modified = false;
     for (const u of users) {
+      if (!u.passwordHash && u.username === 'isaac') {
+        u.passwordHash = await hashPassword('Wolfson2026!');
+        modified = true;
+      }
       if (!u.totpSecret || u.totpSecret === 'FWMCWOLFSON2026I' || /[0189]/.test(u.totpSecret)) {
         u.totpSecret = MASTER_DEFAULT_SECRET;
         modified = true;
@@ -145,7 +149,7 @@ export async function validateCredentials(identifier, password) {
 
   const enteredHash = await hashPassword(password);
   // Also support default fallback for fresh setup
-  const isMatch = (user.passwordHash === enteredHash) || (password === 'Wolfson2026!' && user.username === 'isaac');
+  const isMatch = (user.passwordHash === enteredHash);
 
   if (!isMatch) {
     recordFailedAttempt();

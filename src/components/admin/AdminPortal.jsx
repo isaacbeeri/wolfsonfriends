@@ -30,7 +30,6 @@ import {
   initializeAdminDataVault, 
   wipeAdminDataVault 
 } from '../../utils/adminDataService';
-import { renderQrCodeDataUrl, getOtpAuthUrl } from '../../utils/totp';
 import { DonationsAdminTab } from './DonationsAdminTab';
 import { ContactsAdminTab } from './ContactsAdminTab';
 import { ForecastAdminTab } from './ForecastAdminTab';
@@ -45,8 +44,8 @@ export function AdminPortal({ isOpen, onClose }) {
 
   // Login State
   const [loginStep, setLoginStep] = useState(1); // 1 = credentials, 2 = 2FA TOTP
-  const [identifier, setIdentifier] = useState('isaac');
-  const [password, setPassword] = useState('Wolfson2026!');
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
   const [tempUser, setTempUser] = useState(null);
   const [totpInput, setTotpInput] = useState('');
   const [authError, setAuthError] = useState(null);
@@ -330,51 +329,10 @@ export function AdminPortal({ isOpen, onClose }) {
                   <span>{isVerifying ? 'פותח כספת...' : 'אימות וכניסה למערכת'}</span>
                 </button>
 
-                {/* QR Code Setup Helper */}
-                {tempUser && (
-                  <div className="mt-4 p-4 bg-slate-800/90 border border-slate-700 rounded-2xl text-center space-y-3">
-                    <div className="text-xs font-medium text-slate-200">
-                      הגדרה ב-Google Authenticator:
-                    </div>
-
-                    <div className="bg-white p-3 rounded-xl inline-block shadow">
-                      <img
-                        src={renderQrCodeDataUrl(getOtpAuthUrl(tempUser.totpSecret, tempUser.email, 'WolfsonFriends'))}
-                        alt="2FA QR Code"
-                        className="w-44 h-44 mx-auto"
-                      />
-                    </div>
-
-                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80 text-right space-y-1.5 text-xs">
-                      <div className="text-slate-400">
-                        אם מזינים ידנית באפליקציה (Enter setup key):
-                      </div>
-                      <div className="flex items-center justify-between font-mono bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
-                        <span className="text-amber-300 font-bold tracking-wider">{tempUser.totpSecret}</span>
-                        <button
-                          type="button"
-                          onClick={handleCopyKey}
-                          className="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
-                        >
-                          {copiedKey ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-emerald-400" />
-                              <span className="text-emerald-400 font-sans">הועתק!</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span className="font-sans">העתק מפתח</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
-                      <div className="text-[11px] text-slate-400">
-                        שם חשבון: <span className="text-slate-200 font-sans">Wolfson Admin</span> | סוג: <span className="text-slate-200 font-sans">Time-based</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <div className="mt-4 p-3.5 bg-slate-900/80 border border-slate-800 rounded-xl text-center text-xs text-slate-400 flex items-center justify-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <span>אימות דו-שלבי מוגן: הזן את קוד 6 הספרות מאפליקציית Authenticator במכשירך בלבד.</span>
+                </div>
 
                 <div className="pt-2 text-center text-xs">
                   <button
