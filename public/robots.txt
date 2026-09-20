@@ -1,80 +1,49 @@
-# Robots.txt for Friends of Edith Wolfson Medical Center
-# Public content allowed, Private administrative areas strictly forbidden
-
+# Strictly forbidden for ALL crawlers, search engines, and AI bots (Private / Stealth Mode)
 User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /secure-portal
-Disallow: /secure-portal/
-Disallow: /portal
-Disallow: /portal/
-Disallow: /private_data/
-Disallow: /*?admin=*
+Disallow: /
 
 # Strict Disallow for Artificial Intelligence & LLM Scrapers
 User-agent: GPTBot
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: ChatGPT-User
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: CCBot
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: Google-Extended
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
 
 User-agent: Anthropic-ai
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: Claude-Web
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
 
 User-agent: PerplexityBot
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: Bytespider
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: cohere-ai
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: Omgilibot
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
 
 User-agent: FacebookBot
-Disallow: /admin
-Disallow: /secure-portal
-Disallow: /portal
-Disallow: /private_data/
+Disallow: /
+
+User-agent: Applebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
