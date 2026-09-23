@@ -24,9 +24,12 @@ import {
   UserCheck,
   HeartHandshake,
   Layers,
-  ChevronDown
+  ChevronDown,
+  Printer
 } from 'lucide-react';
 import { getDonations, processDonationsExcelFile, resetDonationsToDefault } from '../../utils/adminDataService';
+import DonationsUploadModal from './DonationsUploadModal';
+import DonationsPdfReport from './DonationsPdfReport';
 
 export function DonationsAdminTab({ userRole = 'viewer' }) {
   const isReadOnly = userRole === 'viewer';
@@ -36,6 +39,8 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
   const [activeTab, setActiveTab] = useState('analytics'); // 'analytics' | 'table' | 'lapsed'
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState(null);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isPdfReportOpen, setIsPdfReportOpen] = useState(false);
 
   const availableYears = useMemo(() => {
     const years = Array.from(new Set(donations.map(d => d.year))).sort((a, b) => b - a);
@@ -437,6 +442,28 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
             </select>
           </div>
 
+          {/* Primary Upload Button */}
+          {!isReadOnly && (
+            <button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-900/30"
+              title="העלאת קובץ תרומות מעודכן (Excel) ואימות נתונים"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>העלאת קובץ תרומות (Excel)</span>
+            </button>
+          )}
+
+          {/* Primary PDF Report Button */}
+          <button
+            onClick={() => setIsPdfReportOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-950/40"
+            title="הפקת דו״ח PDF רשמי של הנתונים המוצגים כעת על המסך"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span>הפקת דו״ח PDF</span>
+          </button>
+
           {/* Export CSV */}
           <button
             onClick={handleExportCsv}
@@ -444,7 +471,7 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
             title="ייצוא רשימת התרומות המוצגת ל-CSV"
           >
             <Download className="w-3.5 h-3.5 text-blue-400" />
-            <span>ייצוא CSV</span>
+            <span className="hidden sm:inline">ייצוא CSV</span>
           </button>
         </div>
       </div>
@@ -937,21 +964,14 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
             <div className="flex items-center gap-2.5">
               {/* Upload Excel Button */}
               {!isReadOnly && (
-                <label className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors shadow ${
-                  isUploading 
-                    ? 'bg-slate-700 text-slate-400 cursor-not-allowed' 
-                    : 'bg-blue-600 hover:bg-blue-500 text-white'
-                }`}>
+                <button
+                  onClick={() => setIsUploadModalOpen(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition-colors shadow"
+                  title="העלאת קובץ תרומות מעודכן"
+                >
                   <Upload className="w-4 h-4" />
-                  <span>{isUploading ? 'מעבד ובודק קובץ...' : 'העלאת קובץ תרומות (Excel)'}</span>
-                  <input
-                    type="file"
-                    accept=".xlsx,.xls"
-                    onChange={handleFileUpload}
-                    disabled={isUploading}
-                    className="hidden"
-                  />
-                </label>
+                  <span>העלאת קובץ תרומות (Excel)</span>
+                </button>
               )}
 
               {/* Reset to Default Button */}
@@ -1144,6 +1164,31 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
           </div>
         </div>
       )}
+      {/* Upload and Audit Modal */}
+      <DonationsUploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        currentDonations={donations}
+        onDonationsUpdated={(updatedRecords, summary) => {
+          setDonations(updatedRecords);
+          setUploadMessage({
+            type: 'success',
+            text: `קובץ התרומות נקלט, אומת ועודכן בהצלחה! סה״כ ${summary.importedCount} תרומות במאגר (מתוכן ${summary.count2026} בשנת 2026 בסך ${summary.sum2026?.toLocaleString()} ₪). כל הסטטיסטיקות והמדדים במסך עודכנו.`
+          });
+        }}
+      />
+
+      {/* PDF Report Generation Modal */}
+      <DonationsPdfReport
+        isOpen={isPdfReportOpen}
+        onClose={() => setIsPdfReportOpen(false)}
+        activeTab={activeTab}
+        selectedYear={selectedYear}
+        donations={donations}
+        executiveStats={executiveStats}
+        filteredDonations={filteredDonations}
+        lapsedDonors={lapsedDonors}
+      />
     </div>
   );
 }
