@@ -21,6 +21,7 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 private_data/
+deploy_cloud_run.py
 *.db
 *.sqlite
 *.sqlite3
