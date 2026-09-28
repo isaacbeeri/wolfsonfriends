@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { translations } from "./data/translations/index.js";
 import { detectSessionLanguage } from "./data/geoLang.js";
 import { Navbar } from "./components/Navbar.jsx";
-import { Hero } from "./components/Hero.jsx";
+import { AboutMissionTop } from "./components/AboutMissionTop.jsx";
 import { BrandPillars } from "./components/BrandPillars.jsx";
 import { ProjectsSection } from "./components/ProjectsSection.jsx";
 import { DisparityComparison } from "./components/DisparityComparison.jsx";
@@ -210,7 +210,7 @@ export function App() {
           />
         ) : (
           <>
-            <Hero t={t} onOpenDonate={handleOpenDonate} dir={dir} lang={lang} />
+            <AboutMissionTop t={t} onOpenDonate={handleOpenDonate} dir={dir} lang={lang} />
             <BrandPillars t={t} lang={lang} />
             <ProjectsSection t={t} lang={lang} onOpenDonate={handleOpenDonate} />
             <DisparityComparison t={t} dir={dir} />

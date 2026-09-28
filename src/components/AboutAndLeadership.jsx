@@ -276,7 +276,8 @@ export function AboutAndLeadership({ t, onOpenDonate, lang }) {
   ];
 
   return (
-    <section id="about" className="py-24 bg-white border-b border-slate-200">
+    <section id="leadership" className="py-24 bg-white border-b border-slate-200">
+      <div id="about-leadership" className="sr-only" aria-hidden="true"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

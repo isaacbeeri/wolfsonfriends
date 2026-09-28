@@ -29,12 +29,25 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
   const currentLangObj = languages.find(l => l.code === lang) || languages[0];
 
   const navLinks = [
+    { href: "#about", label: t.nav.about },
     { href: "#projects", label: t.nav.projects },
     { href: "#disparity", label: t.nav.disparity },
     { href: "#video", label: t.nav.video },
-    { href: "#about", label: t.nav.about },
+    { 
+      href: "#leadership", 
+      label: {
+        he: "הנהלה ושקיפות",
+        en: "Leadership & Governance",
+        fr: "Direction & Transparence",
+        de: "Vorstand & Transparenz",
+        ar: "القيادة والشفافية",
+        ru: "Руководство и прозрачность",
+        es: "Liderazgo y Gobernanza",
+        ja: "役員・ガバナンス",
+        pt: "Liderança e Governança"
+      }[lang] || "Leadership & Governance"
+    },
     { href: "#campus", label: t.nav.map },
-    { href: "#transparency", label: t.nav.transparency },
     { href: "#contact", label: t.nav.contact }
   ];
 
