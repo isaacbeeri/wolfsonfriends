@@ -59,16 +59,38 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
       ja: "なぜ私たちはこの活動を行っているのか？",
       pt: "Por que fazemos o que fazemos?"
     },
-    whyAnswer: {
-      he: "המרכז הרפואי וולפסון מהווה עוגן רפואי חיוני עבור למעלה מחצי מיליון תושבי חולון, בת ים ודרום תל אביב-יפו — אזור המאופיין במורכבות דמוגרפית ייחודית, עם שיעור חסר תקדים של אוכלוסיות מוחלשות וניצולי שואה הנשענים כולם על הרפואה הציבורית. עמותת הידידים פועלת כרשת ביטחון בלתי מתפשרת: אנו פועלים לסגירת פער תקציבי מובנה של 105 מיליון ₪ ולהבאת שוויון טכנולוגי ואבחון מציל חיים ישירות אל הקהילה — כדי שאיש לא יישאר מאחור.",
-      en: "Wolfson Medical Center is a vital medical anchor for over half a million residents of Holon, Bat Yam, and South Tel Aviv-Jaffa — a uniquely complex demographic with an unprecedented proportion of vulnerable populations and Holocaust survivors who rely entirely on public healthcare. The Friends Association serves as an unwavering safety net: we exist to close a NIS 105 Million structural divide and bring technological equity and life-saving diagnostics directly to our community — ensuring no one is left behind.",
-      fr: "Le Centre Médical Wolfson est une ancre médicale vitale pour plus d'un demi-million d'habitants de Holon, Bat Yam et du sud de Tel Aviv-Jaffa — une population complexe comprenant une proportion sans précédent de personnes vulnérables et de survivants de la Shoah dépendant entièrement de la santé publique. L'Association des Amis agit comme un filet de sécurité pour combler un écart structurel de 105 millions de NIS et apporter l'équité technologique directement à la communauté.",
-      de: "Das Wolfson Medical Center ist ein unverzichtbarer Anker für über eine halbe Million Menschen in Holon, Bat Yam und Süd-Tel Aviv-Jaffa — eine Region mit einem hohen Anteil schutzbedürftiger Gruppen und Holocaust-Überlebender, die vollständig auf die öffentliche Gesundheitsversorgung angewiesen sind. Der Förderverein schließt eine strukturelle Lücke von 105 Mio. NIS und bringt Spitzentechnologie direkt zur Gemeinschaft.",
-      ar: "يعد مركز وولفسون الطبي ركيزة طبية حيوية لأكثر من نصف مليون نسمة في حولون وبات يام وجنوب تل أبيب-يافا — وهي منطقة ذات تركيبة سكانية معقدة تضم نسبة كبيرة من الفئات المستضعفة والمسنين الذين يعتمدون كلياً على الطب العام. تعمل جمعية الأصدقاء كشبكة أمان لسد الفجوة التمويلية البالغة 105 ملايين شيكل وضمان العدالة التكنولوجية والتشخيص المنقذ للحياة.",
-      ru: "Медицинский центр Вольфсон — ключевая опора для более чем полумиллиона жителей Холона, Бат-Яма и южного Тель-Авива-Яффо. Значительная часть наших пациентов — пожилые люди и пережившие Холокост, всецело зависящие от общественной медицины. Общество друзей служит надежной сетью безопасности, преодолевая структурный разрыв в 105 млн шекелей и обеспечивая равный доступ к передовой диагностике.",
-      es: "El Centro Médico Wolfson es un ancla médica vital para más de medio millón de residentes en Holon, Bat Yam y el sur de Tel Aviv-Jaffa, con una alta proporción de sobrevivientes del Holocausto y personas vulnerables que dependen al 100% de la medicina pública. La Asociación de Amigos actúa como red de seguridad para cerrar la brecha de 105 millones de NIS y brindar equidad tecnológica.",
-      ja: "ヴォルフソン医療センターは、ホロン、バット・ヤム、南テルアビブ・ヤッファの50万人以上の住民を支える命の拠点です。その多くはホロコースト生存者や公的医療に完全に依存する社会的弱者です。友の会はセーフティネットとして1億500万NISの構造的格差を埋め、最先端の診断技術を地域社会に直接届けるために活動しています。",
-      pt: "O Centro Médico Wolfson é uma âncora médica vital para mais de meio milhão de moradores em Holon, Bat Yam e sul de Tel Aviv-Jaffa, com uma alta proporção de sobreviventes do Holocausto e cidadãos que dependem inteiramente da saúde pública. A Associação de Amigos atua como rede de segurança para superar a lacuna estrutural de 105 milhões de NIS."
+    associationIntro: {
+      he: "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון היא עמותה פילנתרופית עצמאית התומכת במרכז הרפואי וולפסון — בית חולים ממשלתי ואוניברסיטאי בחולון, מדרום לתל אביב.",
+      en: "The Friends of the Edith Wolfson Medical Center is an independent philanthropic association supporting the WMC, a government-owned, university-affiliated hospital in Holon, just south of Tel Aviv.",
+      fr: "Les Amis du Centre Médical Edith Wolfson est une association philanthropique indépendante soutenant le WMC, un hôpital public universitaire situé à Holon, juste au sud de Tel Aviv.",
+      de: "Der Förderverein des Edith Wolfson Medical Center ist eine unabhängige philanthropische Vereinigung zur Unterstützung des WMC, eines staatlichen, universitätsnahen Krankenhauses in Holon südlich von Tel Aviv.",
+      ar: "جمعية أصدقاء مركز إديث وولفسون الطبي هي جمعية خيرية مستقلة تدعم مركز وولفسون الطبي — وهو مستشفى حكومي جامعي في حولون، جنوب تل أبيب.",
+      ru: "Общество друзей медицинского центра имени Эдит Вольфсон — независимая филантропическая организация, поддерживающая МЦ Вольфсон, государственную университетскую больницу в Холоне, к югу от Тель-Авива.",
+      es: "Los Amigos del Centro Médico Edith Wolfson es una asociación filantrópica independiente que apoya al WMC, un hospital público afiliado a la universidad en Holon, al sur de Tel Aviv.",
+      ja: "エディス・ヴォルフソン医療センター友の会は、テルアビブ南部のホロンに位置する政府所有の大学提携病院であるWMCを支援する独立した慈善団体です。",
+      pt: "Os Amigos do Centro Médico Edith Wolfson é uma associação filantrópica independente que apoia o WMC, um hospital público afiliado à universidade em Holon, ao sul de Tel Aviv."
+    },
+    missionStatement: {
+      he: "אנו מחברים תורמים בינלאומיים, קרנות פילנתרופיות ומנהיגי קהילה עם בית החולים כדי לתמוך בצוותים הרפואיים, לחדש תשתיות ולשפר את הטיפול בחולים. המשימה שלנו היא לסייע בסגירת פערים בנגישות לשירותי בריאות, באמצעות הבאת טכנולוגיות רפואיות מתקדמות ואבחון מציל חיים אל הקהילות שבית החולים משרת. באמצעות שותפויות ארוכות טווח, אנו פועלים למען עתיד שבו לכל אדם יש גישה לטיפול הרפואי לו הוא זקוק — ואף אחד אינו נשאר מאחור.",
+      en: "We connect international donors, foundations, and community leaders with the hospital to support clinical teams, modernize infrastructure, and improve patient care. Our mission is to help close gaps in healthcare access by bringing advanced medical technologies and life-saving diagnostics to the communities the hospital serves. Through lasting partnerships, we work toward a future in which everyone can access the care they need—and no one is left behind.",
+      fr: "Nous connectons donateurs internationaux, fondations et leaders communautaires avec l'hôpital pour soutenir les équipes cliniques, moderniser les infrastructures et améliorer les soins. Notre mission est de combler les lacunes d'accès aux soins en apportant des technologies de pointe et des diagnostics vitaux aux communautés desservies. Grâce à des partenariats durables, nous œuvrons pour un avenir où chacun a accès aux soins nécessaires — et où personne n'est laissé pour compte.",
+      de: "Wir verbinden internationale Spender, Stiftungen und Führungspersönlichkeiten mit dem Krankenhaus, um klinische Teams zu unterstützen, Infrastrukturen zu modernisieren und die Patientenversorgung zu verbessern. Unsere Mission ist es, Lücken in der Gesundheitsversorgung zu schließen, indem wir modernste Technologien und lebensrettende Diagnostik direkt zu den Menschen bringen. Durch dauerhafte Partnerschaften schaffen wir eine Zukunft, in der jeder Zugang zu erstklassiger Versorgung hat — und niemand zurückgelassen wird.",
+      ar: "نحن نربط المانحين الدوليين والمؤسسات الخيرية وقادة المجتمع بالمستشفى لدعم الطواقم الطبية وتحديث البنية التحتية وتحسين رعاية المرضى. مهمتنا هي المساعدة في سد الفجوات في الوصول إلى الرعاية الصحية من خلال جلب التقنيات الطبية المتقدمة والتشخيص المنقذ للحياة إلى المجتمعات التي يخدمها المستشفى. من خلال شراكات دائمة، نعمل نحو مستقبل يمكن للجميع فيه الحصول على الرعاية التي يحتاجونها — دون أن يتخلف أحد عن الركب.",
+      ru: "Мы объединяем международных доноров, фонды и лидеров сообществ с больницей, чтобы поддерживать медицинский персонал, модернизировать инфраструктуру и повышать качество ухода за пациентами. Наша миссия — способствовать устранению неравенства в доступе к медицине, предоставляя передовые технологии и спасительную диагностику сообществам, которым служит больница. Через долгосрочное партнерство мы стремимся к будущему, в котором каждый имеет доступ к необходимой медицинской помощи — и никто не забыт.",
+      es: "Conectamos a donantes internacionales, fundaciones y líderes comunitarios con el hospital para respaldar a los equipos médicos, modernizar la infraestructura y mejorar la atención al paciente. Nuestra misión es cerrar las brechas en el acceso a la salud acercando tecnologías de vanguardia y diagnósticos vitales a las comunidades a las que sirve el hospital. A través de alianzas duraderas, trabajamos por un futuro en el que todos puedan acceder a la atención que necesitan — y nadie quede atrás.",
+      ja: "私たちは国際的な支援者、財団、コミュニティリーダーを病院と結びつけ、医療チームを支援し、設備を近代化し、患者ケアを向上させています。私たちの使命は、高度な医療技術と命を救う診断を地域社会に届けることで医療アクセスの格差を解消することです。永続的なパートナーシップを通じて、誰もが必要な治療を受けられ、誰一人として取り残されない未来を目指しています。",
+      pt: "Conectamos doadores internacionais, fundações e líderes comunitários ao hospital para apoiar as equipes clínicas, modernizar a infraestrutura e aprimorar o atendimento aos pacientes. Nossa missão é ajudar a reduzir as disparidades no acesso à saúde, trazendo tecnologias avançadas e diagnósticos vitais para as comunidades atendidas. Por meio de parcerias duradouras, trabalhamos por um futuro em que todos tenham acesso ao cuidado de que precisam — e ninguém seja deixado para trás."
+    },
+    communitySubtext: {
+      he: "המרכז הרפואי וולפסון מהווה עוגן קריטי עבור כחצי מיליון תושבי חולון, בת ים ודרום תל אביב-יפו — מתוכם שיעור חסר תקדים של קשישים וניצולי שואה הנשענים כולם על הרפואה הציבורית. אנו פועלים כרשת ביטחון כדי להבטיח שאיש לא יישאר מאחור.",
+      en: "Wolfson Medical Center is a critical anchor for over half a million residents of Holon, Bat Yam, and South Tel Aviv-Jaffa — including a high proportion of elderly residents and Holocaust survivors who rely entirely on public healthcare. We serve as an unwavering safety net so that no one is left behind.",
+      fr: "Le Centre Médical Wolfson est une ancre vitale pour plus d'un demi-million d'habitants de Holon, Bat Yam et du sud de Tel Aviv-Jaffa — dont une proportion élevée de personnes âgées et de survivants de la Shoah dépendant de la santé publique.",
+      de: "Das Wolfson Medical Center ist ein lebenswichtiger Anker für über eine halbe Million Menschen in Holon, Bat Yam und Süd-Tel Aviv-Jaffa — darunter ein hoher Anteil von älteren Menschen und Holocaust-Überlebenden, die auf öffentliche Versorgung angewiesen sind.",
+      ar: "يمثل مركز وولفسون الطبي ركيزة حيوية لأكثر من نصف مليون نسمة في حولون وبات يام وجنوب تل أبيب-يافا — بما في ذلك نسبة كبيرة من المسنين والناجين من الهولوكوست الذين يعتمدون بالكامل على الطب العام.",
+      ru: "МЦ Вольфсон — важнейшая опора для более чем полумиллиона жителей Холона, Бат-Яма и юга Тель-Авива-Яффо, включая высокий процент пожилых людей и переживших Катастрофу, полностью зависящих от государственной медицины.",
+      es: "El Centro Médico Wolfson es un ancla crucial para más de medio millón de residentes en Holon, Bat Yam y el sur de Tel Aviv-Jaffa, con una alta proporción de ancianos y sobrevivientes que dependen de la salud pública.",
+      ja: "ヴォルフソン医療センターは、公的医療に依存する高齢者やホロコースト生存者を多く含む、ホロン、バット・ヤム、南テルアビブの50万人以上の住民を支えています。",
+      pt: "O Centro Médico Wolfson é uma âncora crucial para mais de meio milhão de residentes em Holon, Bat Yam e sul de Tel Aviv-Jaffa, incluindo uma grande parcela de idosos e sobreviventes que dependem da saúde pública."
     },
     // The 3 Mission Pillars from the Infographic
     pillar1Title: {
@@ -239,16 +261,24 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
               {getT("mainTitle")}
             </h1>
 
-            {/* "Why We Are Doing What We Are Doing" Box */}
-            <div className="p-6 rounded-2xl bg-white/[0.07] border border-white/15 backdrop-blur-md shadow-xl relative overflow-hidden">
+            {/* Authoritative Institutional Definition */}
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed">
+              {getT("associationIntro")}
+            </p>
+
+            {/* "Our Mission" Box */}
+            <div className="p-6 rounded-2xl bg-white/[0.08] border border-white/20 backdrop-blur-md shadow-xl relative overflow-hidden">
               <div className="absolute top-0 start-0 w-2 h-full bg-gradient-to-b from-rose-500 via-amber-400 to-sky-400"></div>
-              <div className="flex items-center gap-2 mb-2 text-rose-300 font-bold text-sm sm:text-base">
+              <div className="flex items-center gap-2 mb-3 text-rose-300 font-bold text-sm sm:text-base">
                 <HeartHandshake className="w-5 h-5 text-rose-400 shrink-0" />
-                <span>{getT("whyQuestion")}</span>
+                <span>{getT("badge")}</span>
               </div>
-              <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-normal">
-                {getT("whyAnswer")}
+              <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-normal mb-3">
+                {getT("missionStatement")}
               </p>
+              <div className="pt-3 border-t border-white/10 text-xs sm:text-sm text-sky-200/90 leading-relaxed">
+                {getT("communitySubtext")}
+              </div>
             </div>
 
             {/* Direct Action Buttons */}

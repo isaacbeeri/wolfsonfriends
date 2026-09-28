@@ -21,7 +21,7 @@ export const en = {
     "badge": "Regional Medical Lifeline for 700,000+ Residents",
     "taxBadge": "Section 46 (Valid to 2029) | US 501(c)(3) via JGive | Proper Management",
     "title": "Bridging the Healthcare Gap. Saving Lives with Dignity.",
-    "subtitle": "Edith Wolfson Medical Center in Holon serves over 700,000 diverse residents across Holon, Bat Yam, Jaffa, and South Tel Aviv. We are dedicated to ensuring that elite clinical care, transformative technology, and modern facilities are accessible to all — regardless of socio-economic background.",
+    "subtitle": "The Friends of the Edith Wolfson Medical Center is an independent philanthropic association supporting the WMC, a government-owned, university-affiliated hospital in Holon, just south of Tel Aviv. We connect international donors, foundations, and community leaders with the hospital to support clinical teams, modernize infrastructure, and improve patient care. Our mission is to help close gaps in healthcare access by bringing advanced medical technologies and life-saving diagnostics to the communities the hospital serves. Through lasting partnerships, we work toward a future in which everyone can access the care they need—and no one is left behind.",
     "ctaDonate": "Support Life-Saving Projects",
     "ctaProjects": "Explore Priorities",
     "ctaVideo": "Watch Vision Film",
