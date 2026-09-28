@@ -26,6 +26,13 @@ import {
   addContact, 
   deleteContact 
 } from '../../utils/adminDataService';
+import { 
+  useTableManager, 
+  TableToolbarControls, 
+  SortableTh, 
+  TableFilterRow, 
+  ColumnManagerModal 
+} from './TableManager';
 
 const CATEGORY_LABELS = {
   all: 'כל אנשי הקשר',
@@ -34,6 +41,27 @@ const CATEGORY_LABELS = {
   general_members: 'חברי עמותה',
   advisors_and_emeriti: 'בדימוס ויועצים'
 };
+
+const CONTACTS_COLUMNS = [
+  { id: 'fullName', label: 'שם מלא', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן שם מלא...' },
+  { id: 'role', label: 'תפקיד ומחלקה', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן תפקיד...' },
+  { 
+    id: 'category', 
+    label: 'סיווג', 
+    sortable: true, 
+    type: 'select', 
+    filterable: true,
+    filterOptions: [
+      { value: 'board', label: 'ועד מנהל' },
+      { value: 'management_and_audit', label: 'הנהלה וביקורת' },
+      { value: 'general_members', label: 'חברי עמותה' },
+      { value: 'advisors_and_emeriti', label: 'בדימוס ויועצים' }
+    ]
+  },
+  { id: 'phone', label: 'טלפון נייד', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן טלפון...' },
+  { id: 'email', label: 'אימייל', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן אימייל...' },
+  { id: 'actions', label: 'פעולות ועריכה', sortable: false, filterable: false, align: 'center' },
+];
 
 export function ContactsAdminTab({ userRole = 'viewer' }) {
   const isReadOnly = userRole === 'viewer';
@@ -89,6 +117,17 @@ export function ContactsAdminTab({ userRole = 'viewer' }) {
       return true;
     });
   }, [contacts, selectedCategory, searchTerm]);
+
+  const contactsColumns = useMemo(() => {
+    return isReadOnly ? CONTACTS_COLUMNS.filter(c => c.id !== 'actions') : CONTACTS_COLUMNS;
+  }, [isReadOnly]);
+
+  const contactsTable = useTableManager({
+    storageKey: 'contacts',
+    columns: contactsColumns,
+    data: filteredContacts,
+    defaultSort: { key: 'fullName', direction: 'asc' }
+  });
 
   // Handle Excel Upload
   const handleExcelUpload = async (e) => {
@@ -401,18 +440,29 @@ export function ContactsAdminTab({ userRole = 'viewer' }) {
 
       {/* Contacts Table */}
       <div className="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden shadow-xl">
-        <div className="px-4 py-3 bg-slate-900/70 border-b border-slate-700 flex items-center justify-between">
+        <div className="px-4 py-3 bg-slate-900/70 border-b border-slate-700 flex flex-wrap items-center justify-between gap-3">
           <div className="text-sm font-semibold text-slate-200 flex items-center gap-2">
-            <span>מוצגות {filteredContacts.length} מתוך {contacts.length} רשומות</span>
+            <span>מוצגות {contactsTable.processedData.length} מתוך {contacts.length} רשומות</span>
             {selectedCategory !== 'all' && (
               <span className="text-xs text-blue-400 font-normal">
                 (מסונן לפי: {CATEGORY_LABELS[selectedCategory]})
               </span>
             )}
           </div>
-          <div className="flex items-center gap-3 text-xs text-slate-400">
-            <span>שמירה אחרונה: {lastSavedTime}</span>
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <div className="flex items-center gap-3">
+            <TableToolbarControls
+              activeFilterCount={contactsTable.activeFilterCount}
+              isFilterRowVisible={contactsTable.isFilterRowVisible}
+              onToggleFilterRow={() => contactsTable.setIsFilterRowVisible(!contactsTable.isFilterRowVisible)}
+              onClearFilters={contactsTable.clearAllFilters}
+              onOpenColumnModal={() => contactsTable.setIsColumnModalOpen(true)}
+              totalItems={filteredContacts.length}
+              filteredItems={contactsTable.processedData.length}
+            />
+            <div className="flex items-center gap-2 text-xs text-slate-400 border-r border-slate-700 pr-3">
+              <span>שמירה אחרונה: {lastSavedTime}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            </div>
           </div>
         </div>
 
@@ -420,100 +470,143 @@ export function ContactsAdminTab({ userRole = 'viewer' }) {
           <table className="w-full text-right text-sm">
             <thead className="bg-slate-900/90 text-slate-400 text-xs uppercase border-b border-slate-700">
               <tr>
-                <th className="px-4 py-3 font-medium">שם מלא</th>
-                <th className="px-4 py-3 font-medium">תפקיד ומחלקה</th>
-                <th className="px-4 py-3 font-medium">סיווג</th>
-                <th className="px-4 py-3 font-medium">טלפון נייד</th>
-                <th className="px-4 py-3 font-medium">אימייל</th>
-                {!isReadOnly && <th className="px-4 py-3 text-center font-medium">פעולות ועריכה</th>}
+                {contactsTable.visibleColumns.map(col => (
+                  <SortableTh
+                    key={col.id}
+                    column={col}
+                    sortConfig={contactsTable.sortConfig}
+                    onSort={contactsTable.handleSort}
+                    className="px-4 py-3 font-medium"
+                  />
+                ))}
               </tr>
+              {contactsTable.isFilterRowVisible && (
+                <TableFilterRow
+                  columns={contactsTable.visibleColumns}
+                  columnFilters={contactsTable.columnFilters}
+                  onFilterChange={contactsTable.handleFilterChange}
+                />
+              )}
             </thead>
             <tbody className="divide-y divide-slate-700/60">
-              {filteredContacts.length === 0 ? (
+              {contactsTable.processedData.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-slate-400">
+                  <td colSpan={contactsTable.visibleColumns.length} className="text-center py-12 text-slate-400">
                     <div className="flex flex-col items-center justify-center gap-2">
                       <Users className="w-8 h-8 text-slate-500" />
-                      <span>לא נמצאו אנשי קשר התואמים את החיפוש.</span>
+                      <span>לא נמצאו אנשי קשר התואמים את החיפוש או הסינון.</span>
                     </div>
                   </td>
                 </tr>
               ) : (
-                filteredContacts.map((c) => (
+                contactsTable.processedData.map((c) => (
                   <tr key={c.id} className="hover:bg-slate-700/40 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-white">
-                      {c.fullName}
-                    </td>
-                    <td className="px-4 py-3 text-slate-300 max-w-xs">
-                      {c.role || '-'}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-medium ${
-                        c.category === 'board'
-                          ? 'bg-amber-500/10 text-amber-300 border border-amber-500/20'
-                          : c.category === 'management_and_audit'
-                          ? 'bg-blue-500/10 text-blue-300 border border-blue-500/20'
-                          : c.category === 'general_members'
-                          ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
-                          : 'bg-purple-500/10 text-purple-300 border border-purple-500/20'
-                      }`}>
-                        {CATEGORY_LABELS[c.category] || c.category}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      {c.phone ? (
-                        <a 
-                          href={`tel:${c.phone}`} 
-                          className="inline-flex items-center gap-1.5 text-slate-300 hover:text-blue-400 font-mono text-xs transition-colors"
-                          dir="ltr"
-                        >
-                          <Phone className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{c.phone}</span>
-                        </a>
-                      ) : (
-                        <span className="text-slate-500 text-xs">-</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      {c.email ? (
-                        <a 
-                          href={`mailto:${c.email}`} 
-                          className="inline-flex items-center gap-1.5 text-slate-300 hover:text-blue-400 font-mono text-xs transition-colors"
-                          dir="ltr"
-                        >
-                          <Mail className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{c.email}</span>
-                        </a>
-                      ) : (
-                        <span className="text-slate-500 text-xs">-</span>
-                      )}
-                    </td>
-                    {!isReadOnly && (
-                      <td className="px-4 py-3 text-center whitespace-nowrap">
-                        <div className="inline-flex items-center justify-center gap-1.5">
-                          <button
-                            onClick={() => handleEditClick(c)}
-                            className="p-1.5 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 rounded transition-colors"
-                            title="ערוך איש קשר ישירות על המסך"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteContact(c.id)}
-                            className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
-                            title="מחק איש קשר"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    )}
+                    {contactsTable.visibleColumns.map(col => {
+                      switch (col.id) {
+                        case 'fullName':
+                          return (
+                            <td key={col.id} className="px-4 py-3 font-semibold text-white">
+                              {c.fullName}
+                            </td>
+                          );
+                        case 'role':
+                          return (
+                            <td key={col.id} className="px-4 py-3 text-slate-300 max-w-xs">
+                              {c.role || '-'}
+                            </td>
+                          );
+                        case 'category':
+                          return (
+                            <td key={col.id} className="px-4 py-3 whitespace-nowrap">
+                              <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-medium ${
+                                c.category === 'board'
+                                  ? 'bg-amber-500/10 text-amber-300 border border-amber-500/20'
+                                  : c.category === 'management_and_audit'
+                                  ? 'bg-blue-500/10 text-blue-300 border border-blue-500/20'
+                                  : c.category === 'general_members'
+                                  ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
+                                  : 'bg-purple-500/10 text-purple-300 border border-purple-500/20'
+                              }`}>
+                                {CATEGORY_LABELS[c.category] || c.category}
+                              </span>
+                            </td>
+                          );
+                        case 'phone':
+                          return (
+                            <td key={col.id} className="px-4 py-3 whitespace-nowrap">
+                              {c.phone ? (
+                                <a 
+                                  href={`tel:${c.phone}`} 
+                                  className="inline-flex items-center gap-1.5 text-slate-300 hover:text-blue-400 font-mono text-xs transition-colors"
+                                  dir="ltr"
+                                >
+                                  <Phone className="w-3.5 h-3.5 text-slate-400" />
+                                  <span>{c.phone}</span>
+                                </a>
+                              ) : (
+                                <span className="text-slate-500 text-xs">-</span>
+                              )}
+                            </td>
+                          );
+                        case 'email':
+                          return (
+                            <td key={col.id} className="px-4 py-3 whitespace-nowrap">
+                              {c.email ? (
+                                <a 
+                                  href={`mailto:${c.email}`} 
+                                  className="inline-flex items-center gap-1.5 text-slate-300 hover:text-blue-400 font-mono text-xs transition-colors"
+                                  dir="ltr"
+                                >
+                                  <Mail className="w-3.5 h-3.5 text-slate-400" />
+                                  <span>{c.email}</span>
+                                </a>
+                              ) : (
+                                <span className="text-slate-500 text-xs">-</span>
+                              )}
+                            </td>
+                          );
+                        case 'actions':
+                          return (
+                            <td key={col.id} className="px-4 py-3 text-center whitespace-nowrap">
+                              <div className="inline-flex items-center justify-center gap-1.5">
+                                <button
+                                  onClick={() => handleEditClick(c)}
+                                  className="p-1.5 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 rounded transition-colors"
+                                  title="ערוך איש קשר ישירות על המסך"
+                                >
+                                  <Edit2 className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteContact(c.id)}
+                                  className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                                  title="מחק איש קשר"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                          );
+                        default:
+                          return null;
+                      }
+                    })}
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
+
+        <ColumnManagerModal
+          isOpen={contactsTable.isColumnModalOpen}
+          onClose={() => contactsTable.setIsColumnModalOpen(false)}
+          allOrderedColumns={contactsTable.allOrderedColumns}
+          hiddenColumns={contactsTable.hiddenColumns}
+          onMoveColumn={contactsTable.moveColumn}
+          onToggleVisibility={contactsTable.toggleColumnVisibility}
+          onResetColumns={contactsTable.resetColumns}
+          tableTitle="דף קשר"
+        />
       </div>
 
       {/* Edit Contact Modal */}

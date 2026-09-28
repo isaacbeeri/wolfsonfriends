@@ -21,6 +21,13 @@ import {
   toggleUserStatus 
 } from '../../utils/authService';
 import { renderQrCodeDataUrl } from '../../utils/totp';
+import { 
+  useTableManager, 
+  TableToolbarControls, 
+  SortableTh, 
+  TableFilterRow, 
+  ColumnManagerModal 
+} from './TableManager';
 
 const ROLE_DESCRIPTIONS = {
   admin: {
@@ -40,6 +47,37 @@ const ROLE_DESCRIPTIONS = {
   }
 };
 
+const USERS_COLUMNS = [
+  { id: 'fullName', label: 'שם מלא', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן שם מלא...' },
+  { id: 'username', label: 'שם משתמש / אימייל', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן משתמש/מייל...' },
+  { 
+    id: 'role', 
+    label: 'הרשאה', 
+    sortable: true, 
+    type: 'select', 
+    filterable: true,
+    filterOptions: [
+      { value: 'admin', label: 'מנהל ראשי' },
+      { value: 'editor', label: 'עורך תוכן' },
+      { value: 'viewer', label: 'צפייה בלבד' }
+    ]
+  },
+  { id: 'totp', label: 'אימות 2FA', sortable: false, filterable: false },
+  { 
+    id: 'status', 
+    label: 'סטטוס', 
+    sortable: true, 
+    type: 'select', 
+    filterable: true,
+    filterOptions: [
+      { value: 'active', label: 'פעיל' },
+      { value: 'disabled', label: 'מושבת' }
+    ]
+  },
+  { id: 'lastLogin', label: 'כניסה אחרונה', sortable: true, type: 'date', filterable: true, filterPlaceholder: 'סנן תאריך...' },
+  { id: 'actions', label: 'פעולות', sortable: false, filterable: false, align: 'center' },
+];
+
 export function UserManagementTab({ currentUserId }) {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +94,13 @@ export function UserManagementTab({ currentUserId }) {
     role: 'viewer'
   });
   const [formError, setFormError] = useState(null);
+
+  const usersTable = useTableManager({
+    storageKey: 'users_management',
+    columns: USERS_COLUMNS,
+    data: users,
+    defaultSort: { key: 'fullName', direction: 'asc' }
+  });
 
   const loadUsers = async () => {
     setIsLoading(true);
@@ -147,108 +192,172 @@ export function UserManagementTab({ currentUserId }) {
 
       {/* Users Table */}
       <div className="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden shadow">
-        <div className="px-4 py-3 bg-slate-900/60 border-b border-slate-700 flex items-center justify-between">
+        <div className="px-4 py-3 bg-slate-900/60 border-b border-slate-700 flex flex-wrap items-center justify-between gap-3">
           <div className="text-sm font-semibold text-slate-200">
-            רשימת מורשי כניסה למערכת ({users.length} משתמשים)
+            רשימת מורשי כניסה למערכת ({usersTable.processedData.length} מתוך {users.length} משתמשים)
           </div>
+          <TableToolbarControls
+            activeFilterCount={usersTable.activeFilterCount}
+            isFilterRowVisible={usersTable.isFilterRowVisible}
+            onToggleFilterRow={() => usersTable.setIsFilterRowVisible(!usersTable.isFilterRowVisible)}
+            onClearFilters={usersTable.clearAllFilters}
+            onOpenColumnModal={() => usersTable.setIsColumnModalOpen(true)}
+            totalItems={users.length}
+            filteredItems={usersTable.processedData.length}
+          />
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-sm">
             <thead className="bg-slate-900/90 text-slate-400 text-xs uppercase border-b border-slate-700">
               <tr>
-                <th className="px-4 py-3">שם מלא</th>
-                <th className="px-4 py-3">שם משתמש / אימייל</th>
-                <th className="px-4 py-3">הרשאה</th>
-                <th className="px-4 py-3">אימות 2FA</th>
-                <th className="px-4 py-3">סטטוס</th>
-                <th className="px-4 py-3">כניסה אחרונה</th>
-                <th className="px-4 py-3 text-center">פעולות</th>
+                {usersTable.visibleColumns.map(col => (
+                  <SortableTh
+                    key={col.id}
+                    column={col}
+                    sortConfig={usersTable.sortConfig}
+                    onSort={usersTable.handleSort}
+                    className="px-4 py-3"
+                  />
+                ))}
               </tr>
+              {usersTable.isFilterRowVisible && (
+                <TableFilterRow
+                  columns={usersTable.visibleColumns}
+                  columnFilters={usersTable.columnFilters}
+                  onFilterChange={usersTable.handleFilterChange}
+                />
+              )}
             </thead>
             <tbody className="divide-y divide-slate-700/60">
-              {users.map((u) => {
-                const roleInfo = ROLE_DESCRIPTIONS[u.role] || ROLE_DESCRIPTIONS.viewer;
-                const isMaster = u.username === 'isaac';
-                return (
-                  <tr key={u.id} className="hover:bg-slate-700/40 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-white">
-                      <div className="flex items-center gap-2">
-                        <span>{u.fullName}</span>
-                        {isMaster && (
-                          <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] rounded font-mono">
-                            Master Admin
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-slate-300 font-mono text-xs">
-                      <div>{u.username}</div>
-                      <div className="text-[11px] text-slate-500">{u.email}</div>
-                    </td>
-                    <td className="px-4 py-3">
-                      {isMaster ? (
-                        <span className={`inline-block px-2.5 py-1 rounded text-xs font-semibold border ${roleInfo.badge}`}>
-                          {roleInfo.label}
-                        </span>
-                      ) : (
-                        <select
-                          value={u.role}
-                          onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                          className="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
-                        >
-                          <option value="viewer">צפייה בלבד</option>
-                          <option value="editor">עורך תוכן</option>
-                          <option value="admin">מנהל ראשי</option>
-                        </select>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <button
-                        onClick={() => setShowSecretModal(u)}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
-                        title="צפה בברקוד 2FA והנחיות"
-                      >
-                        <QrCode className="w-3.5 h-3.5" />
-                        <span>מוגדר (הצג QR)</span>
-                      </button>
-                    </td>
-                    <td className="px-4 py-3">
-                      {isMaster ? (
-                        <span className="text-xs text-emerald-400 font-medium">פעיל תמיד</span>
-                      ) : (
-                        <button
-                          onClick={() => handleToggleStatus(u.id)}
-                          className={`px-2 py-0.5 rounded text-xs font-medium transition-colors ${
-                            u.status === 'active' 
-                              ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20' 
-                              : 'bg-rose-500/10 text-rose-400 hover:bg-rose-500/20'
-                          }`}
-                        >
-                          {u.status === 'active' ? 'פעיל' : 'מושבת'}
-                        </button>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-slate-400 font-mono">
-                      {u.lastLogin ? new Date(u.lastLogin).toLocaleString('he-IL') : 'טרם התחבר'}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {!isMaster && (
-                        <button
-                          onClick={() => handleDelete(u.id, u.fullName)}
-                          className="p-1.5 bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white rounded-md transition-colors"
-                          title="מחק משתמש"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+              {usersTable.processedData.length === 0 ? (
+                <tr>
+                  <td colSpan={usersTable.visibleColumns.length} className="text-center py-10 text-slate-400">
+                    לא נמצאו משתמשים התואמים את הסינון שנבחר.
+                  </td>
+                </tr>
+              ) : (
+                usersTable.processedData.map((u) => {
+                  const roleInfo = ROLE_DESCRIPTIONS[u.role] || ROLE_DESCRIPTIONS.viewer;
+                  const isMaster = u.username === 'isaac';
+                  return (
+                    <tr key={u.id} className="hover:bg-slate-700/40 transition-colors">
+                      {usersTable.visibleColumns.map(col => {
+                        switch (col.id) {
+                          case 'fullName':
+                            return (
+                              <td key={col.id} className="px-4 py-3 font-semibold text-white">
+                                <div className="flex items-center gap-2">
+                                  <span>{u.fullName}</span>
+                                  {isMaster && (
+                                    <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] rounded font-mono">
+                                      Master Admin
+                                    </span>
+                                  )}
+                                </div>
+                              </td>
+                            );
+                          case 'username':
+                            return (
+                              <td key={col.id} className="px-4 py-3 text-slate-300 font-mono text-xs">
+                                <div>{u.username}</div>
+                                <div className="text-[11px] text-slate-500">{u.email}</div>
+                              </td>
+                            );
+                          case 'role':
+                            return (
+                              <td key={col.id} className="px-4 py-3">
+                                {isMaster ? (
+                                  <span className={`inline-block px-2.5 py-1 rounded text-xs font-semibold border ${roleInfo.badge}`}>
+                                    {roleInfo.label}
+                                  </span>
+                                ) : (
+                                  <select
+                                    value={u.role}
+                                    onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                                    className="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                                  >
+                                    <option value="viewer">צפייה בלבד</option>
+                                    <option value="editor">עורך תוכן</option>
+                                    <option value="admin">מנהל ראשי</option>
+                                  </select>
+                                )}
+                              </td>
+                            );
+                          case 'totp':
+                            return (
+                              <td key={col.id} className="px-4 py-3">
+                                <button
+                                  onClick={() => setShowSecretModal(u)}
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
+                                  title="צפה בברקוד 2FA והנחיות"
+                                >
+                                  <QrCode className="w-3.5 h-3.5" />
+                                  <span>מוגדר (הצג QR)</span>
+                                </button>
+                              </td>
+                            );
+                          case 'status':
+                            return (
+                              <td key={col.id} className="px-4 py-3">
+                                {isMaster ? (
+                                  <span className="text-xs text-emerald-400 font-medium">פעיל תמיד</span>
+                                ) : (
+                                  <button
+                                    onClick={() => handleToggleStatus(u.id)}
+                                    className={`px-2 py-0.5 rounded text-xs font-medium transition-colors ${
+                                      u.status === 'active' 
+                                        ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20' 
+                                        : 'bg-rose-500/10 text-rose-400 hover:bg-rose-500/20'
+                                    }`}
+                                  >
+                                    {u.status === 'active' ? 'פעיל' : 'מושבת'}
+                                  </button>
+                                )}
+                              </td>
+                            );
+                          case 'lastLogin':
+                            return (
+                              <td key={col.id} className="px-4 py-3 text-xs text-slate-400 font-mono">
+                                {u.lastLogin ? new Date(u.lastLogin).toLocaleString('he-IL') : 'טרם התחבר'}
+                              </td>
+                            );
+                          case 'actions':
+                            return (
+                              <td key={col.id} className="px-4 py-3 text-center">
+                                {!isMaster && (
+                                  <button
+                                    onClick={() => handleDelete(u.id, u.fullName)}
+                                    className="p-1.5 bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white rounded-md transition-colors"
+                                    title="מחק משתמש"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </td>
+                            );
+                          default:
+                            return null;
+                        }
+                      })}
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
+
+        <ColumnManagerModal
+          isOpen={usersTable.isColumnModalOpen}
+          onClose={() => usersTable.setIsColumnModalOpen(false)}
+          allOrderedColumns={usersTable.allOrderedColumns}
+          hiddenColumns={usersTable.hiddenColumns}
+          onMoveColumn={usersTable.moveColumn}
+          onToggleVisibility={usersTable.toggleColumnVisibility}
+          onResetColumns={usersTable.resetColumns}
+          tableTitle="מורשי כניסה ומשתמשים"
+        />
       </div>
 
       {/* Add User Modal */}

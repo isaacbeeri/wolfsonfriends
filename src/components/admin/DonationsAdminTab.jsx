@@ -27,9 +27,51 @@ import {
   ChevronDown,
   Printer
 } from 'lucide-react';
-import { getDonations, processDonationsExcelFile, resetDonationsToDefault } from '../../utils/adminDataService';
+import { 
+  getDonations, 
+  processDonationsExcelFile, 
+  resetDonationsToDefault 
+} from '../../utils/adminDataService';
 import DonationsUploadModal from './DonationsUploadModal';
 import DonationsPdfReport from './DonationsPdfReport';
+import { 
+  useTableManager, 
+  TableToolbarControls, 
+  SortableTh, 
+  TableFilterRow, 
+  ColumnManagerModal 
+} from './TableManager';
+
+const MAIN_DONATIONS_COLUMNS = [
+  { id: 'index', label: '#', sortable: false, filterable: false, align: 'center', className: 'w-10' },
+  { id: 'date', label: 'תאריך', sortable: true, type: 'date', filterable: true, filterPlaceholder: 'סנן תאריך...', className: 'min-w-[100px]' },
+  { id: 'donorName', label: 'שם התורם', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן תורם...', className: 'min-w-[200px]' },
+  { id: 'amountIls', label: 'סכום בש״ח', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן סכום...', className: 'text-emerald-400 font-bold min-w-[120px]' },
+  { id: 'foreignAmount', label: 'סכום במט״ח', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן מט״ח...', className: 'min-w-[120px]' },
+  { id: 'purpose', label: 'ייעוד התרומה', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן ייעוד...', className: 'min-w-[220px]' },
+  { id: 'receipt', label: 'מס׳ קבלה', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן קבלה...', align: 'center', className: 'min-w-[90px]' },
+  { id: 'cardCode', label: 'חשבשבת', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן כרטיס...', className: 'min-w-[100px]' },
+  { id: 'notes', label: 'הערות / תקורה', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן הערות...', className: 'min-w-[180px]' },
+];
+
+const TOP_DONORS_COLUMNS = [
+  { id: 'index', label: '#', sortable: false, filterable: false, align: 'center', className: 'w-10' },
+  { id: 'name', label: 'שם התורם / הקרן', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן תורם...', className: 'min-w-[200px]' },
+  { id: 'total', label: 'סך תרומות בתקופה', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן סכום...', className: 'text-emerald-400 font-bold min-w-[130px]' },
+  { id: 'count', label: 'מס׳ תרומות', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן כמות...', align: 'center', className: 'min-w-[90px]' },
+  { id: 'lastDate', label: 'מועד אחרון', sortable: true, type: 'date', filterable: true, filterPlaceholder: 'סנן מועד...', className: 'min-w-[120px]' },
+  { id: 'lastPurpose', label: 'ייעוד אחרון', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן ייעוד...', className: 'min-w-[200px]' },
+];
+
+const LAPSED_DONORS_COLUMNS = [
+  { id: 'index', label: '#', sortable: false, filterable: false, align: 'center', className: 'w-10' },
+  { id: 'name', label: 'שם התורם / החברה', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן תורם...', className: 'min-w-[220px]' },
+  { id: 'totalHistoric', label: 'סך היסטורי מצטבר', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן סכום...', className: 'text-emerald-400 font-bold min-w-[140px]' },
+  { id: 'count', label: 'כמות תרומות', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן כמות...', align: 'center', className: 'min-w-[90px]' },
+  { id: 'lastYear', label: 'שנה אחרונה', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן שנה...', align: 'center', className: 'min-w-[100px]' },
+  { id: 'lastPurpose', label: 'ייעוד תרומה אחרון', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן ייעוד...', className: 'min-w-[220px]' },
+  { id: 'action', label: 'פעולה', sortable: false, filterable: false, align: 'center', className: 'min-w-[120px]' },
+];
 
 export function DonationsAdminTab({ userRole = 'viewer' }) {
   const isReadOnly = userRole === 'viewer';
@@ -315,6 +357,25 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
 
     return lapsed;
   }, [donations]);
+
+  const mainTable = useTableManager({
+    storageKey: 'main_donations',
+    columns: MAIN_DONATIONS_COLUMNS,
+    data: filteredDonations,
+    defaultSort: { key: 'date', direction: 'desc' }
+  });
+
+  const topDonorsTable = useTableManager({
+    storageKey: 'top_donors',
+    columns: TOP_DONORS_COLUMNS,
+    data: executiveStats.topDonors
+  });
+
+  const lapsedTable = useTableManager({
+    storageKey: 'lapsed_donors',
+    columns: LAPSED_DONORS_COLUMNS,
+    data: lapsedDonors
+  });
 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -879,7 +940,7 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
 
           {/* Row 4: Top Donors Table */}
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2.5">
                 <span className="p-2 bg-amber-500/10 text-amber-400 rounded-xl">
                   <Award className="w-5 h-5" />
@@ -889,53 +950,107 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
                   <p className="text-[11px] text-slate-400">עשרת התורמים הגדולים בחתך השנה הנבחרת</p>
                 </div>
               </div>
-              <button
-                onClick={() => setActiveTab('table')}
-                className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-semibold"
-              >
-                <span>לכל התרומות</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <TableToolbarControls
+                  activeFilterCount={topDonorsTable.activeFilterCount}
+                  isFilterRowVisible={topDonorsTable.isFilterRowVisible}
+                  onToggleFilterRow={() => topDonorsTable.setIsFilterRowVisible(!topDonorsTable.isFilterRowVisible)}
+                  onClearFilters={topDonorsTable.clearAllFilters}
+                  onOpenColumnModal={() => topDonorsTable.setIsColumnModalOpen(true)}
+                />
+                <button
+                  onClick={() => setActiveTab('table')}
+                  className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-semibold pr-2 border-r border-slate-800"
+                >
+                  <span>לכל התרומות</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-950/60">
-                    <th className="py-2.5 px-3 text-center w-10">#</th>
-                    <th className="py-2.5 px-4 min-w-[200px]">שם התורם / הקרן</th>
-                    <th className="py-2.5 px-4 text-emerald-400 font-bold min-w-[130px]">סך תרומות בתקופה</th>
-                    <th className="py-2.5 px-3 text-center min-w-[90px]">מס׳ תרומות</th>
-                    <th className="py-2.5 px-4 min-w-[120px]">מועד אחרון</th>
-                    <th className="py-2.5 px-4 min-w-[200px]">ייעוד אחרון</th>
+                    {topDonorsTable.visibleColumns.map(col => (
+                      <SortableTh
+                        key={col.id}
+                        column={col}
+                        sortConfig={topDonorsTable.sortConfig}
+                        onSort={topDonorsTable.handleSort}
+                        className={`py-2.5 px-4 ${col.className || ''}`}
+                      />
+                    ))}
                   </tr>
+                  {topDonorsTable.isFilterRowVisible && (
+                    <TableFilterRow
+                      columns={topDonorsTable.visibleColumns}
+                      columnFilters={topDonorsTable.columnFilters}
+                      onFilterChange={topDonorsTable.handleFilterChange}
+                    />
+                  )}
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {executiveStats.topDonors.map((donor, idx) => (
+                  {topDonorsTable.processedData.map((donor, idx) => (
                     <tr key={donor.name} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="py-2.5 px-3 text-center text-slate-500 font-mono text-[11px]">
-                        {idx + 1}
-                      </td>
-                      <td className="py-2.5 px-4 font-bold text-white">
-                        <span dir="auto">{donor.name}</span>
-                      </td>
-                      <td className="py-2.5 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
-                        {donor.total.toLocaleString()} ₪
-                      </td>
-                      <td className="py-2.5 px-3 text-center font-mono text-slate-300">
-                        {donor.count}
-                      </td>
-                      <td className="py-2.5 px-4 font-mono text-slate-400" dir="ltr">
-                        {donor.lastDate || '-'}
-                      </td>
-                      <td className="py-2.5 px-4 text-slate-300 truncate max-w-xs" title={donor.lastPurpose} dir="auto">
-                        {donor.lastPurpose || '-'}
-                      </td>
+                      {topDonorsTable.visibleColumns.map(col => {
+                        switch (col.id) {
+                          case 'index':
+                            return (
+                              <td key={col.id} className="py-2.5 px-3 text-center text-slate-500 font-mono text-[11px]">
+                                {idx + 1}
+                              </td>
+                            );
+                          case 'name':
+                            return (
+                              <td key={col.id} className="py-2.5 px-4 font-bold text-white">
+                                <span dir="auto">{donor.name}</span>
+                              </td>
+                            );
+                          case 'total':
+                            return (
+                              <td key={col.id} className="py-2.5 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
+                                {donor.total.toLocaleString()} ₪
+                              </td>
+                            );
+                          case 'count':
+                            return (
+                              <td key={col.id} className="py-2.5 px-3 text-center font-mono text-slate-300">
+                                {donor.count}
+                              </td>
+                            );
+                          case 'lastDate':
+                            return (
+                              <td key={col.id} className="py-2.5 px-4 font-mono text-slate-400" dir="ltr">
+                                {donor.lastDate || '-'}
+                              </td>
+                            );
+                          case 'lastPurpose':
+                            return (
+                              <td key={col.id} className="py-2.5 px-4 text-slate-300 truncate max-w-xs" title={donor.lastPurpose} dir="auto">
+                                {donor.lastPurpose || '-'}
+                              </td>
+                            );
+                          default:
+                            return null;
+                        }
+                      })}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+
+            <ColumnManagerModal
+              isOpen={topDonorsTable.isColumnModalOpen}
+              onClose={() => topDonorsTable.setIsColumnModalOpen(false)}
+              allOrderedColumns={topDonorsTable.allOrderedColumns}
+              hiddenColumns={topDonorsTable.hiddenColumns}
+              onMoveColumn={topDonorsTable.moveColumn}
+              onToggleVisibility={topDonorsTable.toggleColumnVisibility}
+              onResetColumns={topDonorsTable.resetColumns}
+              tableTitle="תורמי עוגן מובילים"
+            />
           </div>
         </div>
       )}
@@ -1006,76 +1121,139 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
 
           {/* Donations Table */}
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-            <div className="px-5 py-3.5 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <div className="px-5 py-3.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
               <div className="flex items-center gap-2 font-bold text-white">
                 <span>רשימת תרומות</span>
                 <span className="px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full font-mono text-[11px]">
-                  {filteredDonations.length} תוצאות
+                  {mainTable.processedData.length} מתוך {filteredDonations.length} תוצאות
                 </span>
               </div>
-              <span className="text-[11px]">
-                {selectedYear === '2026' ? 'שנת 2026 (נתונים מאומתים)' : `שנה: ${selectedYear}`}
-              </span>
+
+              <div className="flex items-center gap-3">
+                <TableToolbarControls
+                  activeFilterCount={mainTable.activeFilterCount}
+                  isFilterRowVisible={mainTable.isFilterRowVisible}
+                  onToggleFilterRow={() => mainTable.setIsFilterRowVisible(!mainTable.isFilterRowVisible)}
+                  onClearFilters={mainTable.clearAllFilters}
+                  onOpenColumnModal={() => mainTable.setIsColumnModalOpen(true)}
+                  totalItems={filteredDonations.length}
+                  filteredItems={mainTable.processedData.length}
+                />
+                <span className="text-[11px] text-slate-400 border-r border-slate-800 pr-3">
+                  {selectedYear === '2026' ? 'שנת 2026 (נתונים מאומתים)' : `שנה: ${selectedYear}`}
+                </span>
+              </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-950">
-                    <th className="py-3 px-3 text-center w-10">#</th>
-                    <th className="py-3 px-4 min-w-[100px]">תאריך</th>
-                    <th className="py-3 px-4 min-w-[200px]">שם התורם</th>
-                    <th className="py-3 px-4 text-emerald-400 font-bold min-w-[120px]">סכום בש״ח</th>
-                    <th className="py-3 px-4 min-w-[120px]">סכום במט״ח</th>
-                    <th className="py-3 px-4 min-w-[220px]">ייעוד התרומה</th>
-                    <th className="py-3 px-3 text-center min-w-[90px]">מס׳ קבלה</th>
-                    <th className="py-3 px-3 min-w-[100px]">חשבשבת</th>
-                    <th className="py-3 px-4 min-w-[180px]">הערות / תקורה</th>
+                    {mainTable.visibleColumns.map(col => (
+                      <SortableTh
+                        key={col.id}
+                        column={col}
+                        sortConfig={mainTable.sortConfig}
+                        onSort={mainTable.handleSort}
+                        className={`py-3 px-4 ${col.className || ''}`}
+                      />
+                    ))}
                   </tr>
+                  {mainTable.isFilterRowVisible && (
+                    <TableFilterRow
+                      columns={mainTable.visibleColumns}
+                      columnFilters={mainTable.columnFilters}
+                      onFilterChange={mainTable.handleFilterChange}
+                    />
+                  )}
                 </thead>
                 <tbody className="divide-y divide-slate-800/80 bg-slate-900/40">
-                  {filteredDonations.length === 0 ? (
+                  {mainTable.processedData.length === 0 ? (
                     <tr>
-                      <td colSpan={9} className="py-12 text-center text-slate-400">
+                      <td colSpan={mainTable.visibleColumns.length} className="py-12 text-center text-slate-400">
                         לא נמצאו תרומות התואמות את החיפוש או הסינון שנבחר.
                       </td>
                     </tr>
                   ) : (
-                    filteredDonations.map((d, idx) => (
+                    mainTable.processedData.map((d, idx) => (
                       <tr key={d.id || idx} className="hover:bg-slate-800/60 transition-colors">
-                        <td className="py-3 px-3 text-center text-slate-500 font-mono text-[11px]">
-                          {idx + 1}
-                        </td>
-                        <td className="py-3 px-4 font-mono text-slate-300 whitespace-nowrap" dir="ltr">
-                          {d.date || '-'}
-                        </td>
-                        <td className="py-3 px-4 font-bold text-white">
-                          <span dir="auto">{d.donorName}</span>
-                        </td>
-                        <td className="py-3 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
-                          {Number(d.amountIls).toLocaleString()} ₪
-                        </td>
-                        <td className="py-3 px-4 font-mono text-slate-300 whitespace-nowrap" dir="ltr">
-                          {d.foreignAmount ? d.foreignAmount : '-'}
-                        </td>
-                        <td className="py-3 px-4 text-slate-300 max-w-xs truncate" title={d.purpose} dir="auto">
-                          {d.purpose || '-'}
-                        </td>
-                        <td className="py-3 px-3 text-center font-mono text-slate-300 whitespace-nowrap" dir="ltr">
-                          {d.receipt || '-'}
-                        </td>
-                        <td className="py-3 px-3 font-mono text-slate-400 whitespace-nowrap" dir="ltr">
-                          {d.cardCode || '-'}
-                        </td>
-                        <td className="py-3 px-4 text-slate-400 max-w-xs truncate text-[11px]" title={d.notes} dir="auto">
-                          {d.notes || '-'}
-                        </td>
+                        {mainTable.visibleColumns.map(col => {
+                          switch (col.id) {
+                            case 'index':
+                              return (
+                                <td key={col.id} className="py-3 px-3 text-center text-slate-500 font-mono text-[11px]">
+                                  {idx + 1}
+                                </td>
+                              );
+                            case 'date':
+                              return (
+                                <td key={col.id} className="py-3 px-4 font-mono text-slate-300 whitespace-nowrap" dir="ltr">
+                                  {d.date || '-'}
+                                </td>
+                              );
+                            case 'donorName':
+                              return (
+                                <td key={col.id} className="py-3 px-4 font-bold text-white">
+                                  <span dir="auto">{d.donorName}</span>
+                                </td>
+                              );
+                            case 'amountIls':
+                              return (
+                                <td key={col.id} className="py-3 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
+                                  {Number(d.amountIls).toLocaleString()} ₪
+                                </td>
+                              );
+                            case 'foreignAmount':
+                              return (
+                                <td key={col.id} className="py-3 px-4 font-mono text-slate-300 whitespace-nowrap" dir="ltr">
+                                  {d.foreignAmount ? d.foreignAmount : '-'}
+                                </td>
+                              );
+                            case 'purpose':
+                              return (
+                                <td key={col.id} className="py-3 px-4 text-slate-300 max-w-xs truncate" title={d.purpose} dir="auto">
+                                  {d.purpose || '-'}
+                                </td>
+                              );
+                            case 'receipt':
+                              return (
+                                <td key={col.id} className="py-3 px-3 text-center font-mono text-slate-300 whitespace-nowrap" dir="ltr">
+                                  {d.receipt || '-'}
+                                </td>
+                              );
+                            case 'cardCode':
+                              return (
+                                <td key={col.id} className="py-3 px-3 font-mono text-slate-400 whitespace-nowrap" dir="ltr">
+                                  {d.cardCode || '-'}
+                                </td>
+                              );
+                            case 'notes':
+                              return (
+                                <td key={col.id} className="py-3 px-4 text-slate-400 max-w-xs truncate text-[11px]" title={d.notes} dir="auto">
+                                  {d.notes || '-'}
+                                </td>
+                              );
+                            default:
+                              return null;
+                          }
+                        })}
                       </tr>
                     ))
                   )}
                 </tbody>
               </table>
             </div>
+
+            <ColumnManagerModal
+              isOpen={mainTable.isColumnModalOpen}
+              onClose={() => mainTable.setIsColumnModalOpen(false)}
+              allOrderedColumns={mainTable.allOrderedColumns}
+              hiddenColumns={mainTable.hiddenColumns}
+              onMoveColumn={mainTable.moveColumn}
+              onToggleVisibility={mainTable.toggleColumnVisibility}
+              onResetColumns={mainTable.resetColumns}
+              tableTitle="רשימת תרומות"
+            />
           </div>
         </div>
       )}
@@ -1098,9 +1276,20 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-mono text-xs font-bold">
-                {lapsedDonors.length} יעדי פנייה
-              </span>
+              <div className="flex items-center gap-3">
+                <TableToolbarControls
+                  activeFilterCount={lapsedTable.activeFilterCount}
+                  isFilterRowVisible={lapsedTable.isFilterRowVisible}
+                  onToggleFilterRow={() => lapsedTable.setIsFilterRowVisible(!lapsedTable.isFilterRowVisible)}
+                  onClearFilters={lapsedTable.clearAllFilters}
+                  onOpenColumnModal={() => lapsedTable.setIsColumnModalOpen(true)}
+                  totalItems={lapsedDonors.length}
+                  filteredItems={lapsedTable.processedData.length}
+                />
+                <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-mono text-xs font-bold">
+                  {lapsedTable.processedData.length} מתוך {lapsedDonors.length} יעדי פנייה
+                </span>
+              </div>
             </div>
 
             <div className="p-3 bg-emerald-950/40 border border-emerald-800/60 rounded-xl text-xs text-emerald-300 mb-4 flex items-center gap-2">
@@ -1114,53 +1303,100 @@ export function DonationsAdminTab({ userRole = 'viewer' }) {
               <table className="w-full text-right text-xs">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-400 font-semibold bg-slate-950">
-                    <th className="py-3 px-3 text-center w-10">#</th>
-                    <th className="py-3 px-4 min-w-[220px]">שם התורם / החברה</th>
-                    <th className="py-3 px-4 text-emerald-400 font-bold min-w-[140px]">סך היסטורי מצטבר</th>
-                    <th className="py-3 px-3 text-center min-w-[90px]">כמות תרומות</th>
-                    <th className="py-3 px-3 text-center min-w-[100px]">שנה אחרונה</th>
-                    <th className="py-3 px-4 min-w-[220px]">ייעוד תרומה אחרון</th>
-                    <th className="py-3 px-3 text-center min-w-[120px]">פעולה</th>
+                    {lapsedTable.visibleColumns.map(col => (
+                      <SortableTh
+                        key={col.id}
+                        column={col}
+                        sortConfig={lapsedTable.sortConfig}
+                        onSort={lapsedTable.handleSort}
+                        className={`py-3 px-4 ${col.className || ''}`}
+                      />
+                    ))}
                   </tr>
+                  {lapsedTable.isFilterRowVisible && (
+                    <TableFilterRow
+                      columns={lapsedTable.visibleColumns}
+                      columnFilters={lapsedTable.columnFilters}
+                      onFilterChange={lapsedTable.handleFilterChange}
+                    />
+                  )}
                 </thead>
                 <tbody className="divide-y divide-slate-800/80 bg-slate-900/40">
-                  {lapsedDonors.map((item, idx) => (
+                  {lapsedTable.processedData.map((item, idx) => (
                     <tr key={item.name} className="hover:bg-slate-800/60 transition-colors">
-                      <td className="py-3 px-3 text-center text-slate-500 font-mono text-[11px]">
-                        {idx + 1}
-                      </td>
-                      <td className="py-3 px-4 font-bold text-white">
-                        <span dir="auto">{item.name}</span>
-                      </td>
-                      <td className="py-3 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
-                        {item.totalHistoric.toLocaleString()} ₪
-                      </td>
-                      <td className="py-3 px-3 text-center font-mono text-slate-300">
-                        {item.count}
-                      </td>
-                      <td className="py-3 px-3 text-center font-mono font-bold text-amber-400">
-                        {item.lastYear}
-                      </td>
-                      <td className="py-3 px-4 text-slate-300 max-w-xs truncate" title={item.lastPurpose} dir="auto">
-                        {item.lastPurpose || '-'}
-                      </td>
-                      <td className="py-3 px-3 text-center">
-                        <button
-                          onClick={() => {
-                            setSelectedYear('all');
-                            setSearchTerm(item.name);
-                            setActiveTab('table');
-                          }}
-                          className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 rounded-lg text-[11px] font-semibold transition-colors"
-                        >
-                          הצג היסטוריה
-                        </button>
-                      </td>
+                      {lapsedTable.visibleColumns.map(col => {
+                        switch (col.id) {
+                          case 'index':
+                            return (
+                              <td key={col.id} className="py-3 px-3 text-center text-slate-500 font-mono text-[11px]">
+                                {idx + 1}
+                              </td>
+                            );
+                          case 'name':
+                            return (
+                              <td key={col.id} className="py-3 px-4 font-bold text-white">
+                                <span dir="auto">{item.name}</span>
+                              </td>
+                            );
+                          case 'totalHistoric':
+                            return (
+                              <td key={col.id} className="py-3 px-4 font-mono font-black text-emerald-400 whitespace-nowrap" dir="ltr">
+                                {item.totalHistoric.toLocaleString()} ₪
+                              </td>
+                            );
+                          case 'count':
+                            return (
+                              <td key={col.id} className="py-3 px-3 text-center font-mono text-slate-300">
+                                {item.count}
+                              </td>
+                            );
+                          case 'lastYear':
+                            return (
+                              <td key={col.id} className="py-3 px-3 text-center font-mono font-bold text-amber-400">
+                                {item.lastYear}
+                              </td>
+                            );
+                          case 'lastPurpose':
+                            return (
+                              <td key={col.id} className="py-3 px-4 text-slate-300 max-w-xs truncate" title={item.lastPurpose} dir="auto">
+                                {item.lastPurpose || '-'}
+                              </td>
+                            );
+                          case 'action':
+                            return (
+                              <td key={col.id} className="py-3 px-3 text-center">
+                                <button
+                                  onClick={() => {
+                                    setSelectedYear('all');
+                                    setSearchTerm(item.name);
+                                    setActiveTab('table');
+                                  }}
+                                  className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 rounded-lg text-[11px] font-semibold transition-colors"
+                                >
+                                  הצג היסטוריה
+                                </button>
+                              </td>
+                            );
+                          default:
+                            return null;
+                        }
+                      })}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+
+            <ColumnManagerModal
+              isOpen={lapsedTable.isColumnModalOpen}
+              onClose={() => lapsedTable.setIsColumnModalOpen(false)}
+              allOrderedColumns={lapsedTable.allOrderedColumns}
+              hiddenColumns={lapsedTable.hiddenColumns}
+              onMoveColumn={lapsedTable.moveColumn}
+              onToggleVisibility={lapsedTable.toggleColumnVisibility}
+              onResetColumns={lapsedTable.resetColumns}
+              tableTitle="תורמים רדומים לחידוש קשר"
+            />
           </div>
         </div>
       )}

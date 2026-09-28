@@ -254,6 +254,20 @@ export function getDonations() {
   return INITIAL_DONATIONS;
 }
 
+/**
+ * Calculates real-time 2026 actual raised amount and count from latest donations
+ */
+export function getActual2026Raised() {
+  const donations = getDonations();
+  const d2026 = (donations || []).filter(d => Number(d.year) === 2026);
+  const sum = d2026.reduce((acc, d) => acc + (Number(d.amountIls) || 0), 0);
+  return {
+    raisedIls: sum > 0 ? Math.round(sum * 100) / 100 : 3115244.75,
+    count: d2026.length > 0 ? d2026.length : 37,
+    hasUploadedData: d2026.length > 0
+  };
+}
+
 export function saveDonations(donations) {
   memoryVault.donations = donations;
   // Encrypt with AES-256-GCM asynchronously at rest
@@ -440,13 +454,24 @@ export async function processDonationsExcelFile(file) {
     }
   }
 
-  if (parsedRecords.length > 0) {
-    saveDonations(parsedRecords);
-  }
-
   const donations2026 = parsedRecords.filter(d => d.year === 2026);
   const sum2026 = donations2026.reduce((s, d) => s + d.amountIls, 0);
   const totalAmount = parsedRecords.reduce((s, d) => s + d.amountIls, 0);
+
+  if (parsedRecords.length > 0) {
+    saveDonations(parsedRecords);
+    if (sum2026 > 0) {
+      try {
+        const curForecast = getForecast();
+        saveForecast({
+          ...curForecast,
+          currentRaisedIls: sum2026
+        });
+      } catch (err) {
+        console.warn('Could not auto-sync forecast on donations upload:', err);
+      }
+    }
+  }
 
   return {
     success: true,
@@ -666,22 +691,34 @@ export function deleteContact(contactId) {
    ============================================================ */
 
 export function getForecast() {
+  let f = DEFAULT_FORECAST;
   if (memoryVault.forecast && typeof memoryVault.forecast === 'object' && Array.isArray(memoryVault.forecast.pipelineItems)) {
-    return memoryVault.forecast;
-  }
-  try {
-    const raw = localStorage.getItem(FORECAST_STORAGE_KEY);
-    if (raw) {
-      if (!isEncrypted(raw)) {
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.pipelineItems)) {
-          memoryVault.forecast = parsed;
-          return parsed;
+    f = memoryVault.forecast;
+  } else {
+    try {
+      const raw = localStorage.getItem(FORECAST_STORAGE_KEY);
+      if (raw) {
+        if (!isEncrypted(raw)) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object' && Array.isArray(parsed.pipelineItems)) {
+            memoryVault.forecast = parsed;
+            f = parsed;
+          }
         }
       }
-    }
-  } catch (e) {}
-  return DEFAULT_FORECAST;
+    } catch (e) {}
+  }
+
+  // Ensure currentRaisedIls is always up-to-date with latest 2026 donations
+  const actual2026 = getActual2026Raised();
+  if (actual2026.hasUploadedData) {
+    f = {
+      ...f,
+      currentRaisedIls: actual2026.raisedIls
+    };
+  }
+
+  return f;
 }
 
 export function saveForecast(forecast) {

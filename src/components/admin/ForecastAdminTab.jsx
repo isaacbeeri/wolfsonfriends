@@ -29,8 +29,27 @@ import {
   DEFAULT_EXCHANGE_RATES,
   OFFICIAL_BOI_RATES,
   fetchLiveExchangeRates,
-  getStoredLiveRates 
+  getStoredLiveRates,
+  getActual2026Raised
 } from '../../utils/adminDataService';
+import { 
+  useTableManager, 
+  TableToolbarControls, 
+  SortableTh, 
+  TableFilterRow, 
+  ColumnManagerModal 
+} from './TableManager';
+
+const FORECAST_COLUMNS = [
+  { id: 'index', label: '#', sortable: false, filterable: false, align: 'center', className: 'w-12' },
+  { id: 'title', label: 'מקור / גורם מממן', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן מקור...', className: 'min-w-[240px]' },
+  { id: 'originalAmount', label: 'סכום מקורי', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן סכום...', align: 'center', className: 'min-w-[140px]' },
+  { id: 'exchangeRate', label: 'שער המרה', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן שער...', align: 'center', className: 'min-w-[100px]' },
+  { id: 'amountIls', label: 'סכום מחושב בשקלים (₪)', sortable: true, type: 'number', filterable: true, filterPlaceholder: 'סנן סכום בש״ח...', align: 'center', className: 'min-w-[150px] text-emerald-400 font-bold' },
+  { id: 'details', label: 'אבני דרך והערות', sortable: true, type: 'text', filterable: true, filterPlaceholder: 'סנן פירוט...', className: 'min-w-[260px]' },
+  { id: 'lastUpdated', label: 'תאריך עדכון אחרון', sortable: true, type: 'date', filterable: true, filterPlaceholder: 'סנן תאריך...', align: 'center', className: 'min-w-[140px]' },
+  { id: 'actions', label: 'פעולות', sortable: false, filterable: false, align: 'center', className: 'w-12' },
+];
 
 export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צחי בארי' }) {
   const isReadOnly = userRole === 'viewer';
@@ -38,14 +57,19 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
   const [saveStatus, setSaveStatus] = useState(null);
   const [autoNotice, setAutoNotice] = useState(null);
 
+  // Read latest 2026 actual donations data from Excel / storage
+  const initialActual = getActual2026Raised();
+
   // Form & Forecast State
   const [annualGoal, setAnnualGoal] = useState(forecast.annualGoalIls || 15000000);
-  const [currentRaised, setCurrentRaised] = useState(forecast.currentRaisedIls || 3115244.75);
+  const [currentRaised, setCurrentRaised] = useState(initialActual.raisedIls);
+  const [actualDonationsCount, setActualDonationsCount] = useState(initialActual.count);
   const [pipelineNotes, setPipelineNotes] = useState(forecast.pipelineNotes || '');
   const [exchangeRates, setExchangeRates] = useState(() => getStoredLiveRates());
   const [pipelineItems, setPipelineItems] = useState(forecast.pipelineItems || []);
   const [lastTableUpdate, setLastTableUpdate] = useState(forecast.lastUpdated || '19.09.2026 20:45');
   const [isFetchingRates, setIsFetchingRates] = useState(false);
+  const [isRecalculating, setIsRecalculating] = useState(false);
   const [liveRateSource, setLiveRateSource] = useState(exchangeRates.source || 'בנק ישראל (שער יציג)');
   const [liveSyncTime, setLiveSyncTime] = useState(exchangeRates.displayTime || '19/09/2026 20:45');
 
@@ -64,6 +88,17 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
   const progressRaisedPct = Math.round((Number(currentRaised) / numGoal) * 100);
   const progressPipelinePct = Math.round((totalPipelineIls / numGoal) * 100);
   const remainingToGoal = Math.max(0, numGoal - totalExpectedCombined);
+
+  const forecastColumns = React.useMemo(() => {
+    return isReadOnly ? FORECAST_COLUMNS.filter(c => c.id !== 'actions') : FORECAST_COLUMNS;
+  }, [isReadOnly]);
+
+  const forecastTable = useTableManager({
+    storageKey: 'forecast_pipeline',
+    columns: forecastColumns,
+    data: pipelineItems,
+    defaultSort: { key: 'amountIls', direction: 'desc' }
+  });
 
   /**
    * Automatic Live Sync: Fetches real-time market / BOI rates on mount and recalculates
@@ -98,8 +133,70 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
     }
   };
 
-  // Run live sync automatically on component mount
+  /**
+   * Comprehensive Recalculate: Updates actual raised from latest Excel, fetches live rates,
+   * re-parses pipeline text and saves updated figures.
+   */
+  const handleRecalculateAll = async () => {
+    setIsRecalculating(true);
+    try {
+      // 1. Fetch live rates
+      let ratesToUse = exchangeRates;
+      try {
+        const res = await fetchLiveExchangeRates();
+        if (res.success && res.rates) {
+          ratesToUse = res.rates;
+          setExchangeRates(res.rates);
+          setLiveRateSource(res.rates.source || 'בנק ישראל / שוק המט״ח (חי)');
+          setLiveSyncTime(res.rates.displayTime || new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }));
+        }
+      } catch (e) {
+        console.warn('Rates sync error:', e);
+      }
+
+      // 2. Read latest actual 2026 donations from Excel/vault
+      const actual = getActual2026Raised();
+      setCurrentRaised(actual.raisedIls);
+      setActualDonationsCount(actual.count);
+
+      // 3. Re-parse user pipeline text with fresh exchange rates
+      const parsed = parsePipelineText(pipelineNotes, ratesToUse);
+      setPipelineItems(parsed);
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('he-IL') + ' ' + now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+      setLastTableUpdate(dateStr);
+
+      const pipelineTotal = parsed.reduce((s, i) => s + (Number(i.amountIls) || 0), 0);
+      const combinedTotal = actual.raisedIls + pipelineTotal;
+
+      // 4. Save to vault
+      const dataToSave = {
+        ...forecast,
+        annualGoalIls: Number(annualGoal),
+        currentRaisedIls: Number(actual.raisedIls),
+        pipelineNotes,
+        pipelineItems: parsed,
+        lastUpdated: dateStr,
+        updatedBy: currentUserName,
+        exchangeRates: ratesToUse
+      };
+      saveForecast(dataToSave);
+
+      setAutoNotice(
+        `כל נתוני המסך חושבו ועודכנו מחדש בהצלחה! גויס בפועל (אקסל 2026): ${actual.raisedIls.toLocaleString()} ₪ (${actual.count} תרומות). צפי תקבולים נוסף: ${pipelineTotal.toLocaleString()} ₪. סה״כ שנתי משולב: ${combinedTotal.toLocaleString()} ₪.`
+      );
+      setTimeout(() => setAutoNotice(null), 6000);
+    } finally {
+      setIsRecalculating(false);
+    }
+  };
+
+  // Run live sync and donations check on component mount
   useEffect(() => {
+    const actual = getActual2026Raised();
+    setCurrentRaised(actual.raisedIls);
+    setActualDonationsCount(actual.count);
     syncLiveRates(false);
   }, []);
 
@@ -107,18 +204,7 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
    * Recalculates all items from notes and current exchange rates
    */
   const handleParseAndCalculate = async (notesToParse = pipelineNotes, ratesToUse = exchangeRates) => {
-    // Also trigger background live check
-    await syncLiveRates(false);
-
-    const parsed = parsePipelineText(notesToParse, ratesToUse);
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('he-IL') + ' ' + now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
-
-    setPipelineItems(parsed);
-    setLastTableUpdate(dateStr);
-    const total = parsed.reduce((s, i) => s + i.amountIls, 0);
-    setAutoNotice(`המספרים עודכנו בהצלחה לפי שער דולר מעודכן ${ratesToUse.USD} ₪! סה״כ צפי חדש בשקלים: ${total.toLocaleString()} ₪`);
-    setTimeout(() => setAutoNotice(null), 4500);
+    await handleRecalculateAll();
   };
 
   /**
@@ -279,7 +365,17 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={handleRecalculateAll}
+              disabled={isRecalculating}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-950/40"
+              title="חישוב מחדש של כל הנתונים במסך על בסיס קובץ האקסל המעודכן ביותר, שערי מטבע חיים וטקסט הצפי"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRecalculating ? 'animate-spin' : ''}`} />
+              <span>עדכן נתונים (חישוב מחדש)</span>
+            </button>
+
             <button
               onClick={handleExportBrief}
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-medium transition-colors border border-slate-700"
@@ -347,14 +443,21 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
           <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-bold text-emerald-300">גויס בפועל (2026 עד כה)</span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span className="p-1 bg-emerald-500/10 text-emerald-400 rounded-lg">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              </span>
             </div>
             <div className="text-2xl font-black text-emerald-400 font-mono" dir="ltr">
               {Number(currentRaised).toLocaleString()} ₪
             </div>
-            <span className="text-[11px] text-slate-500 mt-2 block">
-              37 תרומות מאומתות במערכת ({progressRaisedPct}% מהיעד)
-            </span>
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-[11px] text-slate-400">
+                {actualDonationsCount} תרומות מאומתות במערכת ({progressRaisedPct}% מהיעד)
+              </span>
+              <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold rounded-md">
+                מעודכן מאקסל
+              </span>
+            </div>
           </div>
 
           {/* Card 3: Pipeline Forecast */}
@@ -367,7 +470,7 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
               +{totalPipelineIls.toLocaleString()} ₪
             </div>
             <span className="text-[11px] text-amber-400/80 mt-2 block">
-              {pipelineItems.length} מענקים בצנרת ({progressPipelinePct}% מהיעד)
+              {pipelineItems.length} מקורות בצנרת ({progressPipelinePct}% מהיעד)
             </span>
           </div>
 
@@ -556,10 +659,20 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <TableToolbarControls
+              activeFilterCount={forecastTable.activeFilterCount}
+              isFilterRowVisible={forecastTable.isFilterRowVisible}
+              onToggleFilterRow={() => forecastTable.setIsFilterRowVisible(!forecastTable.isFilterRowVisible)}
+              onClearFilters={forecastTable.clearAllFilters}
+              onOpenColumnModal={() => forecastTable.setIsColumnModalOpen(true)}
+              totalItems={pipelineItems.length}
+              filteredItems={forecastTable.processedData.length}
+            />
+
             <div className="text-xs bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-slate-300 flex items-center gap-2">
               <Calendar className="w-3.5 h-3.5 text-blue-400" />
-              <span>עדכון אחרון של הטבלה: <strong className="text-white font-mono" dir="ltr">{lastTableUpdate}</strong></span>
+              <span>עדכון אחרון: <strong className="text-white font-mono" dir="ltr">{lastTableUpdate}</strong></span>
             </div>
 
             {!isReadOnly && (
@@ -656,96 +769,123 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
           <table className="w-full text-right border-collapse">
             <thead>
               <tr className="border-b border-slate-800 text-xs text-slate-400 font-semibold bg-slate-950">
-                <th className="py-3.5 px-3 w-12 text-center">#</th>
-                <th className="py-3.5 px-4 min-w-[240px]">מקור / גורם מממן</th>
-                <th className="py-3.5 px-4 min-w-[140px] text-center">סכום מקורי</th>
-                <th className="py-3.5 px-3 min-w-[100px] text-center">שער המרה</th>
-                <th className="py-3.5 px-4 min-w-[150px] text-emerald-400 font-bold text-center">
-                  סכום מחושב בשקלים (₪)
-                </th>
-                <th className="py-3.5 px-4 min-w-[260px]">אבני דרך והערות</th>
-                <th className="py-3.5 px-4 min-w-[140px] text-center">תאריך עדכון אחרון</th>
-                {!isReadOnly && <th className="py-3.5 px-3 text-center w-12">פעולות</th>}
+                {forecastTable.visibleColumns.map(col => (
+                  <SortableTh
+                    key={col.id}
+                    column={col}
+                    sortConfig={forecastTable.sortConfig}
+                    onSort={forecastTable.handleSort}
+                    className={`py-3.5 px-4 ${col.className || ''}`}
+                  />
+                ))}
               </tr>
+              {forecastTable.isFilterRowVisible && (
+                <TableFilterRow
+                  columns={forecastTable.visibleColumns}
+                  columnFilters={forecastTable.columnFilters}
+                  onFilterChange={forecastTable.handleFilterChange}
+                />
+              )}
             </thead>
             <tbody className="divide-y divide-slate-800/80 text-xs bg-slate-900/50">
-              {pipelineItems.length === 0 ? (
+              {forecastTable.processedData.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-8 text-center text-slate-400">
-                    לא הוזנו עדיין פריטי צפי. הקלד צפי בתיבת הטקסט למעלה כדי לחשב אוטומטית.
+                  <td colSpan={forecastTable.visibleColumns.length} className="py-8 text-center text-slate-400">
+                    לא נמצאו פריטי צפי התואמים את החיפוש או הסינון שנבחר.
                   </td>
                 </tr>
               ) : (
-                pipelineItems.map((item, idx) => (
+                forecastTable.processedData.map((item, idx) => (
                   <tr key={item.id || idx} className="hover:bg-slate-800/60 transition-colors">
-                    <td className="py-3.5 px-3 text-center text-slate-500 font-mono font-bold">
-                      {idx + 1}
-                    </td>
-
-                    <td className="py-3.5 px-4 font-bold text-white">
-                      <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                        <span dir="auto" className="leading-normal">
-                          {item.title}
-                        </span>
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 px-4 text-center font-mono font-bold text-slate-200" dir="ltr">
-                      {item.currency === 'USD' && '$'}
-                      {item.currency === 'EUR' && '€'}
-                      {item.currency === 'GBP' && '£'}
-                      {Number(item.originalAmount).toLocaleString()}
-                      {item.currency === 'ILS' && ' ₪'}
-                      <span className="text-[10px] text-slate-400 ml-1.5 uppercase font-sans">({item.currency})</span>
-                    </td>
-
-                    <td className="py-3.5 px-3 text-center">
-                      <span className="font-mono text-slate-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 inline-block text-[11px]" dir="ltr">
-                        {item.currency === 'ILS' ? '1.00 ₪' : `${item.exchangeRate} ₪`}
-                      </span>
-                    </td>
-
-                    <td className="py-3.5 px-4 text-center font-mono font-black text-emerald-400 text-sm whitespace-nowrap" dir="ltr">
-                      {Number(item.amountIls).toLocaleString()} ₪
-                    </td>
-
-                    <td className="py-3.5 px-4 text-slate-300 text-xs leading-relaxed" dir="auto">
-                      {item.details}
-                    </td>
-
-                    <td className="py-3.5 px-4 text-center">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-950 border border-slate-800 rounded-full font-mono text-[11px] text-slate-300 whitespace-nowrap" dir="ltr">
-                        <Clock className="w-3 h-3 text-blue-400" />
-                        <span>{item.lastUpdated || lastTableUpdate}</span>
-                      </span>
-                    </td>
-
-                    {!isReadOnly && (
-                      <td className="py-3.5 px-3 text-center">
-                        <button
-                          onClick={() => handleDeleteItem(item.id)}
-                          className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-800 rounded transition-colors"
-                          title="מחק שורה זו"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </td>
-                    )}
+                    {forecastTable.visibleColumns.map(col => {
+                      switch (col.id) {
+                        case 'index':
+                          return (
+                            <td key={col.id} className="py-3.5 px-3 text-center text-slate-500 font-mono font-bold">
+                              {idx + 1}
+                            </td>
+                          );
+                        case 'title':
+                          return (
+                            <td key={col.id} className="py-3.5 px-4 font-bold text-white">
+                              <div className="flex items-center gap-2">
+                                <Building2 className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <span dir="auto" className="leading-normal">
+                                  {item.title}
+                                </span>
+                              </div>
+                            </td>
+                          );
+                        case 'originalAmount':
+                          return (
+                            <td key={col.id} className="py-3.5 px-4 text-center font-mono font-bold text-slate-200" dir="ltr">
+                              {item.currency === 'USD' && '$'}
+                              {item.currency === 'EUR' && '€'}
+                              {item.currency === 'GBP' && '£'}
+                              {Number(item.originalAmount).toLocaleString()}
+                              {item.currency === 'ILS' && ' ₪'}
+                              <span className="text-[10px] text-slate-400 ml-1.5 uppercase font-sans">({item.currency})</span>
+                            </td>
+                          );
+                        case 'exchangeRate':
+                          return (
+                            <td key={col.id} className="py-3.5 px-3 text-center">
+                              <span className="font-mono text-slate-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 inline-block text-[11px]" dir="ltr">
+                                {item.currency === 'ILS' ? '1.00 ₪' : `${item.exchangeRate} ₪`}
+                              </span>
+                            </td>
+                          );
+                        case 'amountIls':
+                          return (
+                            <td key={col.id} className="py-3.5 px-4 text-center font-mono font-black text-emerald-400 text-sm whitespace-nowrap" dir="ltr">
+                              {Number(item.amountIls).toLocaleString()} ₪
+                            </td>
+                          );
+                        case 'details':
+                          return (
+                            <td key={col.id} className="py-3.5 px-4 text-slate-300 text-xs leading-relaxed" dir="auto">
+                              {item.details}
+                            </td>
+                          );
+                        case 'lastUpdated':
+                          return (
+                            <td key={col.id} className="py-3.5 px-4 text-center">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-950 border border-slate-800 rounded-full font-mono text-[11px] text-slate-300 whitespace-nowrap" dir="ltr">
+                                <Clock className="w-3 h-3 text-blue-400" />
+                                <span>{item.lastUpdated || lastTableUpdate}</span>
+                              </span>
+                            </td>
+                          );
+                        case 'actions':
+                          return (
+                            <td key={col.id} className="py-3.5 px-3 text-center">
+                              <button
+                                onClick={() => handleDeleteItem(item.id)}
+                                className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-800 rounded transition-colors"
+                                title="מחק שורה זו"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </td>
+                          );
+                        default:
+                          return null;
+                      }
+                    })}
                   </tr>
                 ))
               )}
             </tbody>
-            {pipelineItems.length > 0 && (
+            {forecastTable.processedData.length > 0 && (
               <tfoot>
                 <tr className="bg-slate-950 font-bold border-t-2 border-slate-700 text-xs">
-                  <td colSpan={4} className="py-4 px-4 text-white">
-                    סה״כ צפי תקבולים ומענקים חדש (מחושב בשקלים לפי שער מעודכן):
+                  <td colSpan={3} className="py-4 px-4 text-white">
+                    סה״כ צפי תקבולים ומענקים ({forecastTable.processedData.length} פריטים מוצגים):
                   </td>
-                  <td className="py-4 px-4 text-center font-mono text-base font-black text-emerald-300" dir="ltr">
-                    {totalPipelineIls.toLocaleString()} ₪
+                  <td colSpan={2} className="py-4 px-4 text-center font-mono text-base font-black text-emerald-300" dir="ltr">
+                    {forecastTable.processedData.reduce((sum, item) => sum + (Number(item.amountIls) || 0), 0).toLocaleString()} ₪
                   </td>
-                  <td colSpan={3} className="py-4 px-4 text-slate-400 text-left">
+                  <td colSpan={Math.max(1, forecastTable.visibleColumns.length - 5)} className="py-4 px-4 text-slate-400 text-left">
                     עודכן לאחרונה: <span className="font-mono text-slate-200" dir="ltr">{lastTableUpdate}</span>
                   </td>
                 </tr>
@@ -753,6 +893,17 @@ export function ForecastAdminTab({ userRole = 'viewer', currentUserName = 'צח�
             )}
           </table>
         </div>
+
+        <ColumnManagerModal
+          isOpen={forecastTable.isColumnModalOpen}
+          onClose={() => forecastTable.setIsColumnModalOpen(false)}
+          allOrderedColumns={forecastTable.allOrderedColumns}
+          hiddenColumns={forecastTable.hiddenColumns}
+          onMoveColumn={forecastTable.moveColumn}
+          onToggleVisibility={forecastTable.toggleColumnVisibility}
+          onResetColumns={forecastTable.resetColumns}
+          tableTitle="צפי תקבולים ומענקים"
+        />
       </div>
     </div>
   );
