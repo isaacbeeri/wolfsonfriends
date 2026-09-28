@@ -70,49 +70,49 @@ export function ContactSection({ t, lang }) {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white border-b border-slate-200">
+    <section id="contact" className="py-28 md:py-36 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
-            <MessageSquare className="w-3.5 h-3.5 text-wolfson-blue" />
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 shadow-xs">
+            <MessageSquare className="w-4 h-4 text-wolfson-blue" />
             <span>{c.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
             {c.title}
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal">
             {c.subtitle}
           </p>
         </div>
 
         {/* Form and Contact Info Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 max-w-5xl mx-auto items-start">
           
           {/* Contact Details Column */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-6">
+          <div className="lg:col-span-5 space-y-8">
+            <div className="p-8 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200 space-y-7 shadow-sm">
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 text-wolfson-blue flex items-center justify-center shrink-0">
-                  <MapPin className="w-6 h-6" />
+                <div className="w-14 h-14 rounded-2xl bg-blue-100 text-wolfson-blue flex items-center justify-center shrink-0">
+                  <MapPin className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-slate-900 mb-1">{c.addressTitle}</h4>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{c.address}</p>
+                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.addressTitle}</h4>
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{c.address}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                  <Mail className="w-6 h-6" />
+                <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <Mail className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-slate-900 mb-1">{c.emailTitle}</h4>
+                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.emailTitle}</h4>
                   <a
                     href="mailto:friends2@wmc.gov.il"
-                    className="text-xs sm:text-sm font-semibold text-wolfson-blue hover:underline"
+                    className="text-sm sm:text-base font-semibold text-wolfson-blue hover:underline"
                   >
                     {c.email}
                   </a>
@@ -120,14 +120,14 @@ export function ContactSection({ t, lang }) {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
-                  <Phone className="w-6 h-6" />
+                <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                  <Phone className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-slate-900 mb-1">{c.phoneTitle}</h4>
+                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.phoneTitle}</h4>
                   <a
                     href="tel:+97235028596"
-                    className="text-xs sm:text-sm font-semibold text-slate-700 hover:text-wolfson-blue"
+                    className="text-sm sm:text-base font-semibold text-slate-700 hover:text-wolfson-blue"
                   >
                     {c.phone}
                   </a>
@@ -137,14 +137,14 @@ export function ContactSection({ t, lang }) {
             </div>
 
             {/* Location Map Preview */}
-            <div className="rounded-3xl overflow-hidden shadow-md border border-slate-200 h-48 bg-slate-100 relative">
+            <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200 h-56 sm:h-64 bg-slate-100 relative group">
               <img
                 src="/images/geography-map.jpg"
                 alt="Wolfson Catchment Map"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-slate-900/30 flex items-center justify-center">
-                <span className="px-3 py-1.5 rounded-xl bg-white/95 text-xs font-bold text-slate-800 shadow">
+              <div className="absolute inset-0 bg-slate-900/35 flex items-center justify-center">
+                <span className="px-4 py-2 rounded-2xl bg-white/95 text-xs sm:text-sm font-bold text-slate-900 shadow-md">
                   {getC('catchmentPill')}
                 </span>
               </div>
@@ -152,22 +152,22 @@ export function ContactSection({ t, lang }) {
           </div>
 
           {/* Form Column */}
-          <div className="lg:col-span-7 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
+          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-2xl">
             {submitted ? (
               <div className="text-center py-12 space-y-5">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h4 className="text-xl font-bold text-slate-900">
+                <h4 className="text-2xl font-bold text-slate-900">
                   {c.formSuccess}
                 </h4>
-                <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                <p className="text-base text-slate-600 max-w-md mx-auto leading-relaxed">
                   {getC('inquiryRouted')}
                 </p>
-                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
                     href={`mailto:friends2@wmc.gov.il?subject=${encodeURIComponent(`[${isHe ? 'פנייה מאתר הידידים' : 'Wolfson Friends Inquiry'}] ${subject || (isHe ? 'פנייה' : 'General')} - ${name}`)}&body=${encodeURIComponent(`${isHe ? 'שם' : 'Name'}: ${name}\n${isHe ? 'אימייל' : 'Email'}: ${email}\n${isHe ? 'טלפון' : 'Phone'}: ${phone}\n\n${isHe ? 'הודעה' : 'Message'}:\n${message}`)}`}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-xs shadow transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-sm shadow transition-all"
                   >
                     <Mail className="w-4 h-4" />
                     <span>{getC('openEmailApp')}</span>
@@ -181,16 +181,16 @@ export function ContactSection({ t, lang }) {
                       setPhone("");
                       setMessage("");
                     }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all cursor-pointer"
                   >
                     <span>{getC('sendAnother')}</span>
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5">
                     {c.formName} *
                   </label>
                   <input
@@ -198,13 +198,13 @@ export function ContactSection({ t, lang }) {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-base focus:ring-2 focus:ring-sky-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">
                       {c.formEmail} *
                     </label>
                     <input
@@ -212,30 +212,30 @@ export function ContactSection({ t, lang }) {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-base focus:ring-2 focus:ring-sky-500 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">
                       {c.formPhone}
                     </label>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-base focus:ring-2 focus:ring-sky-500 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5">
                     {c.formSubject}
                   </label>
                   <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-sky-500 bg-white"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-base font-medium focus:ring-2 focus:ring-sky-500 bg-white"
                   >
                     {c.formSubjectOptions.map((opt, i) => (
                       <option key={i} value={opt}>{opt}</option>
@@ -244,23 +244,23 @@ export function ContactSection({ t, lang }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5">
                     {c.formMessage} *
                   </label>
                   <textarea
                     required
-                    rows={4}
+                    rows={5}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-base focus:ring-2 focus:ring-sky-500 focus:outline-none"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-sm sm:text-base shadow-md transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-2xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-base sm:text-lg shadow-lg transition-all flex items-center justify-center gap-2.5 cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-5 h-5" />
                   <span>{c.formSubmit}</span>
                 </button>
               </form>

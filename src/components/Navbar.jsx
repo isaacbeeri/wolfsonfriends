@@ -92,14 +92,14 @@ export function Navbar({ lang, setLang, t, onOpenDonate, onToggleAccessibility, 
         <nav 
           role="navigation" 
           aria-label={lang === "he" ? "ניווט ראשי" : (lang === "fr" ? "Navigation principale" : (lang === "de" ? "Hauptnavigation" : "Main Navigation"))}
-          className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6 text-xs xl:text-sm font-semibold text-slate-700"
+          className="hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-5 text-sm xl:text-base font-bold text-slate-800"
         >
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="px-2.5 xl:px-3 py-1.5 rounded-xl text-slate-700 hover:text-wolfson-blue hover:bg-sky-50/80 transition-all duration-150 relative group whitespace-nowrap"
+              className="px-3 xl:px-3.5 py-2 rounded-xl text-slate-800 hover:text-wolfson-blue hover:bg-sky-50 transition-all duration-150 relative group whitespace-nowrap"
             >
               <span>{link.label}</span>
               <span className="absolute bottom-0 inset-x-2 h-0.5 bg-wolfson-blue scale-x-0 group-hover:scale-x-100 transition-transform origin-center rounded-full"></span>

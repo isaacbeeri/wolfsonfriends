@@ -13,45 +13,45 @@ export function CampusMapSection({ t }) {
   ];
 
   return (
-    <section id="campus" className="py-20 bg-slate-50 border-b border-slate-200">
+    <section id="campus" className="py-28 md:py-36 bg-slate-50 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
-            <MapPin className="w-3.5 h-3.5 text-wolfson-blue" />
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 shadow-xs">
+            <MapPin className="w-4 h-4 text-wolfson-blue" />
             <span>{c.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
             {c.title}
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal">
             {c.subtitle}
           </p>
         </div>
 
-        {/* Labeled Campus Photo Container */}
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-200 mb-10 group">
+        {/* Labeled Campus Photo Container - Enlarged */}
+        <div className="max-w-6xl mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200 mb-14 group">
           <div className="relative">
             <img
               src="/images/campus-labeled.jpg"
               alt="Wolfson Medical Center Campus Overview"
-              className="w-full h-auto object-cover group-hover:scale-101 transition-transform duration-500"
+              className="w-full h-auto object-cover group-hover:scale-[1.015] transition-transform duration-500"
             />
           </div>
         </div>
 
         {/* Key Facilities Pills */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
           {facilities.map((fac, idx) => {
             const Icon = fac.icon;
             return (
               <div
                 key={idx}
-                className={`p-3.5 rounded-2xl border flex items-center gap-2.5 transition-all shadow-sm ${fac.color}`}
+                className={`p-4 sm:p-5 rounded-2xl border-2 flex items-center gap-3 transition-all shadow-sm hover:shadow-md ${fac.color}`}
               >
-                <Icon className="w-5 h-5 shrink-0" />
-                <span className="text-xs font-bold tracking-tight text-slate-800">
+                <Icon className="w-6 h-6 shrink-0" />
+                <span className="text-sm sm:text-base font-bold tracking-tight text-slate-900">
                   {fac.name}
                 </span>
               </div>

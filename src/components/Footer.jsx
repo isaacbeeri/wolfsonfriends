@@ -168,37 +168,37 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
   };
 
   return (
-    <footer role="contentinfo" className='bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800'>
+    <footer role="contentinfo" className='bg-slate-950 text-slate-300 pt-20 pb-16 border-t border-slate-800'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         
         {/* Top Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-12'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 mb-16'>
           
           {/* Col 1: Brand & Mission */}
-          <div className='lg:col-span-4 space-y-4'>
-            <div className='flex items-center gap-3'>
+          <div className='lg:col-span-4 space-y-5'>
+            <div className='flex items-center gap-3.5'>
               <img
                 src='/logos/logo-transparent.png'
                 alt='Friends of Edith Wolfson'
-                className='h-14 sm:h-16 w-auto bg-white/95 rounded-xl p-2 shadow-md object-contain'
+                className='h-16 sm:h-18 w-auto bg-white/95 rounded-2xl p-2.5 shadow-md object-contain'
               />
               <div>
-                <span className='block font-extrabold text-sm sm:text-base text-white'>{t.brand.shortName}</span>
-                <span className='block text-xs text-slate-400 font-medium'>
+                <span className='block font-black text-base sm:text-lg text-white'>{t.brand.shortName}</span>
+                <span className='block text-xs sm:text-sm text-slate-400 font-semibold'>
                   {isHe ? 'ע״ר 580022507' : 'Non-Profit #580022507'}
                 </span>
               </div>
             </div>
-            <p className='text-xs sm:text-sm text-slate-400 leading-relaxed font-normal'>
+            <p className='text-sm sm:text-base text-slate-300 leading-relaxed font-normal'>
               {t.brand.tagline}
             </p>
-            <div className='pt-2 flex flex-wrap gap-2'>
+            <div className='pt-2 flex flex-wrap gap-2.5'>
               <button
                 onClick={() => onOpenDonate()}
                 aria-label={t.nav.donate}
-                className='inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs shadow-md transition-all'
+                className='inline-flex items-center gap-2 px-4.5 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer'
               >
-                <Heart className='w-3.5 h-3.5 fill-white' />
+                <Heart className='w-4 h-4 fill-white' />
                 <span>{t.nav.donate}</span>
               </button>
 
@@ -207,11 +207,11 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='Donate via JGive campaign'
-                className='inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-400/30 text-xs font-bold transition-colors'
+                className='inline-flex items-center gap-2 px-4.5 py-3 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-400/30 text-xs sm:text-sm font-bold transition-colors'
               >
-                <Zap className='w-3.5 h-3.5 text-rose-400' />
+                <Zap className='w-4 h-4 text-rose-400' />
                 <span>JGive Campaign</span>
-                <ExternalLink className='w-3 h-3 ms-0.5' />
+                <ExternalLink className='w-3.5 h-3.5 ms-0.5' />
               </a>
 
               <a
@@ -219,11 +219,11 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='LinkedIn - Friends of Edith Wolfson Medical Center'
-                className='inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800/90 hover:bg-sky-950/60 text-slate-300 hover:text-sky-300 border border-slate-700 hover:border-sky-500/50 text-xs font-semibold transition-all'
+                className='inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-800/90 hover:bg-sky-950/60 text-slate-300 hover:text-sky-300 border border-slate-700 hover:border-sky-500/50 text-xs sm:text-sm font-semibold transition-all'
               >
-                <LinkedInIcon className='w-3.5 h-3.5 text-sky-400' />
+                <LinkedInIcon className='w-4 h-4 text-sky-400' />
                 <span>LinkedIn</span>
-                <ExternalLink className='w-3 h-3 ms-0.5 opacity-70' />
+                <ExternalLink className='w-3.5 h-3.5 ms-0.5 opacity-70' />
               </a>
             </div>
           </div>
@@ -232,12 +232,12 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
           <nav 
             role="navigation" 
             aria-label={getF('quickNav')}
-            className='lg:col-span-3 space-y-3'
+            className='lg:col-span-3 space-y-4'
           >
-            <h4 className='text-xs font-bold text-white uppercase tracking-wider'>
+            <h4 className='text-xs sm:text-sm font-bold text-white uppercase tracking-wider'>
               {getF('quickNav')}
             </h4>
-            <ul className='space-y-2 text-xs text-slate-400 font-medium'>
+            <ul className='space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium'>
               <li><a href='#projects' onClick={(e) => handleNavClick(e, '#projects')} className='hover:text-white transition-colors'>{t.nav.projects}</a></li>
               <li><a href='#disparity' onClick={(e) => handleNavClick(e, '#disparity')} className='hover:text-white transition-colors'>{t.nav.disparity}</a></li>
               <li><a href='#video' onClick={(e) => handleNavClick(e, '#video')} className='hover:text-white transition-colors'>{t.nav.video}</a></li>
@@ -252,9 +252,9 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
                     e.preventDefault();
                     if (onOpenFaq) onOpenFaq();
                   }}
-                  className='hover:text-sky-400 text-slate-300 font-semibold flex items-center gap-1.5 transition-colors pt-0.5'
+                  className='hover:text-sky-400 text-slate-200 font-bold flex items-center gap-2 transition-colors pt-1'
                 >
-                  <HelpCircle className='w-3.5 h-3.5 text-sky-400' />
+                  <HelpCircle className='w-4 h-4 text-sky-400' />
                   <span>{getF('faqTitles')}</span>
                 </a>
               </li>
@@ -262,21 +262,21 @@ export function Footer({ t, onOpenDonate, setLang, lang, onOpenAdmin, onOpenFaq,
           </nav>
 
           {/* Col 3: Languages & Official Documents */}
-          <div className='lg:col-span-2 space-y-3'>
-            <h4 className='text-xs font-bold text-white uppercase tracking-wider'>
+          <div className='lg:col-span-2 space-y-4'>
+            <h4 className='text-xs sm:text-sm font-bold text-white uppercase tracking-wider'>
               {getF('languages')}
             </h4>
             <nav role="navigation" aria-label={getF('languages')}>
-              <ul className='space-y-1.5 text-xs text-slate-400 font-medium'>
-                <li><button onClick={() => setLang('he')} className='hover:text-sky-400 transition-colors'>🇮🇱 עברית</button></li>
-                <li><button onClick={() => setLang('en')} className='hover:text-sky-400 transition-colors'>🇺🇸 English</button></li>
-                <li><button onClick={() => setLang('fr')} className='hover:text-sky-400 transition-colors'>🇫🇷 Français</button></li>
-                <li><button onClick={() => setLang('de')} className='hover:text-sky-400 transition-colors'>🇩🇪 Deutsch</button></li>
-                <li><button onClick={() => setLang('ar')} className='hover:text-sky-400 transition-colors'>🇸🇦 العربية</button></li>
-                <li><button onClick={() => setLang('ru')} className='hover:text-sky-400 transition-colors'>🇷🇺 Русский</button></li>
-                <li><button onClick={() => setLang('es')} className='hover:text-sky-400 transition-colors'>🇪🇸 Español</button></li>
-                <li><button onClick={() => setLang('ja')} className='hover:text-sky-400 transition-colors'>🇯🇵 日本語</button></li>
-                <li><button onClick={() => setLang('pt')} className='hover:text-sky-400 transition-colors'>🇧🇷 Português</button></li>
+              <ul className='space-y-2 text-xs sm:text-sm text-slate-300 font-medium'>
+                <li><button onClick={() => setLang('he')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇮🇱 עברית</button></li>
+                <li><button onClick={() => setLang('en')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇺🇸 English</button></li>
+                <li><button onClick={() => setLang('fr')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇫🇷 Français</button></li>
+                <li><button onClick={() => setLang('de')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇩🇪 Deutsch</button></li>
+                <li><button onClick={() => setLang('ar')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇸🇦 العربية</button></li>
+                <li><button onClick={() => setLang('ru')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇷🇺 Русский</button></li>
+                <li><button onClick={() => setLang('es')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇪🇸 Español</button></li>
+                <li><button onClick={() => setLang('ja')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇯🇵 日本語</button></li>
+                <li><button onClick={() => setLang('pt')} className='hover:text-sky-400 transition-colors cursor-pointer'>🇧🇷 Português</button></li>
               </ul>
             </nav>
 

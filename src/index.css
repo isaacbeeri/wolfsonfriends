@@ -5,7 +5,17 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 6rem;
+    font-size: 17px;
+  }
+  body {
+    line-height: 1.68;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  p {
+    line-height: 1.72;
   }
 }
 

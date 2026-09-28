@@ -211,7 +211,7 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
     <section 
       id="about" 
       aria-labelledby="about-mission-heading" 
-      className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-wolfson-navy text-white border-b border-sky-950/60"
+      className="relative pt-28 pb-24 md:pt-36 md:pb-32 lg:pt-40 lg:pb-36 overflow-hidden bg-wolfson-navy text-white border-b border-sky-950/60"
     >
       {/* Background Campus Aerial with Deep Navy & Illuminated Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -231,62 +231,62 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Badges Bar */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/20 text-rose-200 border border-rose-400/35 text-xs sm:text-sm font-bold backdrop-blur-md shadow-xs">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/20 text-rose-200 border border-rose-400/35 text-xs sm:text-sm font-bold backdrop-blur-md shadow-sm">
             <span className="w-2.5 h-2.5 rounded-full bg-rose-400 animate-ping"></span>
             <span>{getT("badge")}</span>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 text-xs font-semibold backdrop-blur-md">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+          <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 text-xs sm:text-sm font-semibold backdrop-blur-md">
+            <ShieldCheck className="w-4 h-4 text-emerald-300" />
             <span>{t.hero.taxBadge}</span>
           </div>
 
           <button
             onClick={() => setIsDiagramOpen(true)}
             aria-label={getT("viewDiagramBtn")}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 border border-sky-400/30 text-xs font-semibold backdrop-blur-md transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 border border-sky-400/30 text-xs sm:text-sm font-semibold backdrop-blur-md transition-colors cursor-pointer"
           >
-            <Maximize2 className="w-3.5 h-3.5 text-sky-300" />
+            <Maximize2 className="w-4 h-4 text-sky-300" />
             <span>{getT("viewDiagramBtn")}</span>
           </button>
         </div>
 
         {/* Top Presentation Grid: Manifesto & News Frame */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-14 items-center mb-16 lg:mb-20">
           
           {/* Main Manifesto Column: The Core "Why" */}
-          <div className="lg:col-span-7 xl:col-span-7 space-y-6">
-            <h1 id="about-mission-heading" className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-7">
+            <h1 id="about-mission-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.18]">
               {getT("mainTitle")}
             </h1>
 
             {/* Authoritative Institutional Definition */}
-            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed">
+            <p className="text-lg sm:text-xl text-sky-100 font-medium leading-relaxed">
               {getT("associationIntro")}
             </p>
 
             {/* "Our Mission" Box */}
-            <div className="p-6 rounded-2xl bg-white/[0.08] border border-white/20 backdrop-blur-md shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 start-0 w-2 h-full bg-gradient-to-b from-rose-500 via-amber-400 to-sky-400"></div>
-              <div className="flex items-center gap-2 mb-3 text-rose-300 font-bold text-sm sm:text-base">
-                <HeartHandshake className="w-5 h-5 text-rose-400 shrink-0" />
+            <div className="p-7 sm:p-8 rounded-3xl bg-white/[0.08] border border-white/20 backdrop-blur-md shadow-2xl relative overflow-hidden space-y-4">
+              <div className="absolute top-0 start-0 w-2.5 h-full bg-gradient-to-b from-rose-500 via-amber-400 to-sky-400"></div>
+              <div className="flex items-center gap-2.5 text-rose-300 font-extrabold text-base sm:text-lg">
+                <HeartHandshake className="w-6 h-6 text-rose-400 shrink-0" />
                 <span>{getT("badge")}</span>
               </div>
-              <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-normal mb-3">
+              <p className="text-lg sm:text-xl text-slate-100 leading-relaxed font-normal">
                 {getT("missionStatement")}
               </p>
-              <div className="pt-3 border-t border-white/10 text-xs sm:text-sm text-sky-200/90 leading-relaxed">
+              <div className="pt-4 border-t border-white/10 text-sm sm:text-base text-sky-200/90 leading-relaxed">
                 {getT("communitySubtext")}
               </div>
             </div>
 
             {/* Direct Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5 pt-3">
               <button
                 onClick={() => onOpenDonate()}
                 aria-label={lang === "he" ? "תרומה לרשת הביטחון הרפואית של וולפסון" : "Donate to our healthcare safety net"}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-base shadow-lg shadow-red-900/40 hover:shadow-red-700/50 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                className="inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-base sm:text-lg shadow-xl shadow-red-900/40 hover:shadow-red-700/50 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               >
                 <Heart className="w-5 h-5 fill-white" />
                 <span>{t.hero.ctaDonate}</span>
@@ -295,18 +295,18 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
               <a
                 href="#projects"
                 aria-label={lang === "he" ? "גלילה ליעדי הפיתוח והפרויקטים" : "Scroll to strategic projects"}
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-base backdrop-blur-md transition-all"
+                className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-base sm:text-lg backdrop-blur-md transition-all"
               >
                 <span>{t.hero.ctaProjects}</span>
-                <ArrowIcon className="w-4 h-4" />
+                <ArrowIcon className="w-5 h-5" />
               </a>
 
               <a
                 href="#video"
                 aria-label={lang === "he" ? "צפייה בסרטון החזון של המרכז הרפואי" : "Watch vision video"}
-                className="inline-flex items-center gap-2 px-4 py-3.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 transition-all text-sm font-medium"
+                className="inline-flex items-center gap-2.5 px-5 py-4 rounded-2xl text-slate-200 hover:text-white hover:bg-white/10 transition-all text-base font-medium"
               >
-                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
                   <Play className="w-4 h-4 fill-white text-white ms-0.5" />
                 </div>
                 <span>{t.hero.ctaVideo}</span>
@@ -323,80 +323,80 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
         {/* ========================================================
             THE 3 PILLARS OF OUR MISSION (From the Infographic)
             ======================================================== */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-1 rounded-full bg-rose-500"></div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-400" />
+        <div className="mb-16 lg:mb-20">
+          <div className="flex items-center gap-3.5 mb-8">
+            <div className="w-10 h-1.5 rounded-full bg-rose-500"></div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+              <Sparkles className="w-6 h-6 text-amber-400" />
               <span>{getT("badge")}</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Pillar 1: A Social and Community Anchor */}
-            <div className="group relative p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] hover:from-white/[0.12] hover:to-white/[0.06] border border-white/15 hover:border-rose-400/50 transition-all duration-300 shadow-lg hover:shadow-rose-950/30 flex flex-col justify-between">
+            <div className="group relative p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.09] to-white/[0.03] hover:from-white/[0.13] hover:to-white/[0.06] border border-white/20 hover:border-rose-400/50 transition-all duration-300 shadow-xl hover:shadow-rose-950/30 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white mb-4 shadow-md shadow-rose-950/40 group-hover:scale-105 transition-transform">
-                  <Users className="w-6 h-6" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white mb-5 shadow-lg shadow-rose-950/40 group-hover:scale-105 transition-transform">
+                  <Users className="w-7 h-7" />
                 </div>
-                <div className="inline-block px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 text-xs font-bold mb-2">
+                <div className="inline-block px-3 py-1 rounded-lg bg-rose-500/20 text-rose-300 text-xs sm:text-sm font-extrabold mb-3">
                   {lang === "he" ? "עוגן חברתי" : "Community Anchor"}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2.5">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
                   {getT("pillar1Title")}
                 </h3>
-                <p className="text-sm text-slate-200 leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
                   {getT("pillar1Desc")}
                 </p>
               </div>
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-rose-300 font-semibold">
+              <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs sm:text-sm text-rose-300 font-semibold">
                 <span>{lang === "he" ? "חולון • בת ים • יפו" : "Holon • Bat Yam • Jaffa"}</span>
-                <span className="text-slate-400">100% {lang === "he" ? "רפואה ציבורית" : "Public Medicine"}</span>
+                <span className="text-slate-300">100% {lang === "he" ? "רפואה ציבורית" : "Public Medicine"}</span>
               </div>
             </div>
 
             {/* Pillar 2: Public Justice in Healthcare */}
-            <div className="group relative p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] hover:from-white/[0.12] hover:to-white/[0.06] border border-white/15 hover:border-sky-400/50 transition-all duration-300 shadow-lg hover:shadow-sky-950/30 flex flex-col justify-between">
+            <div className="group relative p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.09] to-white/[0.03] hover:from-white/[0.13] hover:to-white/[0.06] border border-white/20 hover:border-sky-400/50 transition-all duration-300 shadow-xl hover:shadow-sky-950/30 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white mb-4 shadow-md shadow-sky-950/40 group-hover:scale-105 transition-transform">
-                  <Scale className="w-6 h-6" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white mb-5 shadow-lg shadow-sky-950/40 group-hover:scale-105 transition-transform">
+                  <Scale className="w-7 h-7" />
                 </div>
-                <div className="inline-block px-2.5 py-0.5 rounded-md bg-sky-500/20 text-sky-300 text-xs font-bold mb-2">
+                <div className="inline-block px-3 py-1 rounded-lg bg-sky-500/20 text-sky-300 text-xs sm:text-sm font-extrabold mb-3">
                   {lang === "he" ? "צדק חלוקתי" : "Healthcare Justice"}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2.5">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
                   {getT("pillar2Title")}
                 </h3>
-                <p className="text-sm text-slate-200 leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
                   {getT("pillar2Desc")}
                 </p>
               </div>
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-sky-300 font-semibold">
+              <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs sm:text-sm text-sky-300 font-semibold">
                 <span>{lang === "he" ? "נגישות שווה לאבחון עילית" : "Equal Advanced Access"}</span>
-                <span className="text-slate-400">{lang === "he" ? "ללא אפליה גיאוגרפית" : "No Regional Bias"}</span>
+                <span className="text-slate-300">{lang === "he" ? "ללא אפליה גיאוגרפית" : "No Regional Bias"}</span>
               </div>
             </div>
 
             {/* Pillar 3: Caring for Holocaust Survivors */}
-            <div className="group relative p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] hover:from-white/[0.12] hover:to-white/[0.06] border border-white/15 hover:border-amber-400/50 transition-all duration-300 shadow-lg hover:shadow-amber-950/30 flex flex-col justify-between">
+            <div className="group relative p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.09] to-white/[0.03] hover:from-white/[0.13] hover:to-white/[0.06] border border-white/20 hover:border-amber-400/50 transition-all duration-300 shadow-xl hover:shadow-amber-950/30 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center text-white mb-4 shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform">
-                  <Heart className="w-6 h-6 fill-white" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center text-white mb-5 shadow-lg shadow-amber-950/40 group-hover:scale-105 transition-transform">
+                  <Heart className="w-7 h-7 fill-white" />
                 </div>
-                <div className="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold mb-2">
+                <div className="inline-block px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs sm:text-sm font-extrabold mb-3">
                   {lang === "he" ? "חמלה ורגישות" : "Dignity & Compassion"}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2.5">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
                   {getT("pillar3Title")}
                 </h3>
-                <p className="text-sm text-slate-200 leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
                   {getT("pillar3Desc")}
                 </p>
               </div>
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-amber-300 font-semibold">
+              <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs sm:text-sm text-amber-300 font-semibold">
                 <span>{lang === "he" ? "קשישים ושורדי שואה" : "Elderly & Survivors"}</span>
-                <span className="text-slate-400">{lang === "he" ? "סביבה רציפה ומחבקת" : "Continuous Care"}</span>
+                <span className="text-slate-300">{lang === "he" ? "סביבה רציפה ומחבקת" : "Continuous Care"}</span>
               </div>
             </div>
 
@@ -406,37 +406,37 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
         {/* ========================================================
             THE STRATEGIC GOAL & THE BRIDGE TO TECHNOLOGICAL EQUITY
             ======================================================== */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-sky-950/70 via-blue-900/60 to-slate-900/80 border border-sky-400/30 backdrop-blur-md mb-12 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 end-0 -mt-10 -me-10 w-64 h-64 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="p-8 sm:p-10 lg:p-12 rounded-3xl bg-gradient-to-r from-sky-950/75 via-blue-900/65 to-slate-900/85 border border-sky-400/35 backdrop-blur-md mb-16 lg:mb-20 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 end-0 -mt-10 -me-10 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
-            <div className="lg:col-span-8 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-400/20 text-sky-200 text-xs font-bold">
-                <Cpu className="w-3.5 h-3.5 text-sky-300" />
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-400/20 text-sky-200 text-xs sm:text-sm font-bold">
+                <Cpu className="w-4 h-4 text-sky-300" />
                 <span>{getT("bridgeTitle")}</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-black text-white">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white">
                 {getT("bridgeDivide")}
               </h3>
-              <p className="text-sm sm:text-base text-sky-100 leading-relaxed font-normal">
+              <p className="text-base sm:text-lg text-sky-100 leading-relaxed font-normal">
                 {getT("bridgeSolution")}
               </p>
             </div>
 
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center items-stretch">
+            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 justify-center items-stretch">
               <a
                 href="#projects"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm shadow-md transition-all text-center"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-base shadow-lg transition-all text-center"
               >
                 <span>{lang === "he" ? "פרויקט ניידת PET-CT" : "PET-CT Mobile Project"}</span>
-                <ArrowIcon className="w-4 h-4" />
+                <ArrowIcon className="w-5 h-5" />
               </a>
               <button
                 onClick={() => setIsDiagramOpen(true)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-colors cursor-pointer"
               >
-                <Maximize2 className="w-3.5 h-3.5 text-sky-300" />
+                <Maximize2 className="w-4 h-4 text-sky-300" />
                 <span>{getT("viewDiagramBtn")}</span>
               </button>
             </div>
@@ -445,51 +445,51 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
         </div>
 
         {/* Dynamic Metric Stat Cards (The Scope of Our Work) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-white/10">
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-3 mb-1">
-              <Users className="w-5 h-5 text-sky-400" />
-              <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-8 sm:pt-10 border-t border-white/15">
+          <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-3 mb-2">
+              <Users className="w-6 h-6 text-sky-400" />
+              <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
                 {t.hero.stats.population}
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+            <p className="text-sm sm:text-base text-slate-200 font-medium">
               {t.hero.stats.populationLabel}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-3 mb-1">
-              <Building2 className="w-5 h-5 text-emerald-400" />
-              <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-3 mb-2">
+              <Building2 className="w-6 h-6 text-emerald-400" />
+              <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
                 {t.hero.stats.beds}
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+            <p className="text-sm sm:text-base text-slate-200 font-medium">
               {t.hero.stats.bedsLabel}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-3 mb-1">
-              <Activity className="w-5 h-5 text-amber-400" />
-              <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-3 mb-2">
+              <Activity className="w-6 h-6 text-amber-400" />
+              <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
                 {t.hero.stats.departments}
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+            <p className="text-sm sm:text-base text-slate-200 font-medium">
               {t.hero.stats.departmentsLabel}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-3 mb-1">
-              <Heart className="w-5 h-5 text-rose-400 fill-rose-400" />
-              <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-3 mb-2">
+              <Heart className="w-6 h-6 text-rose-400 fill-rose-400" />
+              <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
                 {t.hero.stats.vulnerable || "45%+"}
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+            <p className="text-sm sm:text-base text-slate-200 font-medium">
               {t.hero.stats.vulnerableLabel || (lang === "he" ? "קשישים ושורדי שואה הנשענים על שירותינו" : "Elderly & Vulnerable Relying on FWMC")}
             </p>
           </div>
