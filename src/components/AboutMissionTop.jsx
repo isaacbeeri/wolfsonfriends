@@ -253,7 +253,7 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
         </div>
 
         {/* Top Presentation Grid: Manifesto & News Frame */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12">
           
           {/* Main Manifesto Column: The Core "Why" */}
           <div className="lg:col-span-7 xl:col-span-7 space-y-6">
