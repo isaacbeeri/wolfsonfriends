@@ -33,7 +33,7 @@ export const de = {
       "departments": "60+",
       "departmentsLabel": "Fachabteilungen und Spezialinstitute",
       "vulnerable": "45%+",
-      "vulnerableLabel": "Senioren, Holocaust-Überlebende und Schutzbedürftige"
+      "vulnerableLabel": "Senioren, Holocaust-Überlebende und Familien unserer Gemeinschaft"
     }
   },
   "pillars": {

@@ -33,7 +33,7 @@ export const en = {
       "departments": "60+",
       "departmentsLabel": "Specialized Clinical Departments",
       "vulnerable": "45%+",
-      "vulnerableLabel": "Elderly, Holocaust Survivors & Vulnerable Groups"
+      "vulnerableLabel": "Elderly, Holocaust Survivors & Community Families"
     }
   },
   "pillars": {
@@ -57,7 +57,7 @@ export const en = {
     },
     "community": {
       "title": "Community & Equity",
-      "desc": "An uncompromising lifeline for Holon, Bat Yam, Jaffa, vulnerable seniors, and Holocaust survivors."
+      "desc": "An uncompromising lifeline for Holon, Bat Yam, Jaffa, seniors, and Holocaust survivors."
     },
     "bannerBadge": "The Beating Heart of the Medical Center",
     "bannerTitle": "“The wellbeing of the soul can only be obtained after that of the body has been secured” — Maimonides",
@@ -67,7 +67,7 @@ export const en = {
   "videoSection": {
     "badge": "Exclusive Video Showcase",
     "title": "Mobile PET-CT: Bridging the Regional Oncology Gap",
-    "subtitle": "Discover how bringing rapid diagnostic imaging directly into the community will expand life-saving oncology staging and eliminate travel hardship for vulnerable patients.",
+    "subtitle": "Discover how bringing rapid diagnostic imaging directly into the community will expand life-saving oncology staging and eliminate travel hardship for patients in need.",
     "duration": "01:30 min",
     "keyInsight1": "Strategic objective to substantially reduce oncology diagnostic waiting times and expand community access",
     "keyInsight2": "Direct physical accessibility for immobile, elderly, and Holocaust survivors",

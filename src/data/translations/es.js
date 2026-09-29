@@ -33,7 +33,7 @@ export const es = {
       "departments": "60+",
       "departmentsLabel": "Departamentos Clínicos Especializados",
       "vulnerable": "45%+",
-      "vulnerableLabel": "Adultos Mayores, Sobrevivientes del Holocausto y Familias Vulnerables"
+      "vulnerableLabel": "Adultos Mayores, Sobrevivientes del Holocausto y Familias de la Comunidad"
     }
   },
   "pillars": {
@@ -57,7 +57,7 @@ export const es = {
     },
     "community": {
       "title": "Comunidad y Equidad",
-      "desc": "Una red de seguridad incondicional para Holon, Bat Yam, Jaffa y comunidades vulnerables."
+      "desc": "Una red de seguridad incondicional para Holon, Bat Yam, Jaffa y toda nuestra comunidad."
     },
     "bannerBadge": "El Corazón Palpitante del Centro Médico",
     "bannerTitle": "«El bienestar del alma sólo puede alcanzarse tras haber asegurado el del cuerpo» — Maimónides",
@@ -67,7 +67,7 @@ export const es = {
   "videoSection": {
     "badge": "Video Exclusivo de Nuestra Visión",
     "title": "PET-CT Móvil: Cerrando la Brecha Regional en Oncología",
-    "subtitle": "Descubra cómo llevar el diagnóstico por imágenes de alta precisión directamente a la comunidad reducirá los tiempos de espera y evitará traslados agotadores para pacientes vulnerables.",
+    "subtitle": "Descubra cómo llevar el diagnóstico por imágenes de alta precisión directamente a la comunidad reducirá los tiempos de espera y evitará traslados agotadores para pacientes que lo necesitan.",
     "duration": "01:30 min",
     "keyInsight1": "Objetivo estratégico de reducir sustancialmente los tiempos de espera en diagnóstico oncológico",
     "keyInsight2": "Accesibilidad directa para personas mayores, pacientes con movilidad reducida y sobrevivientes del Holocausto",

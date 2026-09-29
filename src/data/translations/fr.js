@@ -33,7 +33,7 @@ export const fr = {
       "departments": "60+",
       "departmentsLabel": "Départements et Pôles d'Excellence",
       "vulnerable": "45%+",
-      "vulnerableLabel": "Aînés, Rescapés de la Shoah et Publics Vulnérables"
+      "vulnerableLabel": "Aînés, Rescapés de la Shoah et Familles de la Communauté"
     }
   },
   "pillars": {

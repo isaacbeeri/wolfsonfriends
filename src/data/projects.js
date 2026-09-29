@@ -30,15 +30,15 @@ export const projects = [
     "image": "/images/campus-labeled.jpg",
     "urgent": true,
     "summary": {
-      "he": "יחידת PET-CT ניידת ראשונה מסוגה שתאפשר אבחון מהיר ומציל חיים לחולי סרטן, תוך ביטול הצורך בנסיעות מתישות עבור קשישים, ניצולי שואה ואוכלוסיות מוחלשות.",
-      "en": "The first mobile PET-CT unit of its kind, delivering rapid, life-saving cancer staging while eliminating exhausting travel for elderly patients, Holocaust survivors, and vulnerable communities.",
-      "fr": "La première unité mobile PET-CT permettant un dépistage rapide du cancer, évitant les déplacements éprouvants aux personnes âgées, survivants de la Shoah et populations vulnérables.",
-      "de": "Die erste mobile PET-CT-Einheit, die schnelle, lebensrettende Krebsdiagnostik ermöglicht und beschwerliche Wege für ältere Patienten und Holocaust-Überlebende erübrigt.",
-      "ar": "أول وحدة PET-CT متنقلة من نوعها تتيح تشخيصاً سريعاً ومنقذاً للحياة لمرضى السرطان، مع إلغاء الحاجة للسفر المرهق لكبار السن والناجين من الهولوكوست والفئات الضعيفة.",
+      "he": "יחידת PET-CT ניידת ראשונה מסוגה שתאפשר אבחון מהיר ומציל חיים לחולי סרטן, תוך ביטול הצורך בנסיעות מתישות עבור קשישים, ניצולי שואה וכלל תושבי הקהילה.",
+      "en": "The first mobile PET-CT unit of its kind, delivering rapid, life-saving cancer staging while eliminating exhausting travel for elderly patients, Holocaust survivors, and community residents.",
+      "fr": "La première unité mobile PET-CT permettant un dépistage rapide du cancer, évitant les déplacements éprouvants aux personnes âgées, survivants de la Shoah et membres de la communauté.",
+      "de": "Die erste mobile PET-CT-Einheit, die schnelle, lebensrettende Krebsdiagnostik ermöglicht und beschwerliche Wege für ältere Patienten, Holocaust-Überlebende und die gesamte Gemeinschaft erübrigt.",
+      "ar": "أول وحدة PET-CT متنقلة من نوعها تتيح تشخيصاً سريعاً ومنقذاً للحياة لمرضى السرطان، مع إلغاء الحاجة للسفر المرهق لكبار السن والناجين من الهولوكوست وكافة أفراد المجتمع.",
       "ru": "Первая в своем роде мобильная станция ПЭТ-КТ, обеспечивающая быстрое жизненно важное стадирование рака и избавляющая пожилых людей, переживших Холокост, и маломобильных пациентов от изнурительных поездок.",
-      "es": "La primera unidad móvil de PET-CT de su tipo, que brinda estadificación oncológica rápida y vital, eliminando traslados agotadores para ancianos, sobrevivientes del Holocausto y pacientes vulnerables.",
+      "es": "La primera unidad móvil de PET-CT de su tipo, que brinda estadificación oncológica rápida y vital, eliminando traslados agotadores para ancianos, sobrevivientes del Holocausto y miembros de la comunidad.",
       "ja": "高齢者やホロコースト生存者、移動困難な患者の負担となる遠方通院をなくし、迅速で命を救うがん病期診断を提供する初の移動式PET-CTユニット。",
-      "pt": "A primeira unidade móvel de PET-CT deste tipo, proporcionando estadiamento oncológico rápido e vital, eliminando deslocamentos exaustivos para idosos, sobreviventes do Holocausto e pessoas vulneráveis."
+      "pt": "A primeira unidade móvel de PET-CT deste tipo, proporcionando estadiamento oncológico rápido e vital, eliminando deslocamentos exaustivos para idosos, sobreviventes do Holocausto e membros da comunidade."
     },
     "impactPoints": {
       "he": [

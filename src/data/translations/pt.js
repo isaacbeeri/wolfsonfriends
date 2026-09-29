@@ -33,7 +33,7 @@ export const pt = {
       "departments": "60+",
       "departmentsLabel": "Departamentos e Institutos Especializados",
       "vulnerable": "45%+",
-      "vulnerableLabel": "Idosos, Sobreviventes do Holocausto e Grupos Vulneráveis"
+      "vulnerableLabel": "Idosos, Sobreviventes do Holocausto e Famílias da Comunidade"
     }
   },
   "pillars": {
@@ -57,7 +57,7 @@ export const pt = {
     },
     "community": {
       "title": "Comunidade e Equidade",
-      "desc": "Um suporte intransigente para Holon, Bat Yam, Jaffa e populações vulneráveis."
+      "desc": "Um suporte intransigente para Holon, Bat Yam, Jaffa e toda a nossa comunidade."
     },
     "bannerBadge": "O Coração Pulsante do Hospital",
     "bannerTitle": "«A saúde do corpo precede a saúde da alma» — Maimônides",
@@ -67,7 +67,7 @@ export const pt = {
   "videoSection": {
     "badge": "Vídeo Exclusivo da Nossa Visão",
     "title": "PET-CT Móvel: Superando a Lacuna Diagnóstica no Câncer",
-    "subtitle": "Saiba como o diagnóstico por imagem ágil e comunitário acelerará o estadiamento oncológico e poupará viagens exaustivas aos pacientes mais vulneráveis.",
+    "subtitle": "Saiba como o diagnóstico por imagem ágil e comunitário acelerará o estadiamento oncológico e poupará viagens exaustivas aos pacientes que precisam.",
     "duration": "01:30 min",
     "keyInsight1": "Meta estratégica de reduzir expressivamente o tempo de espera no diagnóstico oncológico",
     "keyInsight2": "Acesso direto para idosos, pessoas com mobilidade reduzida e sobreviventes do Holocausto",

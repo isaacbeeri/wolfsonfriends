@@ -33,7 +33,7 @@ export const he = {
       "departments": "60+",
       "departmentsLabel": "מחלקות, מכונים ומרכזי מומחיות",
       "vulnerable": "45%+",
-      "vulnerableLabel": "קשישים, שורדי שואה ואוכלוסיות מוחלשות"
+      "vulnerableLabel": "קשישים, שורדי שואה ומשפחות הקהילה"
     }
   },
   "pillars": {

@@ -33,7 +33,7 @@ export const ja = {
       "departments": "60+",
       "departmentsLabel": "専門診療科・研究センター数",
       "vulnerable": "45%+",
-      "vulnerableLabel": "高齢者・ホロコースト生存者・支援を要する世帯"
+      "vulnerableLabel": "高齢者・ホロコースト生存者・地域社会のすべてのご家族"
     }
   },
   "pillars": {

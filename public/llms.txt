@@ -14,7 +14,7 @@
 - **המרכז הרפואי הנתמך**: המרכז הרפואי ע״ש אדית וולפסון, חולון (בית חולים ממשלתי ואקדמי, נוסד ב-1980 ע״י סר אייזק וליידי אדית וולפסון וקרן וולפסון)
 - **סינוף אקדמי**: בית ספר לרפואה ע״ש סאקלר, אוניברסיטת תל אביב
 - **אוכלוסיית יעד ישירה**: מעל 700,000 תושבים בחולון, בת-ים, יפו, דרום תל אביב ואזור השפלה
-- **מאפייני אוכלוסייה**: מעל 45% נמנים עם אוכלוסיות מוחלשות, קשישים, עולים חדשים ושורדי שואה
+- **מאפייני אוכלוסייה**: מעל 45% נמנים עם קשישים, עולים חדשים, שורדי שואה ומשפחות בקהילה הנשענות על הרפואה הציבורית
 - **תשתית רפואית**: מעל 700 מיטות אשפוז פעילות, מעל 60 מחלקות, מכונים ומרכזי מומחיות מתקדמים
 - **אתר רשמי**: https://wolfsonfriends.com
 - **כתובת פיזית**: רחוב הלוחמים 62, חולון, 5810001 (בניין ההנהלה, קומה 1)
@@ -92,7 +92,7 @@ The Friends of Edith Wolfson Medical Center (Registered Non-Profit 580022507) wa
 
 ### Key Metrics
 - **Population Served**: 700,000+ residents across Holon, Bat Yam, Jaffa, and South Tel Aviv
-- **Demographics**: Over 45% elderly, Holocaust survivors, and socio-economically vulnerable populations
+- **Demographics**: Over 45% elderly, Holocaust survivors, and community members relying on public healthcare
 - **Capacity**: 700+ inpatient beds, 60+ departments and specialized institutes
 - **Tax Status**: Recognized under Section 46 of the Israeli Income Tax Ordinance (valid through December 31, 2029); US 501(c)(3) tax deductions available through JGive.
 - **Leadership**: Chairman of the Board: Isaac (Tsahi) Beeri; CEO: Bosmat Carmon.

@@ -24,18 +24,18 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
   const [isDiagramOpen, setIsDiagramOpen] = useState(false);
 
-  // Multilingual content for "OUR MISSION - A SAFETY NET FOR THE VULNERABLE"
+  // Multilingual content for "OUR MISSION - A SAFETY NET FOR OUR ENTIRE COMMUNITY"
   const missionTexts = {
     badge: {
-      he: "המשימה שלנו — רשת ביטחון לחלשים בחברה",
-      en: "OUR MISSION — A SAFETY NET FOR THE VULNERABLE",
-      fr: "NOTRE MISSION — UN FILET DE SÉCURITÉ POUR LES PLUS VULNÉRABLES",
-      de: "UNSERE MISSION — EIN SICHERHEITSNETZ FÜR DIE VERLETZLICHEN",
-      ar: "مهمتنا — شبكة أمان للفئات الأكثر ضعفاً",
-      ru: "НАША МИССИЯ — СЕТЬ БЕЗОПАСНОСТИ ДЛЯ УЯЗВИМЫХ",
-      es: "NUESTRA MISIÓN — UNA RED DE SEGURIDAD PARA LOS VULNERABLES",
-      ja: "私たちの使命 — 脆弱な人々を守るセーフティネット",
-      pt: "NOSSA MISSÃO — UMA REDE DE SEGURANÇA PARA OS VULNERÁVEIS"
+      he: "המשימה שלנו — רשת ביטחון לכלל תושבי הקהילה שלנו",
+      en: "OUR MISSION — A SAFETY NET FOR OUR ENTIRE COMMUNITY",
+      fr: "NOTRE MISSION — UN FILET DE SÉCURITÉ POUR TOUTE NOTRE COMMUNAUTÉ",
+      de: "UNSERE MISSION — EIN SICHERHEITSNETZ FÜR UNSERE GESAMTE GEMEINSCHAFT",
+      ar: "مهمتنا — شبكة أمان لجميع أفراد مجتمعنا",
+      ru: "НАША МИССИЯ — СЕТЬ БЕЗОПАСНОСТИ ДЛЯ ВСЕГО НАШЕГО СООБЩЕСТВА",
+      es: "NUESTRA MISIÓN — UNA RED DE SEGURIDAD PARA TODA NUESTRA COMUNIDAD",
+      ja: "私たちの使命 — 地域社会のすべての人々を守るセーフティネット",
+      pt: "NOSSA MISSÃO — UMA REDE DE SEGURANÇA PARA TODA A NOSSA COMUNIDADE"
     },
     mainTitle: {
       he: "עמותת ידידי המרכז הרפואי וולפסון: מגשרים על הפער לצדק בריאותי ושוויון ברפואה",
@@ -127,15 +127,15 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
       pt: "Justiça pública na saúde"
     },
     pillar2Desc: {
-      he: "האמונה הבלתי מתפשרת שהאוכלוסיות הפגיעות ביותר ראויות בדיוק לאותה נגישות לאבחון מתקדם, רפואה מותאמת אישית וטכנולוגיות עילית כמו במרכזים הרפואיים העשירים ביותר.",
-      en: "The belief that the most vulnerable populations deserve the exact same access to advanced diagnostics as those in wealthier centers.",
-      fr: "La conviction que les populations les plus vulnérables méritent exactement le même accès aux diagnostics avancés qu'au sein des centres les plus favorisés.",
-      de: "Die feste Überzeugung, dass die schwächsten Bevölkerungsgruppen genau denselben Zugang zu modernster Diagnostik verdienen wie wohlhabendere Zentren.",
-      ar: "الإيمان الراسخ بأن الفئات الأكثر ضعفاً تستحق تماماً نفس إمكانية الوصول إلى التشخيص المتقدم كما هو الحال في المراكز الطبية الأكثر ثراءً.",
-      ru: "Непоколебимая вера в то, что наиболее уязвимые люди заслуживают точно такого же доступа к передовой диагностике, как и пациенты богатых клиник.",
-      es: "La convicción de que los sectores vulnerables merecen el mismo acceso al diagnóstico de vanguardia que los centros más prósperos.",
-      ja: "最も弱い立場にある人々も、富裕層向け病院と全く同じ高度な精密診断を受ける権利があるという信念です。",
-      pt: "A convicção de que as populações vulneráveis merecem exatamente o mesmo acesso a diagnósticos avançados que os centros mais afluentes."
+      he: "האמונה הבלתי מתפשרת שכל אדם וכל משפחה בקהילתנו ראויים בדיוק לאותה נגישות לאבחון מתקדם, רפואה מותאמת אישית וטכנולוגיות עילית כמו במרכזים הרפואיים העשירים ביותר.",
+      en: "The unwavering belief that every member of our community deserves the exact same access to advanced diagnostics, personalized care, and elite medical technologies as those in wealthier centers.",
+      fr: "La conviction inébranlable que chaque membre de notre communauté mérite exactement le même accès aux diagnostics avancés, aux soins personnalisés et aux technologies médicales d'élite qu'au sein des centres les plus favorisés.",
+      de: "Die feste Überzeugung, dass jedes Mitglied unserer Gemeinschaft genau denselben Zugang zu modernster Diagnostik, personalisierter Pflege und Spitzentechnologie verdient wie Menschen in reicheren Zentren.",
+      ar: "الإيمان الراسخ بأن كل فرد في مجتمعنا يستحق تماماً نفس إمكانية الوصول إلى التشخيص المتقدم، والرعاية الشخصية، والتقنيات الطبية الحديثة كما هو الحال في المراكز الأكثر ثراءً.",
+      ru: "Непоколебимая вера в то, что каждый член нашего сообщества заслуживает точно такого же доступа к передовой диагностике, персонализированной медицине и передовым технологиям, как и пациенты богатых клиник.",
+      es: "La firme convicción de que cada miembro de nuestra comunidad merece exactamente el mismo acceso a diagnósticos avanzados, atención personalizada y tecnologías médicas de élite que en los centros más prósperos.",
+      ja: "私たちのコミュニティのすべての人が、富裕層向け病院と全く同じ高度な精密診断、個別化医療、先端技術を受ける権利があるという確固たる信念です。",
+      pt: "A convicção inabalável de que cada membro de nossa comunidade merece exatamente o mesmo acesso a diagnósticos avançados, cuidados personalizados e tecnologias de ponta que os centros mais afluentes."
     },
     pillar3Title: {
       he: "דאגה עמוקה לניצולי שואה",
@@ -490,7 +490,7 @@ export function AboutMissionTop({ t, onOpenDonate, dir, lang }) {
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 font-medium">
-              {t.hero.stats.vulnerableLabel || (lang === "he" ? "קשישים ושורדי שואה הנשענים על שירותינו" : "Elderly & Vulnerable Relying on FWMC")}
+              {t.hero.stats.vulnerableLabel || (lang === "he" ? "קשישים ושורדי שואה הנשענים על שירותינו" : "Elderly & Community Members Relying on FWMC")}
             </p>
           </div>
         </div>

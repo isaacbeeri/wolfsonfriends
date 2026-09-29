@@ -99,7 +99,7 @@ export function ContactSection({ t, lang }) {
                   <MapPin className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.addressTitle}</h4>
+                  <h3 className="font-bold text-base text-slate-900 mb-1">{c.addressTitle}</h3>
                   <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{c.address}</p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function ContactSection({ t, lang }) {
                   <Mail className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.emailTitle}</h4>
+                  <h3 className="font-bold text-base text-slate-900 mb-1">{c.emailTitle}</h3>
                   <a
                     href="mailto:friends2@wmc.gov.il"
                     className="text-sm sm:text-base font-semibold text-wolfson-blue hover:underline"
@@ -124,7 +124,7 @@ export function ContactSection({ t, lang }) {
                   <Phone className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-slate-900 mb-1">{c.phoneTitle}</h4>
+                  <h3 className="font-bold text-base text-slate-900 mb-1">{c.phoneTitle}</h3>
                   <a
                     href="tel:+97235028596"
                     className="text-sm sm:text-base font-semibold text-slate-700 hover:text-wolfson-blue"
@@ -158,9 +158,9 @@ export function ContactSection({ t, lang }) {
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h4 className="text-2xl font-bold text-slate-900">
+                <h3 className="text-2xl font-bold text-slate-900">
                   {c.formSuccess}
-                </h4>
+                </h3>
                 <p className="text-base text-slate-600 max-w-md mx-auto leading-relaxed">
                   {getC('inquiryRouted')}
                 </p>

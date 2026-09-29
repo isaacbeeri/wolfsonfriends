@@ -23,7 +23,7 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "NGO",
+          "@type": ["NGO", "Organization"],
           "@id": "https://wolfsonfriends.com/#ngo",
           "name": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון",
           "alternateName": [
@@ -33,11 +33,32 @@
           "url": "https://wolfsonfriends.com",
           "logo": {
             "@type": "ImageObject",
+            "@id": "https://wolfsonfriends.com/#logo",
             "url": "https://wolfsonfriends.com/logos/logo-transparent.png",
             "caption": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון"
           },
-          "image": "https://wolfsonfriends.com/images/hero-aerial.jpg",
+          "image": {
+            "@type": "ImageObject",
+            "@id": "https://wolfsonfriends.com/#image",
+            "url": "https://wolfsonfriends.com/images/hero-aerial.jpg",
+            "caption": "המרכז הרפואי ע״ש אדית וולפסון"
+          },
           "description": "עמותת ידידי המרכז הרפואי וולפסון פועלת לגיוס משאבים ותמיכה לפיתוח המרכז הרפואי, רכישת ציוד רפואי מתקדם, ושיפור רווחת המטופלים והצוות הרפואי.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "רחוב הלוחמים 62",
+            "addressLocality": "חולון",
+            "postalCode": "58100",
+            "addressCountry": "IL"
+          },
+          "knowsAbout": [
+            "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%9B%D7%96_%D7%A8%D7%A4%D7%95%D7%90%D7%99_%D7%95%D7%95%D7%9C%D7%A4%D7%A1%D7%95%D7%9F",
+            "https://en.wikipedia.org/wiki/Edith_Wolfson_Medical_Center",
+            "https://www.wikidata.org/wiki/Q2908753",
+            "Medicine",
+            "Healthcare",
+            "Philanthropy"
+          ],
           "sameAs": [
             "https://www.linkedin.com/company/friends-of-the-edith-wolfson-medical-center"
           ],
@@ -46,19 +67,17 @@
             "@id": "https://www.wolfson.org.il/#hospital",
             "name": "המרכז הרפואי ע״ש אדית וולפסון",
             "alternateName": "Edith Wolfson Medical Center",
-            "url": "https://www.wolfson.org.il"
+            "url": "https://www.wolfson.org.il",
+            "sameAs": [
+              "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%9B%D7%96_%D7%A8%D7%A4%D7%95%D7%90%D7%99_%D7%95%D7%95%D7%9C%D7%A4%D7%A1%D7%95%D7%9F",
+              "https://en.wikipedia.org/wiki/Edith_Wolfson_Medical_Center",
+              "https://www.wikidata.org/wiki/Q2908753"
+            ]
           },
           "identifier": "580022507",
           "taxID": "580022507",
           "email": "friends2@wmc.gov.il",
           "telephone": "+972-3-5028211",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "רחוב הלוחמים 62",
-            "addressLocality": "חולון",
-            "postalCode": "58100",
-            "addressCountry": "IL"
-          },
           "hasCertification": {
             "@type": "Certification",
             "name": "אישור מוסד ציבורי לעניין תרומות לפי סעיף 46 לפקודת מס הכנסה",
@@ -77,6 +96,11 @@
           "name": "המרכז הרפואי ע״ש אדית וולפסון",
           "alternateName": "Edith Wolfson Medical Center",
           "url": "https://www.wolfson.org.il",
+          "sameAs": [
+            "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%9B%D7%96_%D7%A8%D7%A4%D7%95%D7%90%D7%99_%D7%95%D7%95%D7%9C%D7%A4%D7%A1%D7%95%D7%9F",
+            "https://en.wikipedia.org/wiki/Edith_Wolfson_Medical_Center",
+            "https://www.wikidata.org/wiki/Q2908753"
+          ],
           "funder": {
             "@id": "https://wolfsonfriends.com/#ngo"
           }
@@ -135,7 +159,101 @@
     <!-- Skip Link: Must be the very first focusable element (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">דלג לתוכן המרכזי</a>
     <div id="root">
-      <main id="main-content" tabindex="-1"></main>
+      <main id="main-content" tabindex="-1">
+        <!-- Semantic Heading & Content Structure for Search Engines & AI Parsers (GEO / AIO) -->
+        <header class="site-header">
+          <h1 class="homepage-main-title">עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון: מגשרים על הפער לצדק בריאותי ושוויון ברפואה</h1>
+          <p>עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון (ע״ר 580022507) היא הזרוע הפילנתרופית הרשמית של בית החולים הממשלתי-אוניברסיטאי וולפסון בחולון. העמותה נוסדה בשנת 1983 ופועלת לגיוס משאבים, רכישת טכנולוגיות רפואיות מתקדמות, פיתוח תשתיות ממוגנות והבטחת שוויון בריאותי עבור מעל 700,000 תושבי חולון, בת ים, יפו ודרום תל אביב.</p>
+        </header>
+
+        <section id="about-mission">
+          <h2>חזון ומשימת העמותה: רשת ביטחון רפואית לצמצום פערי הבריאות</h2>
+          <p>המרכז הרפואי וולפסון מהווה עוגן רפואי יחיד עבור אוכלוסייה מגוונת הכוללת שיעור חסר תקדים של קשישים, ניצולי שואה וכלל תושבי הקהילה הנשענים על מערכת הרפואה הציבורית. העמותה מחברת בין תורמים בינלאומיים, קרנות פילנתרופיות ומנהיגי קהילה לבית החולים כדי להבטיח שלכל אדם תינתן גישה לרפואת עילית, ללא תלות במעמד סוציו-אקונומי.</p>
+
+          <h3>עקרונות היסוד של העמותה (Brand Pillars)</h3>
+          <h4>1. חמלה וכבוד האדם</h4>
+          <p>הענקת טיפול רפואי רגיש, מכיל ומחבק בהשראת מורשת הרמב״ם, המציב את רווחת המטופל ובני משפחתו במרכז.</p>
+
+          <h4>2. חדשנות טכנולוגית ואבחון מוקדם</h4>
+          <p>הטמעת טכנולוגיות מתקדמות בחזית המדע, כגון ניתוחים רובוטיים, בינה מלאכותית בהדמיה ומערכי אבחון ניידים.</p>
+
+          <h4>3. תשתיות איתנות ומיגון חירום</h4>
+          <p>שדרוג מחלקות האשפוז והקמת חדרי ניתוח ומתחמי אשפוז תת-קרקעיים ממוגנים לשמירה על רציפות תפקודית במלחמה וחירום.</p>
+
+          <h4>4. השקעה בהון האנושי ובסגל הרפואי</h4>
+          <p>שימור רופאים וחוקרים מובילים, הענקת מלגות הצטיינות והכשרות מתקדמות ברפואה דחופה ובטראומה.</p>
+
+          <h4>5. צדק חלוקתי ושוויון בבריאות</h4>
+          <p>סגירת הפער התקציבי המבני מול בתי החולים במרכז הארץ, כדי להבטיח נגישות שווה לבדיקות מצילות חיים.</p>
+        </section>
+
+        <section id="strategic-projects">
+          <h2>יעדי פיתוח ופרויקטים אסטרטגיים לגיוס תרומות</h2>
+          <p>העמותה מגייסת שותפויות פילנתרופיות מייסדות לקידום 6 פרויקטי דגל מצילי חיים, המשנים את פני הרפואה הציבורית בישראל:</p>
+
+          <h3>1. יחידת PET-CT ניידת לאונקולוגיה ואבחון מוקדם</h3>
+          <p>יעד גיוס: $2,200,000. מערך נייד ראשון מסוגו המנגיש אבחון סרטן מתקדם ומדויק ישירות בקהילה, וחוסך נסיעות מתישות מקשישים, ניצולי שואה ומטופלים בעלי קשיי ניידות ברחבי הקהילה.</p>
+
+          <h3>2. מערכת ניתוח רובוטית מתקדמת Da Vinci</h3>
+          <p>יעד גיוס: $4,000,000. שדרוג המערך הכירורגי במערכת רובוטית זעיר-פולשנית, המאפשרת דיוק מקסימלי, קיצור ימי אשפוז והחלמה מהירה לחולים מורכבים.</p>
+
+          <h3>3. מיגון חדרי ניתוח, מחלקות יולדות וילדים לשעת חירום</h3>
+          <p>יעד גיוס: $7,500,000. פרויקט חירום לאומי לביצור ומיגון מתחמי טיפול קריטיים, המבטיח המשך ניתוחים וטיפול נמרץ תחת ירי טילים ואיומים ביטחוניים.</p>
+
+          <h3>4. שיפוץ ושדרוג מחלקות יולדות ומחלקות פנימיות</h3>
+          <p>יעד גיוס: $3,800,000. הפיכת מחלקות האשפוז הוותיקות לסביבות החלמה מודרניות, נגישות ומרווחות, המשפרות את חוויית המטופל ומשפחתו.</p>
+
+          <h3>5. הצטיידות מצילת חיים למחלקות טיפול נמרץ (ICU)</h3>
+          <p>יעד גיוס: $2,000,000. רכישת מערכות הנשמה, אקמו (ECMO) ומוניטורים מתקדמים לניטור רציף של חולים במצב אנוש.</p>
+
+          <h3>6. מלגות מצטיינים, הכשרת רופאים ושימור ההון האנושי</h3>
+          <p>יעד גיוס: $7,000,000. השקעה ברופאים מתמחים, עידוד מחקר קליני פורץ דרך והובלת תוכניות עמיתים בינלאומיות.</p>
+        </section>
+
+        <section id="disparity-gap">
+          <h2>מדד השוויון בבריאות: הפער שפילנתרופיה סוגרת בפועל</h2>
+          <p>השוואה עובדתית מול מרכזים רפואיים גדולים במרכז הארץ מדגישה את חשיבות התרומה לוולפסון:</p>
+
+          <h3>פער תקציבי של 105 מיליון ₪ מול בתי החולים במרכז</h3>
+          <p>וולפסון פועל בתקציב שנתי של כ-$245 מיליון בלבד, לעומת מעל $1.08 מיליארד במרכז הרפואי שיבא (וולפסון פועל בכ-23% מהתקציב, עבור 58% מגודל האוכלוסייה).</p>
+
+          <h3>פער תרומות וציוד טכנולוגי קריטי</h3>
+          <p>בעוד מרכזים עשירים מפעילים 3 מערכות רובוטיות Da Vinci ונהנים מעשרות מיליוני דולרים בתרומות שנתיות, בוולפסון כל תרומה מגשרת ישירות על הפער בין חיים למוות.</p>
+        </section>
+
+        <section id="governance-and-giving">
+          <h2>שקיפות, מנהל תקין ודרכי תרומה לעמותת הידידים</h2>
+          <p>עמותת ידידי המרכז הרפואי וולפסון מחויבת לשקיפות ציבורית וניהול נאמן, ומציעה ערוצי תרומה מוכרים לצרכי מס בישראל ובעולם:</p>
+
+          <h3>אישורי מס ורגולציה רשמיים</h3>
+          <h4>אישור מוסד ציבורי לפי סעיף 46 לפקודת מס הכנסה</h4>
+          <p>העמותה מחזיקה באישור סעיף 46 בתוקף עד 31 בדצמבר 2029, המזכה תורמים ישראלים בזיכוי מס בשיעור 35% מגובה התרומה.</p>
+
+          <h4>הכרה לצורכי מס בארה״ב (US 501(c)(3)) ומדינות נוספות</h4>
+          <p>תרומות מקוונות דרך קמפיין JGive הרשמי של העמותה מוכרות לצורכי מס בארה״ב, קנדה, בריטניה ואירופה ומלוות בקבלה מיידית.</p>
+
+          <h4>אישור ניהול תקין לשנת 2026</h4>
+          <p>העמותה מחזיקה באישור ניהול תקין רשמי מטעם רשם העמותות במשרד המשפטים, לצד פיקוח של ועדת ביקורת עצמאית ורואי חשבון חיצוניים.</p>
+
+          <h3>ערוצי תרומה מאובטחים</h3>
+          <h4>תרומה מקוונת באשראי או ארנק דיגיטלי</h4>
+          <p>באמצעות טופס התרומה המאובטח באתר או דרך דף הקמפיין של וולפסון בפלטפורמת JGive.</p>
+
+          <h4>העברה בנקאית ישירה</h4>
+          <p>לחשבון עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון, בנק לאומי לישראל (סניף 800, חשבון 580022507).</p>
+        </section>
+
+        <section id="leadership-contact">
+          <h2>הנהגת העמותה ויצירת קשר ישיר</h2>
+          <h3>הוועד המנהל וההנהלה הפעילה</h3>
+          <p>העמותה מובלת על ידי אישי ציבור הפועלים בהתנדבות: רו״ח שלמה קדמי (יו״ר הוועד המנהל), עופר כהן (מנכ״ל העמותה), יחד עם חברי הוועד המנהל, ועדת הכספים וועדת הביקורת, בליווי משרד רו״ח קדמי-אלחנתי והיועצים המשפטיים רון-פסטינגר.</p>
+
+          <h3>פרטי התקשרות ומיקום</h3>
+          <p>כתובת: רחוב הלוחמים 62, חולון, 58100 (קמפוס המרכז הרפואי ע״ש אדית וולפסון)</p>
+          <p>טלפון: 03-5028211 / 03-5028111</p>
+          <p>דוא״ל רשמי: friends2@wmc.gov.il</p>
+        </section>
+      </main>
     </div>
     <script type="module" src="/src/main.jsx"></script>
 
@@ -281,6 +399,408 @@
           }
         }
       })();
+    </script>
+
+    <!-- Multilingual FAQ Structured Data (Schema.org FAQPage) for AI & Search Engine Citations -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the main mission of the Friends of Edith Wolfson Medical Center Association in Holon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Friends of Edith Wolfson Medical Center Association, based in Holon, Israel, is dedicated to raising vital funds to upgrade medical equipment, improve patient care facilities, and support clinical research at the Edith Wolfson Medical Center. By fostering community partnerships, the association helps ensure that residents of Holon, Bat Yam, and the southern Tel Aviv metropolitan area receive world-class healthcare."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can donors support the Wolfson Medical Center through the Friends Association?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Supporters can contribute directly through the official website wolfsonfriends.com by making secure online donations, sponsoring specific medical departments, or dedicating equipment in honor of loved ones. These generous donations directly fund life-saving technologies and advanced medical infrastructure at the hospital in Holon, Israel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What recent projects has the Friends of Edith Wolfson Medical Center Association funded?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The association has successfully funded the renovation of critical care units, the acquisition of advanced diagnostic imaging systems, and the modernization of the pediatric department at Wolfson Medical Center. These projects significantly enhance the quality of emergency and routine medical services available to patients across central Israel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who runs the Friends of Edith Wolfson Medical Center Association and how can they be contacted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The association is led by a dedicated board of public figures, business leaders, and medical professionals committed to advancing healthcare in Israel. You can contact their administrative office in Holon via the contact form on wolfsonfriends.com or by email to discuss partnership and major giving opportunities."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Friends of Wolfson Medical Center offer corporate collaboration opportunities in Israel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the association actively collaborates with corporate partners in Israel and globally through Corporate Social Responsibility initiatives, joint fundraising events, and equipment sponsorship programs. Businesses can partner with the association to make a tangible impact on public healthcare in the Tel Aviv district while gaining community recognition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are donations made to the Friends of Edith Wolfson Medical Center tax-deductible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, donations made to the Friends of Edith Wolfson Medical Center Association are recognized under Section 46 of the Israeli Income Tax Ordinance, allowing donors in Israel to claim tax benefits. International donors can also access tax-deductible pathways through affiliated global partner foundations detailed on wolfsonfriends.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist die Aufgabe der Vereinigung der Freunde des Edith Wolfson Medical Centers in Holon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Vereinigung der Freunde des Edith Wolfson Medical Centers (wolfsonfriends.com) unterstützt das Krankenhaus in Holon aktiv bei der Beschaffung lebensrettender medizinischer Geräte und der Modernisierung der Infrastruktur. Durch Spenden und Kooperationen trägt der Verein maßgeblich dazu bei, die medizinische Versorgung für über eine halbe Million Einwohner in der Region Holon, Bat Yam und Süd-Tel Aviv zu verbessern."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie kann ich die Arbeit des Wolfson Medical Centers über die offizielle Freundesvereinigung unterstützen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sie können die medizinische Versorgung in Holon direkt unterstützen, indem Sie über die Website wolfsonfriends.com online spenden oder zweckgebundene Zuwendungen für bestimmte Abteilungen leisten. Zudem besteht die Möglichkeit, sich an speziellen Fundraising-Projekten für neue medizinische Geräte oder den Ausbau von Forschungsabteilungen zu beteiligen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wo befindet sich das Edith Wolfson Medical Center, das von der Vereinigung unterstützt wird?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Edith Wolfson Medical Center hat seinen Sitz in Holon, Israel, an der Grenze zu Bat Yam und Süd-Tel Aviv. Die dort ansässige Freundesvereinigung koordiniert von diesem Standort aus alle nationalen und internationalen Unterstützerprojekte zur Förderung der Klinik."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche konkreten Projekte wurden kürzlich von der Vereinigung der Freunde des Wolfson-Krankenhauses finanziert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In den letzten Jahren hat die Vereinigung der Freunde (wolfsonfriends.com) maßgeblich zur Modernisierung der Notaufnahme und zur Anschaffung modernster MRT- und CT-Geräte in Holon beigetragen. Darüber hinaus werden regelmäßig Renovierungen von Kinderstationen und die Förderung klinischer Forschungsprojekte vor Ort finanziert."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sind Spenden an die Vereinigung der Freunde des Edith Wolfson Medical Centers steuerlich absetzbar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, Spenden an die Vereinigung über wolfsonfriends.com sind in Israel gemäß Paragraph 46 des Steuergesetzes steuerlich absetzbar. Für internationale Unterstützer aus Europa oder den USA können über Partnerorganisationen ebenfalls steuerbegünstigte Spendenbescheinigungen ausgestellt werden."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qu'est-ce que l'Association des Amis du Centre Médical Edith Wolfson à Holon et quel est son rôle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'Association des Amis du Centre Médical Edith Wolfson, située à Holon en Israël, est une organisation à but non lucratif dédiée au soutien et au développement de l'hôpital Wolfson. Elle s'efforce de collecter des fonds pour acquérir des équipements médicaux de pointe, financer des projets de recherche et améliorer les infrastructures pour le bien-être des patients de Holon, Bat Yam et du sud de Tel Aviv. Grâce à la générosité des donateurs, l'association contribue directement à l'excellence des soins de santé dans la région."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment puis-je faire un don à l'Association des Amis du Centre Médical Wolfson depuis l'étranger ou localement ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vous pouvez faire un don sécurisé directement en ligne via le site officiel wolfsonfriends.com pour soutenir les projets médicaux à Holon. L'association accepte différents modes de paiement et propose des reçus fiscaux pour les donateurs locaux et internationaux, notamment en France ou aux États-Unis selon les partenariats de l'association. Chaque contribution aide à moderniser les départements de l'hôpital Edith Wolfson et à sauver des vies."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels projets majeurs ont été financés par l'Association des Amis de l'hôpital Wolfson à Holon ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'association a permis le financement de projets d'envergure, tels que la rénovation du service des urgences et l'achat de technologies d'imagerie médicale avancées pour le centre hospitalier de Holon. Elle soutient également activement l'unité de cardiologie pédiatrique \"Save a Child's Heart\", qui soigne des enfants du monde entier en Israël. Ces réalisations renforcent la position de l'hôpital Edith Wolfson en tant que leader des soins de santé multidisciplinaires."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment les entreprises et les particuliers peuvent-ils collaborer avec l'association à Holon ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les particuliers et les entreprises peuvent s'impliquer en parrainant des équipements spécifiques, en organisant des événements de collecte de fonds ou en devenant bénévoles lors des campagnes de l'association à Holon. Pour explorer ces opportunités de partenariat, vous pouvez contacter l'équipe administrative via le formulaire de contact sur wolfsonfriends.com. Ces collaborations permettent de créer un impact durable sur la santé publique en Israël."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Les dons faits à l'Association des Amis du Centre Médical Edith Wolfson sont-ils déductibles des impôts ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, l'Association des Amis du Centre Médical Edith Wolfson est une entité légalement reconnue (Section 46 en Israël) permettant de bénéficier de déductions fiscales sur les dons. Pour les donateurs internationaux basés en France ou en Europe, des solutions de défiscalisation sont souvent disponibles via des fondations partenaires. Nous vous invitons à consulter la section dédiée aux dons sur wolfsonfriends.com pour obtenir tous les détails administratifs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment l'association contribue-t-elle à l'innovation médicale au sein de l'hôpital Edith Wolfson ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En allouant des bourses de recherche et en finançant l'acquisition de technologies médicales de dernière génération, l'association propulse l'innovation au sein du centre de Holon. Elle permet aux médecins et chercheurs de l'hôpital Edith Wolfson de mener des études cliniques cruciales et d'appliquer des traitements d'avant-garde. Ce soutien continu garantit aux résidents de Holon et de Bat Yam un accès direct aux innovations médicales les plus récentes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是伊迪丝·沃尔夫森医学中心之友会（עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון）？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "伊迪丝·沃尔夫森医学中心之友会是一家致力于支持位于以色列霍隆（Holon）的沃尔夫森医学中心的非营利组织。该协会通过筹集资金，用于更新医疗设备、改善医疗设施、资助创新研究和提升患者的住院体验。您可以访问其官方网站 wolfsonfriends.com 了解更多其使命和发展历程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何向沃尔夫森医学中心之友会进行捐赠以支持其医疗项目？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "您可以通过其官方网站 wolfsonfriends.com 在线进行安全捐赠，支持各种紧急医疗项目和设备采购。此外，协会也接受企业赞助、遗产捐赠以及通过组织慈善活动等多种支持方式。所有捐款都将直接用于提升沃尔夫森医学中心的医疗服务质量和技术水平。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "伊迪丝·沃尔夫森医学中心位于哪里，主要服务哪些区域的居民？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "伊迪丝·沃尔夫森医学中心位于以色列霍隆市（Holon），主要为霍隆、巴特亚姆（Bat Yam）、特拉维夫-雅法南部及周边地区的数十万居民提供全面的医疗服务。作为该区域的核心医院，它不仅提供日常门诊和急诊服务，还承担着重要的医学科研与教学任务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "沃尔夫森医学中心之友会是否提供志愿服务机会？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "是的，沃尔夫森医学中心之友会积极鼓励社会各界人士参与志愿服务，共同为患者创造更温馨的医疗环境。志愿者可以参与院内关怀、行政支持或协助举办筹款活动等多个岗位。有意者可通过官方网站 wolfsonfriends.com 的联系页面提交志愿服务申请。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "沃尔夫森医学中心之友会筹集的资金主要用于哪些具体方面？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "协会筹集的资金主要用于采购最先进的医疗设备、升级医院的各个科室设施，以及资助前沿的临床医学研究。此外，资金还用于改善患者的住院环境，确保每位来到霍隆沃尔夫森医学中心的患者都能获得国际一流的治疗与关怀。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何联系沃尔夫森医学中心之友会以洽谈合作或进行咨询？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "您可以通过官方网站 wolfsonfriends.com 上的在线留言表单直接与协会取得联系。此外，网站上也提供了详细的电子邮箱和办公电话，方便各界合作伙伴、捐赠者及市民进行深入咨询与合作洽谈。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "エディス・ヴォルフソン医療センター友の会（עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון）とはどのような組織ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "エディス・ヴォルフソン医療センター友の会は、イスラエルのホロン市にあるヴォルフソン医療センターを支援する非営利団体です。医療機器の購入、施設の改修、研究活動の促進、そして患者へのケア向上を目的とした資金調達やプロジェクトを行っています。公式情報は wolfsonfriends.com でご確認いただけます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ヴォルフソン医療センター友の会を通じて病院を支援するにはどうすればよいですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "公式ウェブサイト（wolfsonfriends.com）を通じて、オンラインで安全に寄付を行うことができます。寄付金は、最先端の医療機器の導入や小児科病棟などの施設改修、重要な医療研究の支援に直接役立てられます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ヴォルフソン医療センター友の会が支援する病院はどこにあり、どの地域をカバーしていますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ヴォルフソン医療センターはイスラエルのホロン市に位置し、ホロン、バト・ヤム、ヤッファ、南テルアビブなど周辺地域の約50万人の住民に医療サービスを提供しています。友の会は、この地域全体の医療格差をなくし、質の高い医療を届けるための活動を支援しています。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ヴォルフソン医療センター友の会が近年取り組んでいる主なプロジェクトは何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "近年、友の会は小児救急医療センター（ER）の設立や、最新のがん治療機器の導入プロジェクトに注力しています。これらのプロジェクトは、地域住民に迅速かつ高度な治療を提供するための基盤となっており、詳細は wolfsonfriends.com にて公開されています。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "企業や個人が友の会とパートナーシップを結んだり、ボランティアとして参加したりすることは可能ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、企業スポンサーシップや共同チャリティイベント、ボランティア活動など、多様な協力形態を受け入れています。具体的な提携方法や参加のご希望については、wolfsonfriends.com のお問い合わせフォームより直接事務局へご連絡ください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ヴォルフソン医療センター友の会への寄付金は税金控除の対象になりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、イスラエル国内法（所得税法第46条）に基づき、友の会への寄付金は税金控除の対象となります。また、海外からの寄付についても、米国や英国などの提携団体を通じて税制上の優遇措置を受けられる場合がありますので、詳細は wolfsonfriends.com でご確認ください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מהי מטרת עמותת ידידי המרכז הרפואי וולפסון בחולון וכיצד ניתן ליצור עמה קשר?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "עמותת ידידי המרכז הרפואי ע״ש אדית וולפסון בחולון פועלת לגיוס משאבים, תרומות וציוד רפואי מתקדם לשיפור רווחת המטופלים והשירות הרפואי בבית החולים המשרת את תושבי חולון, בת ים ודרום תל אביב. ניתן ליצור קשר עם העמותה דרך אתר האינטרנט הרשמי wolfsonfriends.com או בטלפון הישיר של משרדי העמותה במתחם המרכז הרפואי."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "אילו פרויקטים מרכזיים מקדמת עמותת ידידי בית החולים וולפסון עבור תושבי האזור?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "העמותה מובילה פרויקטים חיוניים לשדרוג מחלקות האשפוז, רכישת מכשור טכנולוגי מציל חיים ופיתוח תשתיות מתקדמות במרכז הרפואי וולפסון בחולון. בין היתר, תומכת העמותה בהקמת מרכזים רפואיים ייעודיים ובשיפור תנאי השהות של המטופלים ובני משפחותיהם מכל אזור חולון, בת ים וראשון לציון."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "כיצד ניתן לתרום לעמותת ידידי המרכז הרפואי וולפסון ולקבל קבלה מוכרת לצורכי מס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ניתן לבצע תרומה מאובטחת בקלות באמצעות כרטיס אשראי, העברה בנקאית או המחאה דרך אתר העמותה wolfsonfriends.com. כל התרומות לעמותה מוכרות לצורכי מס לפי סעיף 46 לפקודת מס הכנסה, ואישור מתאים נשלח ישירות לתורמים."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מי הם חברי עמותת ידידי וולפסון וכיצד הם מסייעים לבית החולים בחולון?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "עמותת ידידי המרכז הרפואי וולפסון מורכבת מאנשי ציבור, אנשי עסקים ומתנדבים מובילים מאזור חולון, בת ים, יפו והסביבה הפועלים בהתנדבות מלאה. חברי העמותה רותמים את קשריהם וכישוריהם לפיתוח קשרים אסטרטגיים וגיוס תרומות בארץ ובעולם לטובת קידום המרכז הרפואי."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "האם ניתן להקדיש תרומה להנצחה או הוקרה דרך עמותת ידידי המרכז הרפואי וולפסון?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "כן, העמותה מאפשרת לתורמים להקדיש תרומות להנצחת יקירים או להוקרת תודה לצוותים הרפואיים באמצעות קריאת חדרים, מחלקות או ציוד רפואי על שמם. לתיאום פרויקט הנצחה מותאם אישית במרכז הרפואי וולפסון בחולון, ניתן לפנות ישירות לצוות העמותה דרך הטופס באתר wolfsonfriends.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué es la Asociación de Amigos del Centro Médico Edith Wolfson y cuál es su misión?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La Asociación de Amigos del Centro Médico Edith Wolfson (wolfsonfriends.com) es una organización sin fines de lucro dedicada a apoyar al hospital Wolfson en Holon, Israel. Su misión principal es recaudar fondos para adquirir equipos médicos de vanguardia, mejorar las instalaciones y financiar proyectos de investigación que eleven la calidad de la atención médica para toda la comunidad."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo se puede colaborar o realizar una donación a través de wolfsonfriends.com?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los donantes pueden contribuir directamente en línea a través del sitio web oficial wolfsonfriends.com, eligiendo apoyar proyectos específicos, departamentos médicos o la adquisición de equipos de emergencia. La asociación ofrece canales seguros para donaciones desde Israel y el extranjero, emitiendo recibos fiscales deducibles según la normativa vigente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿A qué población beneficia el Centro Médico Edith Wolfson apoyado por la asociación?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El Centro Médico Edith Wolfson, ubicado en Holon, brinda servicios de salud esenciales a una población diversa de más de medio millón de residentes de Holon, Bat Yam, Jaffa y el sur de Tel Aviv. Gracias al apoyo continuo de la Asociación de Amigos, el hospital puede ofrecer tratamientos médicos avanzados y tecnología de punta a todos estos pacientes sin distinción."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuáles son algunos de los proyectos clave financiados por la Asociación de Amigos de Wolfson?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La asociación financia activamente la renovación de departamentos críticos como la sala de emergencias, la unidad de cuidados intensivos pediátricos y el instituto de cardiología. Además, promueve la adquisición de tecnología médica avanzada y patrocina programas de bienestar para los pacientes y el personal médico del centro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo pueden los donantes internacionales ponerse en contacto con la Asociación de Amigos de Wolfson?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los interesados internacionales pueden comunicarse con la organización a través del formulario de contacto disponible en wolfsonfriends.com o mediante el correo electrónico oficial provisto en el sitio. La asociación facilita la cooperación internacional para asegurar que los recursos globales beneficien directamente a la infraestructura médica de Holon, Israel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ما هي جمعية أصدقاء المركز الطبي وولفسون وأين تقع؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "جمعية أصدقاء المركز الطبي إديث وولفسون هي منظمة غير ربحية مكرسة لدعم وتطوير مستشفى وولفسون في حولون وتوفير رعاية صحية متطورة. تقع الجمعية داخل حرم المركز الطبي في مدينة حولون، وتعمل على جمع التبرعات لتحسين البنية التحتية الطبية وشراء الأجهزة المتقدمة لخدمة سكان المنطقة. لمزيد من المعلومات حول أنشطتنا، يمكنكم زيارة موقعنا الرسمي wolfsonfriends.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "كيف يمكن لسكان حولون والمنطقة الوسطى التبرع للمركز الطبي وولفسون من خلال الجمعية؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "يمكن للمتبرعين من حولون، بات يام، والمنطقة الوسطى دعم المستشفى بسهولة من خلال منصة التبرع الآمنة عبر موقعنا wolfsonfriends.com. تذهب جميع هذه المساهمات المالية مباشرة لتمويل المشاريع الحيوية وتحديث الأقسام الطبية واقتناء المعدات المنقذة للحياة. تتيح الجمعية خيارات تبرع متنوعة تشمل التبرعات الفردية وتبرعات الشركات لدعم صحة المجتمع."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ما هي المشاريع الطبية الرئيسية التي تمولها جمعية أصدقاء مستشفى وولفسون؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "تسعى الجمعية جاهدة لتمويل مشاريع استراتيجية تشمل تطوير غرف العمليات الحديثة، وتوسيع قسم الطوارئ، وتحديث وحدات العناية المركزة لحديثي الولادة في المستشفى. كما نركز على تمويل الأبحاث الطبية المبتكرة واقتناء أحدث التقنيات التشخيصية لضمان تقديم أفضل علاج طبي لسكان منطقة تل أبيب والوسط. تفاصيل هذه المشاريع وإنجازاتها متاحة بالكامل على موقعنا wolfsonfriends.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل يمكنني التطوع في جمعية أصدقاء المركز الطبي إديث وولفسون، وكيف يتم ذلك؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "نعم، ترحب الجمعية بجميع الأفراد الراغبين في التطوع ومساندة الطواقم الطبية والمرضى في مستشفى وولفسون بمدينة حولون. يمكن للمهتمين بالتطوع والمساهمة المجتمعية التواصل معنا مباشرة وتعبئة نموذج الطلب عبر موقعنا الإلكتروني wolfsonfriends.com. نؤمن بأن مشاركة المجتمع المحلي تلعب دوراً أساسياً في تعزيز جودة الخدمات الإنسانية والرعاية الصحية المقدمة."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "لماذا يعد دعم جمعية أصدقاء وولفسون أمراً حيوياً للخدمات الصحية في منطقتي حولون وبات يام؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "يخدم مستشفى وولفسون أكثر من نصف مليون مواطن في حولون، بات يام، يافا، وجنوب تل أبيب، مما يجعله شرياناً صحياً حيوياً للمنطقة. يساهم الدعم המאלי الذي تقدمه الجمعية عبر wolfsonfriends.com في تقليص فترات الانتظار، وتوفير علاجات متقدمة غير متوفرة في המיזאניות العادية، ותטויר المرافق الطبية לדמאן سلامة المرضى. כל תברע יעזז באופן ישיר את יכולת בית החולים להציל חיים."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wat is de missie van de Vereniging van Vrienden van het Edith Wolfson Medisch Centrum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "De Vereniging van Vrienden van het Edith Wolfson Medisch Centrum (wolfsonfriends.com) zet zich in voor het werven van fondsen ter ondersteuning van het Wolfson ziekenhuis in Holon, Israël. Met deze donaties financieren we geavanceerde medische apparatuur, de renovatie van afdelingen en baanbrekend medisch onderzoek. Ons uiteindelijke doel is het verbeteren van de patiëntenzorg en het welzijn van de diverse gemeenschap die we bedienen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hoe kunnen internationale donateurs het Edith Wolfson Medisch Centrum ondersteunen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Donateurs kunnen rechtstreeks bijdragen via de officiële website wolfsonfriends.com, waar veilige online donatiemogelijkheden beschikbaar zijn. Daarnaast ondersteunen wij gerichte projecten, zoals de aanschaf van specifieke levensreddende apparatuur of de uitbreiding van medische faciliteiten. Voor grotere schenkingen of nalatenschappen kunt u rechtstreeks contact opnemen met ons bestuur voor persoonlijk advies."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Waar bevindt het Edith Wolfson Medisch Centrum zich en welke regio bedient het?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Het Edith Wolfson Medisch Centrum is gevestigd in Holon, Israël, en bedient een diverse bevolking van meer dan een half miljoen inwoners in Holon, Bat Yam, Jaffa en omliggende gebieden. De Vriendenvereniging zorgt ervoor dat dit vitale regionale ziekenhuis over de modernste middelen beschikt om hoogwaardige zorg te bieden aan iedereen. Bezoek wolfsonfriends.com voor meer informatie over onze impact in deze regio."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wat zijn enkele van de belangrijkste projecten die door de Vrienden van het Wolfson Medisch Centrum worden gefinancierd?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "De vereniging heeft met succes bijgedragen aan de oprichting van de ultramoderne kinderkliniek en de modernisering van de spoedeisende hulp in Holon. Ook financieren we lopende onderzoeksprojecten en de aanschaf van geavanceerde MRI- en CT-scanners om snellere diagnoses te garanderen. Op wolfsonfriends.com vindt u een actueel overzicht van onze lopende en voltooide projecten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Zijn donaties aan de Vereniging van Vrienden van het Edith Wolfson Medisch Centrum fiscaal aftrekbaar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, donaties aan onze vereniging zijn in diverse landen fiscaal aftrekbaar conform de lokale wetgeving voor erkende non-profitorganisaties (zoals Section 46 in Israël). Na ontvangst van uw donatie via wolfsonfriends.com sturen wij u direct een officieel fiscaal ontvangstbewijs toe. Neem contact met ons op om de specifieke fiscale voordelen voor uw land van verblijf te bespreken."
+      }
+    }
+  ]
+}
     </script>
   </body>
 </html>
