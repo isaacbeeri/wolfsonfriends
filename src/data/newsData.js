@@ -1,6 +1,67 @@
 // Authentic default news items for Friends of Wolfson Medical Center
 export const defaultNewsItems = [
   {
+    "id": "news-6",
+    "active": true,
+    "category": {
+      "he": "מחקר ואקדמיה",
+      "en": "Research & Academia",
+      "fr": "Recherche & Académie",
+      "de": "Forschung & Wissenschaft",
+      "ar": "بحث وأكاديميا",
+      "ru": "Наука и образование",
+      "es": "Investigación y Academia",
+      "ja": "研究・学術提携",
+      "pt": "Pesquisa e Academia"
+    },
+    "date": {
+      "he": "2026",
+      "en": "2026",
+      "fr": "2026",
+      "de": "2026",
+      "ar": "2026",
+      "ru": "2026",
+      "es": "2026",
+      "ja": "2026",
+      "pt": "2026"
+    },
+    "title": {
+      "he": "מחזקים את החיבור בין רפואה, מחקר ואקדמיה",
+      "en": "Strengthening the Link Between Medicine, Research & Academia",
+      "fr": "Renforcer le Lien entre Médecine, Recherche et Milieu Universitaire",
+      "de": "Stärkung der Verbindung zwischen Medizin, Forschung und Lehre",
+      "ar": "تعزيز الرابط بين الطب والبحث العلمي والأكاديميا",
+      "ru": "Укрепление связей между медициной, исследованиями и университетской наукой",
+      "es": "Fortaleciendo el Vínculo entre Medicina, Investigación y Academia",
+      "ja": "医療・臨床研究・学術機関の連携強化",
+      "pt": "Fortalecendo a Conexão entre Medicina, Pesquisa e Academia"
+    },
+    "snippet": {
+      "he": "צוותים מ-Wolfson Medical Center ו-Gray Faculty of Medical & Health Sciences נפגשו לדיון בגיבוש מסגרת אסטרטגית משותפת לשיתוף פעולה אקדמי וקליני.",
+      "en": "Teams from Wolfson Medical Center and the Gray Faculty of Medical & Health Sciences met to formulate a joint strategic framework for academic and clinical cooperation.",
+      "fr": "Les équipes du Centre Médical Wolfson et de la Gray Faculty of Medical & Health Sciences se sont réunies pour définir un cadre stratégique de coopération universitaire et clinique.",
+      "de": "Teams des Wolfson Medical Center und der Gray Faculty of Medical & Health Sciences trafen sich zur Ausarbeitung einer gemeinsamen Kooperation in Forschung und Klinik.",
+      "ar": "التقى فريق من مركز فولفسון الطبي وكلية غراي للعلوم الطبية والصحية لمناقشة صياغة إطار استراتيجي مشترك للتعاون الأكاديمي والسريري.",
+      "ru": "Команды Медицинского центра Вольфсон и Gray Faculty of Medical & Health Sciences провели встречу для выработки совместной стратегии академического и клинического сотрудничества.",
+      "es": "Equipos del Centro Médico Wolfson y Gray Faculty of Medical & Health Sciences se reunieron para estructurar un marco estratégico de cooperación académica y clínica.",
+      "ja": "ウォルフソン医療センターとGray Faculty of Medical & Health Sciencesのチームが会合を開き、学術・臨床提携の戦略的枠組みを策定しました。",
+      "pt": "Equipes do Wolfson Medical Center e da Gray Faculty of Medical & Health Sciences reuniram-se para formular uma estrutura estratégica de cooperação acadêmica e clínica."
+    },
+    "image": "/images/medical-team.jpg",
+    "link": "#about",
+    "linkText": {
+      "he": "לפרטים נוספים",
+      "en": "Learn More",
+      "fr": "En savoir plus",
+      "de": "Mehr erfahren",
+      "ar": "للمزيد من التفاصيل",
+      "ru": "Подробнее",
+      "es": "Más información",
+      "ja": "詳細を見る",
+      "pt": "Saiba mais"
+    }
+  },
+  {
     "id": "news-5",
     "active": true,
     "category": {
@@ -421,15 +482,22 @@ export function compressImageFile(file, maxWidth = 800, maxHeight = 800, quality
 export function sanitizeNewsItems(items) {
   if (!Array.isArray(items)) return defaultNewsItems;
   return items.map(item => {
+    const SUPPORTED_LANGS = ['he', 'en', 'fr', 'de', 'ar', 'ru', 'es', 'ja', 'pt'];
     const formatLocalized = (field, fallback = "") => {
-      if (!field) return { he: fallback, en: fallback, fr: fallback, de: fallback };
-      if (typeof field === "string") return { he: field, en: field, fr: field, de: field };
-      return {
-        he: field.he || fallback,
-        en: field.en || field.he || fallback,
-        fr: field.fr || field.en || field.he || fallback,
-        de: field.de || field.en || field.he || fallback
-      };
+      const res = {};
+      if (!field) {
+        SUPPORTED_LANGS.forEach(l => { res[l] = fallback; });
+        return res;
+      }
+      if (typeof field === "string") {
+        SUPPORTED_LANGS.forEach(l => { res[l] = field; });
+        return res;
+      }
+      const primaryFallback = field.he || field.en || fallback;
+      SUPPORTED_LANGS.forEach(l => {
+        res[l] = field[l] || primaryFallback;
+      });
+      return res;
     };
 
     return {

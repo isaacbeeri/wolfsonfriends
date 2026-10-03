@@ -1,26 +1,50 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronRight, ChevronLeft, ExternalLink, ArrowRight, ArrowLeft, Radio, Sparkles, Pause, Play } from "lucide-react";
-import { getStoredNews } from "../data/newsData";
+import { ChevronRight, ChevronLeft, ExternalLink, ArrowRight, ArrowLeft, Radio, Sparkles, Pause, Play, Globe } from "lucide-react";
+import { getStoredNews, saveStoredNews } from "../data/newsData";
+import { translateText, detectLanguage, LANGUAGE_CONFIG } from "../utils/translationService";
 
+const liveTextMap = {
+  he: "עדכונים שוטפים",
+  ar: "تحديثات حية",
+  ru: "Новости и события",
+  es: "Actualizaciones en vivo",
+  ja: "最新ニュース",
+  pt: "Atualizações ao vivo",
+  fr: "Actualités en direct",
+  de: "Aktuelle Meldungen",
+  en: "Live Updates"
+};
 
-  const liveTextMap = {
-    he: "עדכונים שוטפים",
-    ar: "تحديثات حية",
-    ru: "Новости и события",
-    es: "Actualizaciones en vivo",
-    ja: "最新ニュース",
-    pt: "Atualizações ao vivo",
-    fr: "Actualités en direct",
-    de: "Aktuelle Meldungen",
-    en: "Live Updates"
-  };
+const categoryFallbacks = {
+  he: "חדשות",
+  en: "News",
+  fr: "Actualités",
+  de: "Nachrichten",
+  ar: "أخبار",
+  ru: "Новости",
+  es: "Noticias",
+  ja: "最新ニュース",
+  pt: "Notícias"
+};
+
+const linkFallbacks = {
+  he: "לפרטים נוספים",
+  en: "Learn More",
+  fr: "En savoir plus",
+  de: "Mehr erfahren",
+  ar: "للمزيد من التفاصيل",
+  ru: "Подробнее",
+  es: "Más información",
+  ja: "詳細を見る",
+  pt: "Saiba mais"
+};
 
 export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
   const [items, setItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
-  const isRtl = dir === "rtl";
+  const isRtl = dir === "rtl" || lang === "he" || lang === "ar";
 
   // Load news from storage & listen for live admin updates
   useEffect(() => {
@@ -36,6 +60,76 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
     window.addEventListener("fwmc_news_updated", handleUpdate);
     return () => window.removeEventListener("fwmc_news_updated", handleUpdate);
   }, []);
+
+  // On-the-fly dynamic translation for items missing active language translation
+  useEffect(() => {
+    if (!items || items.length === 0 || lang === "he") return;
+
+    let isMounted = true;
+    const itemsToTranslate = items.map((item, idx) => ({ item, idx })).filter(({ item }) => {
+      const currentTitle = typeof item.title === "object" ? (item.title[lang] || "") : "";
+      // If missing or identical to Hebrew source while user selected non-Hebrew
+      const hebrewTitle = typeof item.title === "object" ? (item.title.he || "") : (typeof item.title === "string" ? item.title : "");
+      return !currentTitle || (currentTitle === hebrewTitle && detectLanguage(currentTitle) === "he");
+    });
+
+    if (itemsToTranslate.length === 0) return;
+
+    const translateMissing = async () => {
+      let hasChanges = false;
+      const updatedItems = [...items];
+
+      for (const { item, idx } of itemsToTranslate) {
+        try {
+          const heTitle = typeof item.title === "object" ? (item.title.he || item.title.en || "") : (item.title || "");
+          const heSnippet = typeof item.snippet === "object" ? (item.snippet.he || item.snippet.en || "") : (item.snippet || "");
+          const heCat = typeof item.category === "object" ? (item.category.he || item.category.en || "") : (item.category || "");
+
+          if (!heTitle) continue;
+
+          const [translatedTitle, translatedSnippet, translatedCat] = await Promise.all([
+            translateText(heTitle, lang, "he"),
+            heSnippet ? translateText(heSnippet, lang, "he") : Promise.resolve(""),
+            heCat ? translateText(heCat, lang, "he") : Promise.resolve(categoryFallbacks[lang] || "News")
+          ]);
+
+          if (translatedTitle && translatedTitle !== heTitle) {
+            hasChanges = true;
+            const titleObj = typeof item.title === "object" ? { ...item.title } : { he: item.title };
+            const snippetObj = typeof item.snippet === "object" ? { ...item.snippet } : { he: item.snippet };
+            const catObj = typeof item.category === "object" ? { ...item.category } : { he: item.category };
+            const linkTextObj = typeof item.linkText === "object" ? { ...item.linkText } : { he: item.linkText };
+
+            titleObj[lang] = translatedTitle;
+            if (translatedSnippet) snippetObj[lang] = translatedSnippet;
+            if (translatedCat) catObj[lang] = translatedCat;
+            if (!linkTextObj[lang]) linkTextObj[lang] = linkFallbacks[lang] || linkFallbacks.en;
+
+            updatedItems[idx] = {
+              ...item,
+              title: titleObj,
+              snippet: snippetObj,
+              category: catObj,
+              linkText: linkTextObj
+            };
+          }
+        } catch (e) {
+          // Graceful fallback
+        }
+      }
+
+      if (hasChanges && isMounted) {
+        setItems(updatedItems);
+        saveStoredNews(updatedItems);
+      }
+    };
+
+    translateMissing();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [items, lang]);
 
   // Auto-play timer with progress bar
   useEffect(() => {
@@ -77,18 +171,18 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
 
   const current = items[currentIndex] || items[0];
 
-  // Helper for localized fields
+  // Helper for localized fields with smart fallback
   const getField = (obj, fallback = "") => {
     if (!obj) return fallback;
     if (typeof obj === "string") return obj;
-    return obj[lang] || obj.he || obj.en || fallback;
+    return obj[lang] || obj.en || obj.he || fallback;
   };
 
-  const categoryText = getField(current.category, "חדשות");
+  const categoryText = getField(current.category, categoryFallbacks[lang] || "News");
   const dateText = getField(current.date, "2026");
-  const titleText = getField(current.title, "עדכון חדשות");
+  const titleText = getField(current.title, "Update");
   const snippetText = getField(current.snippet, "");
-  const linkText = getField(current.linkText, isRtl ? "לפרטים המלאים" : "Read More");
+  const linkText = getField(current.linkText, linkFallbacks[lang] || (isRtl ? "לפרטים נוספים" : "Learn More"));
   const linkUrl = current.link || "#";
   const isExternal = linkUrl.startsWith("http");
 
@@ -115,7 +209,7 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
       </div>
 
       {/* Top Header Bar: Live Badge, Timer Progress, Counter */}
-      <div className="relative z-10 p-5 sm:p-6 lg:p-7 flex items-center justify-between">
+      <div className="relative z-10 p-5 sm:p-6 lg:p-7 flex items-center justify-between" dir={isRtl ? "rtl" : "ltr"}>
         <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/85 text-white text-xs sm:text-sm font-bold border border-white/25 backdrop-blur-md shadow-md">
           <span className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
@@ -147,7 +241,7 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 p-6 sm:p-7 lg:p-8 space-y-4 flex-1 flex flex-col justify-end">
+      <div className="relative z-10 p-6 sm:p-7 lg:p-8 space-y-4 flex-1 flex flex-col justify-end" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Category & Date Pill */}
         <div className="flex items-center gap-2.5 flex-wrap">
@@ -193,13 +287,13 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
           </a>
 
           {/* Controls: Prev, Next & Dots */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" dir="ltr">
             <button
               onClick={handlePrev}
               className="p-2 rounded-xl bg-slate-900/70 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/20 backdrop-blur-md transition-colors cursor-pointer"
               aria-label="Previous update"
             >
-              {isRtl ? <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />}
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             <button
@@ -207,7 +301,7 @@ export function NewsRoller({ lang = "he", dir = "rtl", onOpenAdmin }) {
               className="p-2 rounded-xl bg-slate-900/70 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/20 backdrop-blur-md transition-colors cursor-pointer"
               aria-label="Next update"
             >
-              {isRtl ? <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />}
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
 

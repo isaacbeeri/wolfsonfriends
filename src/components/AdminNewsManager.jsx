@@ -17,9 +17,20 @@ import {
   ShieldCheck,
   Save,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Globe,
+  Sparkles,
+  Loader2,
+  Languages
 } from "lucide-react";
 import { getStoredNews, saveStoredNews, resetStoredNews, compressImageFile } from "../data/newsData";
+import { 
+  SUPPORTED_LANGUAGES, 
+  LANGUAGE_CONFIG, 
+  translateText, 
+  translateNewsBundle, 
+  detectLanguage 
+} from "../utils/translationService";
 
 const DEFAULT_PIN = "wolfson2026";
 
@@ -32,6 +43,38 @@ const PRESET_IMAGES = [
   { label: "צילום אווירי של הקמפוס", url: "/images/hero-aerial.jpg" },
   { label: "מפת מרכזי המצוינות", url: "/images/campus-labeled.jpg" }
 ];
+
+const createEmptyMultilingualField = (defaultVal = "") => {
+  const obj = {};
+  SUPPORTED_LANGUAGES.forEach(l => {
+    obj[l] = defaultVal;
+  });
+  return obj;
+};
+
+const DEFAULT_CATEGORIES = {
+  he: "חדשות",
+  en: "News",
+  fr: "Actualités",
+  de: "Nachrichten",
+  ar: "أخبار",
+  ru: "Новости",
+  es: "Noticias",
+  ja: "最新ニュース",
+  pt: "Notícias"
+};
+
+const DEFAULT_LINK_TEXT = {
+  he: "לפרטים נוספים",
+  en: "Learn More",
+  fr: "En savoir plus",
+  de: "Mehr erfahren",
+  ar: "للمزيد من التفاصيل",
+  ru: "Подробнее",
+  es: "Más información",
+  ja: "詳細を見る",
+  pt: "Saiba mais"
+};
 
 export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
   if (!isOpen) return null;
@@ -46,15 +89,22 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
   const [items, setItems] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Form State
-  const [formCategory, setFormCategory] = useState("חדשות");
-  const [formDate, setFormDate] = useState("2026");
-  const [formTitle, setFormTitle] = useState("");
-  const [formSnippet, setFormSnippet] = useState("");
+  // Translation states
+  const [selectedFormLang, setSelectedFormLang] = useState("he");
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [isTranslatingAll, setIsTranslatingAll] = useState(false);
+  const [translationStatus, setTranslationStatus] = useState("");
+
+  // Multilingual Form State
+  const [formCategory, setFormCategory] = useState(() => ({ ...DEFAULT_CATEGORIES }));
+  const [formDate, setFormDate] = useState(() => createEmptyMultilingualField("2026"));
+  const [formTitle, setFormTitle] = useState(() => createEmptyMultilingualField(""));
+  const [formSnippet, setFormSnippet] = useState(() => createEmptyMultilingualField(""));
+  const [formLinkText, setFormLinkText] = useState(() => ({ ...DEFAULT_LINK_TEXT }));
   const [formImage, setFormImage] = useState("/images/growth-arrow.jpg");
   const [formLink, setFormLink] = useState("#projects");
-  const [formLinkText, setFormLinkText] = useState("לפרטים נוספים");
   const [formActive, setFormActive] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadNote, setUploadNote] = useState("");
@@ -83,7 +133,6 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
     };
   }, []);
 
-
   const handleLogin = (e) => {
     e.preventDefault();
     if (Date.now() < lockedUntil) {
@@ -108,32 +157,129 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
   const resetForm = () => {
     setEditingId(null);
-    setFormCategory(isHe ? "חדשות" : "News");
-    setFormDate("2026");
-    setFormTitle("");
-    setFormSnippet("");
+    setSelectedFormLang("he");
+    setFormCategory({ ...DEFAULT_CATEGORIES });
+    setFormDate(createEmptyMultilingualField("2026"));
+    setFormTitle(createEmptyMultilingualField(""));
+    setFormSnippet(createEmptyMultilingualField(""));
+    setFormLinkText({ ...DEFAULT_LINK_TEXT });
     setFormImage("/images/growth-arrow.jpg");
     setFormLink("#projects");
-    setFormLinkText(isHe ? "לפרטים נוספים" : "Read More");
     setFormActive(true);
+    setTranslationStatus("");
   };
 
   const handleEditClick = (item) => {
     setEditingId(item.id);
-    const getVal = (v) => typeof v === "object" ? (v[lang] || v.he || v.en || "") : (v || "");
-    setFormCategory(getVal(item.category));
-    setFormDate(getVal(item.date));
-    setFormTitle(getVal(item.title));
-    setFormSnippet(getVal(item.snippet));
+    setSelectedFormLang("he");
+    setTranslationStatus("");
+
+    const extractMultilingual = (val, defaults = {}) => {
+      const res = {};
+      SUPPORTED_LANGUAGES.forEach(l => {
+        if (typeof val === "object" && val !== null) {
+          res[l] = val[l] || val.he || val.en || defaults[l] || "";
+        } else if (typeof val === "string") {
+          res[l] = val;
+        } else {
+          res[l] = defaults[l] || "";
+        }
+      });
+      return res;
+    };
+
+    setFormCategory(extractMultilingual(item.category, DEFAULT_CATEGORIES));
+    setFormDate(extractMultilingual(item.date, createEmptyMultilingualField("2026")));
+    setFormTitle(extractMultilingual(item.title));
+    setFormSnippet(extractMultilingual(item.snippet));
+    setFormLinkText(extractMultilingual(item.linkText, DEFAULT_LINK_TEXT));
     setFormImage(item.image || "/images/growth-arrow.jpg");
-    setFormLink(item.link || "#");
-    setFormLinkText(getVal(item.linkText));
+    setFormLink(item.link || "#projects");
     setFormActive(item.active !== false);
   };
 
-  const handleSaveForm = (e) => {
+  // Auto-translate current form into all 9 languages
+  const handleAutoTranslateCurrent = async () => {
+    const currentTitleVal = formTitle[selectedFormLang] || formTitle.he || formTitle.en || "";
+    if (!currentTitleVal.trim()) {
+      alert(isHe ? "נא להזין תחילה כותרת בשפה הנוכחית לפני תרגום." : "Please enter a title before translating.");
+      return;
+    }
+
+    try {
+      setIsTranslating(true);
+      setTranslationStatus(isHe ? "מתרגם לכל 9 השפות הנתמכות..." : "Translating to all 9 supported languages...");
+
+      const bundle = await translateNewsBundle({
+        title: currentTitleVal,
+        snippet: formSnippet[selectedFormLang] || formSnippet.he || formSnippet.en || "",
+        category: formCategory[selectedFormLang] || formCategory.he || formCategory.en || DEFAULT_CATEGORIES[selectedFormLang],
+        date: formDate[selectedFormLang] || formDate.he || formDate.en || "2026",
+        linkText: formLinkText[selectedFormLang] || formLinkText.he || formLinkText.en || DEFAULT_LINK_TEXT[selectedFormLang]
+      }, selectedFormLang);
+
+      setFormTitle(prev => ({ ...prev, ...bundle.title }));
+      setFormSnippet(prev => ({ ...prev, ...bundle.snippet }));
+      setFormCategory(prev => ({ ...prev, ...bundle.category }));
+      setFormDate(prev => ({ ...prev, ...bundle.date }));
+      setFormLinkText(prev => ({ ...prev, ...bundle.linkText }));
+
+      setTranslationStatus(isHe ? "✓ תורגם בהצלחה לכל 9 השפות!" : "✓ Successfully translated to all 9 languages!");
+      setTimeout(() => setTranslationStatus(""), 4000);
+    } catch (err) {
+      console.error("Auto translation failed:", err);
+      setTranslationStatus(isHe ? "שגיאה בביצוע התרגום האוטומטי" : "Translation error");
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  const handleSaveForm = async (e) => {
     e.preventDefault();
-    if (!formTitle.trim()) return;
+    const primaryTitle = formTitle[selectedFormLang] || formTitle.he || formTitle.en;
+    if (!primaryTitle || !primaryTitle.trim()) {
+      alert(isHe ? "יש להזין כותרת לידיעה" : "Title is required");
+      return;
+    }
+
+    // Auto-fill any empty languages via automatic translation before save
+    let finalTitle = { ...formTitle };
+    let finalSnippet = { ...formSnippet };
+    let finalCategory = { ...formCategory };
+    let finalDate = { ...formDate };
+    let finalLinkText = { ...formLinkText };
+
+    const missingLangs = SUPPORTED_LANGUAGES.filter(l => !finalTitle[l] || !finalTitle[l].trim());
+
+    if (missingLangs.length > 0) {
+      try {
+        setIsTranslating(true);
+        const bundle = await translateNewsBundle({
+          title: primaryTitle,
+          snippet: formSnippet[selectedFormLang] || formSnippet.he || formSnippet.en || "",
+          category: formCategory[selectedFormLang] || formCategory.he || formCategory.en || DEFAULT_CATEGORIES[selectedFormLang],
+          date: formDate[selectedFormLang] || formDate.he || formDate.en || "2026",
+          linkText: formLinkText[selectedFormLang] || formLinkText.he || formLinkText.en || DEFAULT_LINK_TEXT[selectedFormLang]
+        }, selectedFormLang);
+
+        finalTitle = { ...finalTitle, ...bundle.title };
+        finalSnippet = { ...finalSnippet, ...bundle.snippet };
+        finalCategory = { ...finalCategory, ...bundle.category };
+        finalDate = { ...finalDate, ...bundle.date };
+        finalLinkText = { ...finalLinkText, ...bundle.linkText };
+      } catch (e) {
+        // Fallback fill with primary
+        missingLangs.forEach(l => {
+          finalTitle[l] = finalTitle[l] || primaryTitle;
+          finalSnippet[l] = finalSnippet[l] || formSnippet[selectedFormLang] || "";
+          finalCategory[l] = finalCategory[l] || DEFAULT_CATEGORIES[l] || "News";
+          finalDate[l] = finalDate[l] || "2026";
+          finalLinkText[l] = finalLinkText[l] || DEFAULT_LINK_TEXT[l] || "Learn More";
+        });
+      } finally {
+        setIsTranslating(false);
+      }
+    }
 
     let updatedList;
     if (editingId) {
@@ -142,13 +288,13 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
           return {
             ...item,
             active: formActive,
-            category: { ...item.category, [lang]: formCategory, he: formCategory, en: formCategory },
-            date: { ...item.date, [lang]: formDate, he: formDate, en: formDate },
-            title: { ...item.title, [lang]: formTitle, he: formTitle, en: formTitle },
-            snippet: { ...item.snippet, [lang]: formSnippet, he: formSnippet, en: formSnippet },
+            category: finalCategory,
+            date: finalDate,
+            title: finalTitle,
+            snippet: finalSnippet,
             image: formImage,
             link: formLink,
-            linkText: { ...item.linkText, [lang]: formLinkText, he: formLinkText, en: formLinkText }
+            linkText: finalLinkText
           };
         }
         return item;
@@ -157,13 +303,13 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
       const newItem = {
         id: "news-" + Date.now(),
         active: formActive,
-        category: { he: formCategory, en: formCategory, fr: formCategory, de: formCategory },
-        date: { he: formDate, en: formDate, fr: formDate, de: formDate },
-        title: { he: formTitle, en: formTitle, fr: formTitle, de: formTitle },
-        snippet: { he: formSnippet, en: formSnippet, fr: formSnippet, de: formSnippet },
+        category: finalCategory,
+        date: finalDate,
+        title: finalTitle,
+        snippet: finalSnippet,
         image: formImage,
         link: formLink,
-        linkText: { he: formLinkText, en: formLinkText, fr: formLinkText, de: formLinkText }
+        linkText: finalLinkText
       };
       updatedList = [newItem, ...items];
     }
@@ -171,8 +317,9 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
     setItems(updatedList);
     saveStoredNews(updatedList);
     resetForm();
+    setToastMessage(isHe ? "העדכון נשמר ותורגם בהצלחה לכל השפות המוצגות באתר!" : "Update saved and translated to all site languages!");
     setShowSuccessToast(true);
-    setTimeout(() => setShowSuccessToast(false), 3000);
+    setTimeout(() => setShowSuccessToast(false), 4000);
   };
 
   const handleDelete = (id) => {
@@ -196,18 +343,121 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
   };
 
   const handleResetDefaults = () => {
-    if (confirm(isHe ? "לאפס את כל הידיעות לברירת המחדל המקורית?" : "Reset all news items to defaults?")) {
+    if (confirm(isHe ? "לאפס את כל הידיעות לברירת המחדל המקורית (כולל תרגומים לכל 9 השפות)?" : "Reset all news items to defaults (with all 9 languages)?")) {
       const defaults = resetStoredNews();
       setItems(defaults);
       resetForm();
     }
   };
 
+  // Quick single-item auto-translate from list
+  const handleTranslateSingleItem = async (itemId) => {
+    const it = items.find(x => x.id === itemId);
+    if (!it) return;
+
+    try {
+      setIsTranslating(true);
+      const srcTitle = typeof it.title === "object" ? (it.title.he || it.title.en) : it.title;
+      const srcSnippet = typeof it.snippet === "object" ? (it.snippet.he || it.snippet.en) : it.snippet;
+      const srcCat = typeof it.category === "object" ? (it.category.he || it.category.en) : it.category;
+      const srcDate = typeof it.date === "object" ? (it.date.he || it.date.en) : it.date;
+      const srcLinkText = typeof it.linkText === "object" ? (it.linkText.he || it.linkText.en) : it.linkText;
+
+      const srcLang = detectLanguage(srcTitle || srcSnippet || "");
+
+      const bundle = await translateNewsBundle({
+        title: srcTitle || "",
+        snippet: srcSnippet || "",
+        category: srcCat || "חדשות",
+        date: srcDate || "2026",
+        linkText: srcLinkText || "לפרטים נוספים"
+      }, srcLang);
+
+      const updated = items.map(item => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            title: { ...(typeof item.title === "object" ? item.title : {}), ...bundle.title },
+            snippet: { ...(typeof item.snippet === "object" ? item.snippet : {}), ...bundle.snippet },
+            category: { ...(typeof item.category === "object" ? item.category : {}), ...bundle.category },
+            date: { ...(typeof item.date === "object" ? item.date : {}), ...bundle.date },
+            linkText: { ...(typeof item.linkText === "object" ? item.linkText : {}), ...bundle.linkText }
+          };
+        }
+        return item;
+      });
+
+      setItems(updated);
+      saveStoredNews(updated);
+      setToastMessage(isHe ? "הידיעה תורגמה בהצלחה לכל 9 השפות!" : "Story translated to all 9 languages!");
+      setShowSuccessToast(true);
+      setTimeout(() => setShowSuccessToast(false), 3000);
+    } catch (e) {
+      alert(isHe ? "שגיאה בתרגום הידיעה" : "Failed to translate item");
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  // Translate all items in storage
+  const handleTranslateAllItems = async () => {
+    if (!confirm(isHe ? "לתרגם את כל הידיעות הקיימות לכל 9 השפות הנתמכות באתר?" : "Translate all news items into all 9 supported languages?")) {
+      return;
+    }
+
+    try {
+      setIsTranslatingAll(true);
+      const updatedList = [...items];
+
+      for (let i = 0; i < updatedList.length; i++) {
+        const it = updatedList[i];
+        const srcTitle = typeof it.title === "object" ? (it.title.he || it.title.en) : it.title;
+        const srcSnippet = typeof it.snippet === "object" ? (it.snippet.he || it.snippet.en) : it.snippet;
+        const srcCat = typeof it.category === "object" ? (it.category.he || it.category.en) : it.category;
+        const srcDate = typeof it.date === "object" ? (it.date.he || it.date.en) : it.date;
+        const srcLinkText = typeof it.linkText === "object" ? (it.linkText.he || it.linkText.en) : it.linkText;
+
+        const srcLang = detectLanguage(srcTitle || srcSnippet || "");
+
+        const bundle = await translateNewsBundle({
+          title: srcTitle || "",
+          snippet: srcSnippet || "",
+          category: srcCat || "חדשות",
+          date: srcDate || "2026",
+          linkText: srcLinkText || "לפרטים נוספים"
+        }, srcLang);
+
+        updatedList[i] = {
+          ...it,
+          title: { ...(typeof it.title === "object" ? it.title : {}), ...bundle.title },
+          snippet: { ...(typeof it.snippet === "object" ? it.snippet : {}), ...bundle.snippet },
+          category: { ...(typeof it.category === "object" ? itemCategorySafe(it) : {}), ...bundle.category },
+          date: { ...(typeof it.date === "object" ? it.date : {}), ...bundle.date },
+          linkText: { ...(typeof it.linkText === "object" ? it.linkText : {}), ...bundle.linkText }
+        };
+      }
+
+      setItems(updatedList);
+      saveStoredNews(updatedList);
+      setToastMessage(isHe ? "כל הידיעות תורגמו בהצלחה לכל 9 השפות!" : "All items translated to all 9 languages!");
+      setShowSuccessToast(true);
+      setTimeout(() => setShowSuccessToast(false), 4000);
+    } catch (err) {
+      alert(isHe ? "שגיאה בתרגום הידיעות" : "Translation error");
+    } finally {
+      setIsTranslatingAll(false);
+    }
+  };
+
+  const itemCategorySafe = (it) => {
+    return typeof it.category === "object" ? it.category : DEFAULT_CATEGORIES;
+  };
+
   const handleExportJson = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
     const a = document.createElement("a");
     a.href = dataStr;
-    a.download = "wolfson_news_backup.json";
+    a.download = "wolfson_news_multilingual_backup.json";
     a.click();
   };
 
@@ -230,25 +480,39 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
     }
   };
 
+  // Helper to check language coverage of a news item
+  const getLanguageCoverage = (item) => {
+    if (!item.title || typeof item.title !== "object") return [];
+    return SUPPORTED_LANGUAGES.filter(l => Boolean(item.title[l] && item.title[l].trim()));
+  };
+
+  const isFormLangRtl = LANGUAGE_CONFIG[selectedFormLang]?.dir === "rtl";
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 animate-in fade-in duration-200">
       <div 
-        className="relative bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col"
+        className="relative bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
         dir={isHe ? "rtl" : "ltr"}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-7 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-5 sm:p-6 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-300 flex items-center justify-center border border-sky-400/30">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold">
-                {isHe ? "ממשק ניהול עדכוני חדשות (Admin CMS)" : "News & Updates CMS"}
+              <h3 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
+                <span>{isHe ? "ניהול עדכוני חדשות במסגרת" : "Homepage News CMS"}</span>
+                <span className="text-[11px] font-normal px-2.5 py-0.5 rounded-full bg-sky-400/20 text-sky-200 border border-sky-300/30 flex items-center gap-1">
+                  <Languages className="w-3 h-3" />
+                  <span>9 שפות / 9 Languages</span>
+                </span>
               </h3>
               <p className="text-xs text-slate-300">
-                {isHe ? "שליטה בזמן אמת בתכנים המוצגים במסגרת החדשות בעמוד הבית" : "Live management of stories displayed on the homepage roller"}
+                {isHe 
+                  ? "הוספה, עריכה ותרגום אוטומטי של עדכונים חיים לכל השפות הנתמכות באתר" 
+                  : "Add, edit, and auto-translate live updates across all 9 site languages"}
               </p>
             </div>
           </div>
@@ -262,21 +526,21 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto flex-1">
+        <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6">
           
           {!isAuthenticated ? (
             /* PIN Code Screen */
             <div className="max-w-md mx-auto py-12 text-center space-y-5">
-              <div className="w-16 h-16 rounded-2xl bg-sky-50 text-wolfson-blue flex items-center justify-center mx-auto border border-sky-100 shadow-sm">
-                <Lock className="w-8 h-8" />
+              <div className="w-16 h-16 rounded-2xl bg-sky-50 text-blue-900 flex items-center justify-center mx-auto border border-sky-100 shadow-sm">
+                <Lock className="w-8 h-8 text-sky-600" />
               </div>
               <h4 className="text-xl font-bold text-slate-900">
                 {isHe ? "אזור ניהול מורשה" : "Authorized Management Area"}
               </h4>
               <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                 {isHe 
-                  ? "הזן את קוד הגישה של עמותת הידידים כדי לערוך, להוסיף או להסיר עדכונים מהמסגרת החיה."
-                  : "Enter the Friends Association PIN code to manage news updates."}
+                  ? "הזן את קוד הגישה של עמותת הידידים כדי לערוך, להוסיף או לתרגם עדכונים במסגרת החיה."
+                  : "Enter the Friends Association PIN code to manage and translate news updates."}
               </p>
 
               <form onSubmit={handleLogin} className="space-y-3 max-w-xs mx-auto">
@@ -285,7 +549,7 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                   placeholder={isHe ? "הקש קוד גישה (wolfson2026)" : "Enter PIN (wolfson2026)"}
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
-                  className="w-full text-center tracking-widest text-lg font-mono px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-wolfson-blue"
+                  className="w-full text-center tracking-widest text-lg font-mono px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-600"
                   autoFocus
                 />
                 {pinError && (
@@ -296,7 +560,7 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                 )}
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-wolfson-blue hover:bg-blue-900 text-white font-bold text-sm shadow-md transition-all"
+                  className="w-full py-2.5 rounded-xl bg-blue-900 hover:bg-blue-950 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
                 >
                   {isHe ? "כניסה למערכת" : "Unlock Admin"}
                 </button>
@@ -308,55 +572,154 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
               
               {/* Success Notification */}
               {showSuccessToast && (
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs sm:text-sm font-bold flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>{isHe ? "העדכון נשמר בהצלחה ופורסם מיד במסגרת החיה!" : "Update saved and live on homepage!"}</span>
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs sm:text-sm font-bold flex items-center gap-2.5 shadow-sm animate-in fade-in slide-in-from-top-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <span>{toastMessage}</span>
                 </div>
               )}
 
               {/* Form Section */}
-              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                    {editingId ? <Edit3 className="w-4 h-4 text-sky-600" /> : <Plus className="w-4 h-4 text-emerald-600" />}
-                    <span>{editingId ? (isHe ? "עריכת עדכון קיים" : "Edit Story") : (isHe ? "הוספת עדכון חדש למסגרת" : "Add New Update")}</span>
-                  </h4>
-                  {editingId && (
+              <div className="p-5 sm:p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm">
+                
+                {/* Form Header */}
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-2">
+                    {editingId ? <Edit3 className="w-5 h-5 text-sky-600" /> : <Plus className="w-5 h-5 text-emerald-600" />}
+                    <h4 className="font-bold text-slate-900 text-base">
+                      {editingId ? (isHe ? "עריכת ידיעה קיימת" : "Edit Story") : (isHe ? "הוספת ידיעה חדשה למסגרת" : "Add New Update")}
+                    </h4>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {/* One-click Auto Translate Button */}
                     <button
                       type="button"
-                      onClick={resetForm}
-                      className="text-xs text-slate-500 hover:text-slate-900 underline"
+                      onClick={handleAutoTranslateCurrent}
+                      disabled={isTranslating}
+                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-700 hover:to-sky-700 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+                      title={isHe ? "תרגם אוטומטית לכל 9 השפות בלחיצה אחת" : "Auto-translate into all 9 languages"}
                     >
-                      {isHe ? "ביטול עריכה" : "Cancel Edit"}
+                      {isTranslating ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>{isHe ? "מתרגם..." : "Translating..."}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                          <span>{isHe ? "✨ תרגם לכל 9 השפות" : "✨ Auto-Translate All"}</span>
+                        </>
+                      )}
                     </button>
-                  )}
+
+                    {editingId && (
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className="text-xs text-slate-500 hover:text-slate-900 underline px-2 py-1"
+                      >
+                        {isHe ? "ביטול עריכה" : "Cancel Edit"}
+                      </button>
+                    )}
+                  </div>
                 </div>
 
+                {/* Translation Status Badge */}
+                {translationStatus && (
+                  <div className="mb-4 px-3.5 py-2 rounded-xl bg-sky-50 border border-sky-200 text-sky-900 text-xs font-bold flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-sky-600 animate-spin" />
+                    <span>{translationStatus}</span>
+                  </div>
+                )}
+
+                {/* LANGUAGE TABS */}
+                <div className="mb-5">
+                  <label className="block text-xs font-extrabold text-slate-700 mb-2 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5 text-sky-600" />
+                      <span>{isHe ? "בחר שפה לעריכה ותצוגה מקדימה:" : "Select language to edit & preview:"}</span>
+                    </span>
+                    <span className="text-[11px] font-normal text-slate-500">
+                      {isHe ? "ניתן להקליד בכל שפה וללחוץ 'תרגם לכל 9 השפות'" : "Edit any language or use auto-translate"}
+                    </span>
+                  </label>
+
+                  <div className="flex flex-wrap gap-1.5 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-inner">
+                    {SUPPORTED_LANGUAGES.map((lCode) => {
+                      const cfg = LANGUAGE_CONFIG[lCode];
+                      const isSelected = selectedFormLang === lCode;
+                      const hasText = Boolean(formTitle[lCode] && formTitle[lCode].trim());
+
+                      return (
+                        <button
+                          key={lCode}
+                          type="button"
+                          onClick={() => setSelectedFormLang(lCode)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                            isSelected
+                              ? "bg-sky-600 text-white shadow-md"
+                              : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                          }`}
+                        >
+                          <span>{cfg.flag}</span>
+                          <span>{cfg.name}</span>
+                          <span className={`w-2 h-2 rounded-full ${
+                            hasText 
+                              ? (isSelected ? "bg-emerald-300" : "bg-emerald-500") 
+                              : (isSelected ? "bg-white/40" : "bg-slate-300")
+                          }`} title={hasText ? "מתורגם" : "חסר"} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Form Fields for Selected Language */}
                 <form onSubmit={handleSaveForm} className="space-y-4">
+                  
+                  {/* Language Context Banner */}
+                  <div className="px-3 py-1.5 rounded-xl bg-sky-50/70 border border-sky-100 flex items-center justify-between text-xs text-sky-900">
+                    <span className="font-bold flex items-center gap-1.5">
+                      <span>{LANGUAGE_CONFIG[selectedFormLang]?.flag}</span>
+                      <span>{isHe ? `עורך כעת עבור: ${LANGUAGE_CONFIG[selectedFormLang]?.name}` : `Editing: ${LANGUAGE_CONFIG[selectedFormLang]?.name}`}</span>
+                    </span>
+                    <span className="text-[11px] text-sky-700 font-mono">
+                      {isFormLangRtl ? "RTL Direction" : "LTR Direction"}
+                    </span>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
-                        {isHe ? "כותרת העדכון" : "Headline Title"} *
+                        {isHe ? "כותרת העדכון" : "Headline Title"} ({LANGUAGE_CONFIG[selectedFormLang]?.name}) *
                       </label>
                       <input
                         type="text"
-                        required
-                        value={formTitle}
-                        onChange={(e) => setFormTitle(e.target.value)}
-                        placeholder={isHe ? "לדוגמה: הישג פילנתרופי חסר תקדים..." : "e.g. Landmark Donation..."}
+                        required={selectedFormLang === "he"}
+                        dir={isFormLangRtl ? "rtl" : "ltr"}
+                        value={formTitle[selectedFormLang] || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setFormTitle(prev => ({ ...prev, [selectedFormLang]: val }));
+                        }}
+                        placeholder={isHe ? "לדוגמה: מחזקים את החיבור בין רפואה, מחקר ואקדמיה..." : "e.g. Advancing Medical Innovation..."}
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 bg-white"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
-                        {isHe ? "קטגוריה / תגית" : "Category Tag"}
+                        {isHe ? "קטגוריה / תגית" : "Category Tag"} ({LANGUAGE_CONFIG[selectedFormLang]?.name})
                       </label>
                       <input
                         type="text"
-                        value={formCategory}
-                        onChange={(e) => setFormCategory(e.target.value)}
-                        placeholder={isHe ? "חדשות / הישג פילנתרופי / ציוד חדש" : "News / Milestone / Innovation"}
+                        dir={isFormLangRtl ? "rtl" : "ltr"}
+                        value={formCategory[selectedFormLang] || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setFormCategory(prev => ({ ...prev, [selectedFormLang]: val }));
+                        }}
+                        placeholder={DEFAULT_CATEGORIES[selectedFormLang] || "News"}
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 bg-white"
                       />
                     </div>
@@ -364,12 +727,16 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">
-                      {isHe ? "תמצית התוכן (2-3 שורות קריאות)" : "Summary Snippet"}
+                      {isHe ? "תמצית התוכן (2-3 שורות קריאות)" : "Summary Snippet"} ({LANGUAGE_CONFIG[selectedFormLang]?.name})
                     </label>
                     <textarea
                       rows={2}
-                      value={formSnippet}
-                      onChange={(e) => setFormSnippet(e.target.value)}
+                      dir={isFormLangRtl ? "rtl" : "ltr"}
+                      value={formSnippet[selectedFormLang] || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormSnippet(prev => ({ ...prev, [selectedFormLang]: val }));
+                      }}
                       placeholder={isHe ? "תיאור קצר וקולע של הידיעה או האירוע..." : "Short punchy summary..."}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 bg-white"
                     />
@@ -382,9 +749,12 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                       </label>
                       <input
                         type="text"
-                        value={formDate}
-                        onChange={(e) => setFormDate(e.target.value)}
-                        placeholder="ספטמבר 2026"
+                        value={formDate[selectedFormLang] || formDate.he || "2026"}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setFormDate(prev => ({ ...prev, [selectedFormLang]: val }));
+                        }}
+                        placeholder="2026"
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 bg-white"
                       />
                     </div>
@@ -404,13 +774,17 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
-                        {isHe ? "טקסט כפתור" : "Button Label"}
+                        {isHe ? "טקסט כפתור" : "Button Label"} ({LANGUAGE_CONFIG[selectedFormLang]?.name})
                       </label>
                       <input
                         type="text"
-                        value={formLinkText}
-                        onChange={(e) => setFormLinkText(e.target.value)}
-                        placeholder={isHe ? "לפרטים נוספים" : "Read More"}
+                        dir={isFormLangRtl ? "rtl" : "ltr"}
+                        value={formLinkText[selectedFormLang] || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setFormLinkText(prev => ({ ...prev, [selectedFormLang]: val }));
+                        }}
+                        placeholder={DEFAULT_LINK_TEXT[selectedFormLang] || "Learn More"}
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 bg-white"
                       />
                     </div>
@@ -429,7 +803,7 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                           key={i}
                           type="button"
                           onClick={() => setFormImage(img.url)}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-all flex items-center gap-1 ${
+                          className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-all flex items-center gap-1 cursor-pointer ${
                             formImage === img.url
                               ? "bg-sky-600 text-white border-sky-600 shadow-xs"
                               : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100"
@@ -474,7 +848,8 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                     </div>
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-200">
+                  {/* Form Footer */}
+                  <div className="pt-3 flex items-center justify-between border-t border-slate-200 gap-3">
                     <label className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
                       <input
                         type="checkbox"
@@ -487,10 +862,20 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all"
+                      disabled={isTranslating}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-50"
                     >
-                      <Save className="w-4 h-4" />
-                      <span>{editingId ? (isHe ? "עדכן ידיעה" : "Update Story") : (isHe ? "פרסם למסגרת" : "Publish to Roller")}</span>
+                      {isTranslating ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>{isHe ? "מתרגם ושומר..." : "Translating & Saving..."}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Save className="w-4 h-4" />
+                          <span>{editingId ? (isHe ? "עדכן ושמור לכל השפות" : "Update Story") : (isHe ? "פרסם לכל 9 השפות" : "Publish to All Languages")}</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>
@@ -498,23 +883,39 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
 
               {/* Items Management List */}
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-slate-900 text-base">
-                    {isHe ? `כל הידיעות במסגרת (${items.length})` : `All News Items (${items.length})`}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h4 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <span>{isHe ? `כל הידיעות במסגרת (${items.length})` : `All News Items (${items.length})`}</span>
                   </h4>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {/* Translate All Items Button */}
+                    <button
+                      onClick={handleTranslateAllItems}
+                      disabled={isTranslatingAll}
+                      title={isHe ? "תרגם את כל הידיעות הקיימות לכל 9 השפות" : "Translate all stories to 9 languages"}
+                      className="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200 flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      {isTranslatingAll ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                      )}
+                      <span>{isHe ? "תרגם את כל הידיעות" : "Translate All"}</span>
+                    </button>
+
                     <button
                       onClick={handleExportJson}
                       title={isHe ? "הורד קובץ גיבוי של העדכונים" : "Export JSON"}
-                      className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-300 flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-300 flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>{isHe ? "ייצוא JSON" : "Export"}</span>
                     </button>
+                    
                     <button
                       onClick={handleResetDefaults}
                       title={isHe ? "שחזר את הידיעות המקוריות של העמותה" : "Reset Defaults"}
-                      className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold border border-rose-200 flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold border border-rose-200 flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>{isHe ? "איפוס לברירת מחדל" : "Reset"}</span>
@@ -528,6 +929,8 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                     const itTitle = getVal(item.title);
                     const itCat = getVal(item.category);
                     const itDate = getVal(item.date);
+                    const coverage = getLanguageCoverage(item);
+                    const isFullyCovered = coverage.length >= 9;
 
                     return (
                       <div
@@ -545,7 +948,7 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                             className="w-14 h-14 object-cover rounded-xl border border-slate-200 shrink-0"
                           />
                           <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
                               <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold">
                                 {itCat}
                               </span>
@@ -559,6 +962,15 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                                   {isHe ? "מוסתר" : "Draft"}
                                 </span>
                               )}
+                              {/* Language Coverage Pill */}
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                                isFullyCovered
+                                  ? "bg-emerald-100 text-emerald-800"
+                                  : "bg-amber-100 text-amber-800"
+                              }`}>
+                                <Languages className="w-2.5 h-2.5" />
+                                <span>{coverage.length}/9 שפות</span>
+                              </span>
                             </div>
                             <h5 className="font-bold text-slate-900 text-sm truncate">
                               {itTitle}
@@ -567,11 +979,20 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                         </div>
 
                         <div className="flex items-center gap-1.5 shrink-0">
+                          {/* Quick Translate Button if not 9 languages */}
+                          <button
+                            onClick={() => handleTranslateSingleItem(item.id)}
+                            title={isHe ? "תרגם ידיעה זו לכל 9 השפות" : "Translate this item into 9 languages"}
+                            className="p-1.5 rounded-lg text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 cursor-pointer"
+                          >
+                            <Sparkles className="w-4 h-4" />
+                          </button>
+
                           <button
                             onClick={() => handleMove(idx, -1)}
                             disabled={idx === 0}
                             title={isHe ? "העבר למעלה" : "Move Up"}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 disabled:opacity-30 disabled:pointer-events-none hover:bg-slate-100"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 disabled:opacity-30 disabled:pointer-events-none hover:bg-slate-100 cursor-pointer"
                           >
                             <ArrowUp className="w-4 h-4" />
                           </button>
@@ -579,21 +1000,21 @@ export function AdminNewsManager({ isOpen, onClose, lang = "he" }) {
                             onClick={() => handleMove(idx, 1)}
                             disabled={idx === items.length - 1}
                             title={isHe ? "העבר למטה" : "Move Down"}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 disabled:opacity-30 disabled:pointer-events-none hover:bg-slate-100"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 disabled:opacity-30 disabled:pointer-events-none hover:bg-slate-100 cursor-pointer"
                           >
                             <ArrowDown className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleEditClick(item)}
                             title={isHe ? "ערוך ידיעה" : "Edit"}
-                            className="p-1.5 rounded-lg text-sky-600 hover:text-sky-800 hover:bg-sky-50"
+                            className="p-1.5 rounded-lg text-sky-600 hover:text-sky-800 hover:bg-sky-50 cursor-pointer"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(item.id)}
                             title={isHe ? "מחק ידיעה" : "Delete"}
-                            className="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50"
+                            className="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
